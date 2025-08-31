@@ -1,0 +1,123 @@
+{
+  "today_utc": "2025-08-01",
+  "activity_events": [
+    {"ts":"2025-08-01T09:12:00Z","user_id":"u1","action":"view","content_id":"d1"},
+    {"ts":"2025-08-01T09:30:00Z","user_id":"u2","action":"edit","content_id":"d2"},
+    {"ts":"2025-08-01T10:10:00Z","user_id":"u3","action":"drill","content_id":"d3"},
+    {"ts":"2025-08-01T11:40:00Z","user_id":"u4","action":"view","content_id":"d4"},
+    {"ts":"2025-07-31T08:45:00Z","user_id":"u5","action":"view","content_id":"d5"},
+    {"ts":"2025-07-30T13:20:00Z","user_id":"u6","action":"alert_delivered","content_id":"d6"},
+    {"ts":"2025-07-30T13:25:00Z","user_id":"u7","action":"subscription_email","content_id":"d6"},
+    {"ts":"2025-07-29T12:00:00Z","user_id":"u8","action":"view","content_id":"d7"},
+    {"ts":"2025-07-28T09:50:00Z","user_id":"u9","action":"export","content_id":"d8"},
+    {"ts":"2025-07-28T15:05:00Z","user_id":"u10","action":"view","content_id":"d1"},
+    {"ts":"2025-07-25T11:20:00Z","user_id":"u2","action":"drill","content_id":"d2"},
+    {"ts":"2025-07-25T11:45:00Z","user_id":"u3","action":"drill","content_id":"d3"},
+    {"ts":"2025-07-24T14:15:00Z","user_id":"u6","action":"view","content_id":"d4"},
+    {"ts":"2025-07-23T16:40:00Z","user_id":"u8","action":"view","content_id":"d5"},
+    {"ts":"2025-07-22T09:30:00Z","user_id":"u1","action":"view","content_id":"d6"}
+  ],
+  "user_directory": [
+    {"user_id":"u1","department":"Finance"},
+    {"user_id":"u2","department":"Ops"},
+    {"user_id":"u3","department":"Sales"},
+    {"user_id":"u4","department":"HR"},
+    {"user_id":"u5","department":"Marketing"},
+    {"user_id":"u6","department":"Ops"},
+    {"user_id":"u7","department":"Support"},
+    {"user_id":"u8","department":"Sales"},
+    {"user_id":"u9","department":"Finance"},
+    {"user_id":"u10","department":"HR"}
+  ],
+  "session_logs": [
+    {"user":"u1","duration":320,"pages":6,"repeats_per_week":3},
+    {"user":"u2","duration":250,"pages":4,"repeats_per_week":2},
+    {"user":"u3","duration":190,"pages":3,"repeats_per_week":1},
+    {"user":"u4","duration":140,"pages":2,"repeats_per_week":1},
+    {"user":"u5","duration":410,"pages":7,"repeats_per_week":4},
+    {"user":"u6","duration":180,"pages":3,"repeats_per_week":2}
+  ],
+  "usage_logs": [
+    {"user":"u1","role":"creator"},
+    {"user":"u2","role":"creator"},
+    {"user":"u3","role":"viewer"},
+    {"user":"u4","role":"viewer"},
+    {"user":"u5","role":"creator"},
+    {"user":"u6","role":"viewer"},
+    {"user":"u7","role":"viewer"},
+    {"user":"u8","role":"creator"},
+    {"user":"u9","role":"viewer"},
+    {"user":"u10","role":"viewer"}
+  ],
+  "interaction_logs": [
+    {"user":"u1","action":"drill"},
+    {"user":"u2","action":"drill"},
+    {"user":"u3","action":"view"},
+    {"user":"u4","action":"view"},
+    {"user":"u5","action":"drill"}
+  ],
+  "governance_data": [
+    {"id":"d1","certified":true,"owner":"fin_bi","metadata":["description","refresh_rate","lineage"]},
+    {"id":"d2","certified":true,"owner":"ops_bi","metadata":["description","refresh_rate"]},
+    {"id":"d3","certified":false,"owner":null,"metadata":[]},
+    {"id":"d4","certified":true,"owner":"hr_bi","metadata":["description","refresh_rate","pii"]},
+    {"id":"d5","certified":false,"owner":"mktg_bi","metadata":["description"]},
+    {"id":"d6","certified":true,"owner":"ops_bi","metadata":["description","refresh_rate","glossary"]},
+    {"id":"d7","certified":false,"owner":null,"metadata":[]},
+    {"id":"d8","certified":true,"owner":"sales_bi","metadata":["description","refresh_rate","pii"]}
+  ],
+  "dashboard_metadata": [
+    {"id":"d1","last_refresh":"2025-07-31","sla":"daily","priority":"high"},
+    {"id":"d2","last_refresh":"2025-07-30","sla":"daily","priority":"high"},
+    {"id":"d3","last_refresh":"2025-07-27","sla":"weekly","priority":"normal"},
+    {"id":"d4","last_refresh":"2025-07-28","sla":"weekly","priority":"normal"},
+    {"id":"d5","last_refresh":"2025-07-29","sla":"weekly","priority":"normal"},
+    {"id":"d6","last_refresh":"2025-07-31","sla":"daily","priority":"high"},
+    {"id":"d7","last_refresh":"2025-07-22","sla":"weekly","priority":"normal"},
+    {"id":"d8","last_refresh":"2025-07-25","sla":"weekly","priority":"normal"}
+  ],
+  "source_catalog": [
+    "Snowflake",
+    "BigQuery",
+    "Redshift",
+    "Postgres",
+    "MySQL",
+    "Salesforce",
+    "Zendesk",
+    "Amplitude",
+    "GA4",
+    "S3"
+  ],
+  "dashboard_link_data": [
+    {"id":"d1","links":["d2","d3"],"link_usage":20},
+    {"id":"d2","links":["d1","d4"],"link_usage":12},
+    {"id":"d3","links":["d1"],"link_usage":8},
+    {"id":"d4","links":[],"link_usage":0},
+    {"id":"d5","links":["d6"],"link_usage":10},
+    {"id":"d6","links":["d5","d7"],"link_usage":9},
+    {"id":"d7","links":[],"link_usage":0},
+    {"id":"d8","links":[],"link_usage":0}
+  ],
+  "user_roles": [
+    {"id": "u1", "role": "creator"},
+    {"id": "u2", "role": "creator"},
+    {"id": "u3", "role": "viewer"},
+    {"id": "u4", "role": "viewer"},
+    {"id": "u5", "role": "creator"},
+    {"id": "u6", "role": "viewer"},
+    {"id": "u7", "role": "viewer"},
+    {"id": "u8", "role": "creator"},
+    {"id": "u9", "role": "viewer"},
+    {"id": "u10", "role": "viewer"}
+ ],
+  "decision_logs": [
+    {"id": "dec01", "linked_dash": "sales_forecast", "evidence": "minutes"},
+    {"id": "dec02", "linked_dash": "sales_forecast", "evidence": "minutes"},
+    {"id": "dec03","linked_dash": "d05", "evidence": "ticket_link"},
+    {"id": "dec04", "linked_dash": "d01", "evidence": "deck"},
+    {"id": "dec05", "linked_dash": null, "evidence": null},
+    {"id": "dec06", "linked_dash": "d03", "evidence": "minutes"},
+    {"id": "dec07", "linked_dash": "d05", "evidence": "deck"},
+    {"id": "dec08", "linked_dash": null, "evidence": null}
+  ]
+}
