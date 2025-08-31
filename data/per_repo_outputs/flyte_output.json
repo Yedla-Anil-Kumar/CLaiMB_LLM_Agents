@@ -1,0 +1,123 @@
+[
+  {
+    "agent": "micro_agent_orchestrator",
+    "repo": "flyte",
+    "scores": {
+      "development_maturity": 2.36,
+      "innovation_pipeline": 1.5
+    },
+    "micro_agent_results": {
+      "source_files_analyzed": 50,
+      "total_files_analyzed": 148
+    },
+    "aimri_summary": {
+      "code_health": {
+        "level": 2,
+        "evidence": {
+          "mi": 0.3880000000000001,
+          "cc": 1.14,
+          "docs": 0.25299999999999995
+        }
+      },
+      "testing_rigor": {
+        "level": 5,
+        "evidence": {
+          "has_tests": true,
+          "files": 5,
+          "coverage": 0.65,
+          "testing_quality": 0.7
+        }
+      },
+      "ci_cd": {
+        "level": 4,
+        "evidence": {
+          "ci_workflows": 38,
+          "has_ci": true,
+          "deploy_scripts": 6,
+          "has_deploy_scripts": true
+        }
+      },
+      "env_reproducibility": {
+        "level": 5,
+        "evidence": {
+          "requirements": true,
+          "pipfile": false,
+          "env_yml": true,
+          "pyproject": true,
+          "dep_quality": 0.85,
+          "env_consistency": 0.8
+        }
+      },
+      "secret_hygiene": {
+        "level": 0,
+        "evidence": {
+          "has_secrets": true,
+          "security_score": 0.0
+        }
+      },
+      "experiment_tracking": {
+        "level": 0,
+        "evidence": {
+          "mlflow": false,
+          "wandb": false,
+          "clearml": false
+        }
+      },
+      "hpo": {
+        "level": 3,
+        "evidence": {
+          "hparam_file": true,
+          "optuna": false,
+          "ray_tune": false
+        }
+      },
+      "data_validation": {
+        "level": 0,
+        "evidence": {
+          "great_expectations": false,
+          "evidently": false,
+          "pandera": false
+        }
+      },
+      "training_eval": {
+        "level": 4,
+        "evidence": {
+          "train_scripts": 4,
+          "entrypoint": false,
+          "metrics_lib": true,
+          "eval_scripts": 8
+        }
+      },
+      "serving_deploy": {
+        "level": 1,
+        "evidence": {
+          "fastapi": false,
+          "flask": false,
+          "streamlit": false,
+          "export_torch": false,
+          "export_sklearn": false,
+          "deploy_scripts": true
+        }
+      },
+      "pipelines": {
+        "level": 4,
+        "evidence": {
+          "airflow": false,
+          "prefect": true,
+          "luigi": false,
+          "argo": true,
+          "kedro": false
+        }
+      },
+      "parallelism": {
+        "level": 0,
+        "evidence": {
+          "threading": false,
+          "multiprocessing": false,
+          "concurrent": false,
+          "nested_loop_files": 1
+        }
+      }
+    }
+  }
+]
