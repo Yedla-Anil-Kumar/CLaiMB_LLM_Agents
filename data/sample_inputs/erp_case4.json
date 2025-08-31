@@ -1,0 +1,100 @@
+{
+  "process_automation_coverage": {
+    "value": 0.72,
+    "by_platform": {
+      "Salesforce": 0.70,
+      "ServiceNow": 0.75,
+      "SAP": 0.68
+    }
+  },
+  "workflow_sla_adherence": {
+    "value": 0.91,
+    "by_priority": {
+      "high": 0.94,
+      "normal": 0.89
+    }
+  },
+  "lead_to_oppty_cycle_time": {
+    "median_h": 28,
+    "p90_h": 52
+  },
+  "case_resolution_time_sn": {
+    "median_min": 15,
+    "p90_min": 35
+  },
+  "incident_reopen_rate_sn": {
+    "rate": 0.05
+  },
+  "hr_onboarding_cycle_time": {
+    "median_days": 7,
+    "p90_days": 12
+  },
+  "procure_to_pay_cycle_time": {
+    "total_days": 18,
+    "stage_breakdown_days": {
+      "requisition": 3,
+      "po": 5,
+      "goods_receipt": 4,
+      "invoice_to_pay": 6
+    }
+  },
+  "q2c_throughput": {
+    "orders_per_hour": 1.5,
+    "p90_hours_to_cash": 16
+  },
+  "backlog_aging": {
+    "median_days": 0.8,
+    "p90_days": 2.5
+  },
+  "rpa_success_rate": {
+    "success": 0.93,
+    "by_system": {
+      "SAP": 0.91,
+      "SFDC": 0.95
+    }
+  },
+  "data_sync_latency": {
+    "p50_s": 12,
+    "p95_s": 18,
+    "fail_rate": 0.0
+  },
+  "api_reliability": {
+    "availability": 0.996,
+    "error_rate": 0.001,
+    "p95_ms": 280
+  },
+  "integration_topology_health": {
+    "healthy_nodes_pct": 0.70,
+    "critical_alerts_7d": 5
+  },
+  "duplicate_record_rate": {
+    "rate": 0.03,
+    "entity": "Account"
+  },
+  "dq_exceptions_rate": {
+    "rate": 0.06,
+    "critical_rate": 0.02
+  },
+  "ai_integration_penetration": {
+    "workflows_pct": 0.55,
+    "execution_share_pct": 0.38
+  },
+  "ai_outcome_uplift": {
+    "uplift_pct": 0.11,
+    "trend_8w": "flat"
+  },
+  "ai_governance_coverage": {
+    "coverage_pct": 0.82,
+    "alerts_last_30d": 0
+  },
+  "customization_debt_index": {
+    "index": 0.42,
+    "unmanaged_customizations": 3,
+    "deprecated_api_calls": 2
+  },
+  "change_failure_rate": {
+    "cfr": 0.14,
+    "deploys_30d": 120,
+    "rollbacks_30d": 9
+  }
+}
