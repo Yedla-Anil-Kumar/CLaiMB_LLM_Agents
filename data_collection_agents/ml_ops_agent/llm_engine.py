@@ -6,6 +6,8 @@ import random
 from typing import Any, Dict, List, Optional
 
 from ml_ops_agent.base_agent import BaseMicroAgent
+from loguru import logger
+from ml_ops_agent.logging_utils import timed
 
 """
 MLOps Metric Grader — ONE-SHOT (per metric)
@@ -754,11 +756,23 @@ class MLOpsLLM(BaseMicroAgent):
     def grade_metric(self, metric_id: str, evidence: Dict[str, Any]) -> Dict[str, Any]:
         _ = METRIC_PROMPTS[metric_id]  # fail fast if unknown
         prompt = build_prompt(metric_id, evidence)
-        return self._ask(metric_id=metric_id, user_prompt=prompt)
+        logger.debug(f"Built prompt for {metric_id} (len={len(prompt)})")
+        with timed(f"metric.{metric_id}"):
+            out = self._ask(metric_id=metric_id, user_prompt=prompt)
+            out["metric_id"] = metric_id
+
+        logger.info(f"[{metric_id}] band={out['band']} | rationale={out['rationale']}")
+        if out.get("flags"):
+            logger.info(f"[{metric_id}] flags={out['flags']}")
+        if out.get("gaps"):
+            logger.info(f"[{metric_id}] gaps={out['gaps']}")
+
+        return out
 
     def _ask(self, *, metric_id: str, user_prompt: str, max_tokens: int = 700) -> Dict[str, Any]:
         time.sleep(random.uniform(0.02, 0.07))
-        raw = self._call_llm(system_prompt="", prompt=user_prompt, max_tokens=max_tokens)
+        with timed("LLM.call"):
+            raw = self._call_llm(system_prompt="", prompt=user_prompt, max_tokens=max_tokens)
         try:
             out = self._parse_json_response(raw) or {}
         except Exception:

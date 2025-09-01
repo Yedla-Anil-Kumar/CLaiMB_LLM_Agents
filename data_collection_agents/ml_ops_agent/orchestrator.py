@@ -137,65 +137,65 @@ class MLOpsOrchestrator:
         metrics = [m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m15,m16,m17,m18,m19,m20]
         m = {x["metric_id"]: x for x in metrics}
 
-        # ---- AIMRI Category computations (0–5 levels; using our 1–5 bands as-is) ----
-        # Category 3 — AI/ML Capabilities (3.1–3.5)
-        # 3.1 Model Development: experiment velocity + validation artifacts
-        cat3_1 = round((0.55*_b(m3) + 0.45*_b(m5)), 2)
+        # # ---- AIMRI Category computations (0–5 levels; using our 1–5 bands as-is) ----
+        # # Category 3 — AI/ML Capabilities (3.1–3.5)
+        # # 3.1 Model Development: experiment velocity + validation artifacts
+        # cat3_1 = round((0.55*_b(m3) + 0.45*_b(m5)), 2)
 
-        # 3.2 Production Deployment: AML+SM endpoint SLO & jobs/pipeline flow
-        cat3_2 = round((0.30*_b(m7) + 0.25*_b(m12) + 0.25*_b(m8) + 0.20*_b(m13)), 2)
+        # # 3.2 Production Deployment: AML+SM endpoint SLO & jobs/pipeline flow
+        # cat3_2 = round((0.30*_b(m7) + 0.25*_b(m12) + 0.25*_b(m8) + 0.20*_b(m13)), 2)
 
-        # 3.3 MLOps Maturity: lineage, reproducibility, job/pipeline maturity, DORA speed
-        cat3_3 = round((0.20*_b(m2) + 0.20*_b(m6) + 0.20*_b(m8) + 0.20*_b(m13) + 0.20*_b(m18)), 2)
+        # # 3.3 MLOps Maturity: lineage, reproducibility, job/pipeline maturity, DORA speed
+        # cat3_3 = round((0.20*_b(m2) + 0.20*_b(m6) + 0.20*_b(m8) + 0.20*_b(m13) + 0.20*_b(m18)), 2)
 
-        # 3.4 Model Governance: registries + policy gates
-        cat3_4 = round((0.45*_b(m4) + 0.35*_b(m10) + 0.20*_b(m20)), 2)
+        # # 3.4 Model Governance: registries + policy gates
+        # cat3_4 = round((0.45*_b(m4) + 0.35*_b(m10) + 0.20*_b(m20)), 2)
 
-        # 3.5 Advanced Capabilities: explainability/bias & cost efficiency
-        cat3_5 = round((0.60*_b(m15) + 0.40*_b(m16)), 2)
+        # # 3.5 Advanced Capabilities: explainability/bias & cost efficiency
+        # cat3_5 = round((0.60*_b(m15) + 0.40*_b(m16)), 2)
 
-        cat3_overall = round((0.20*cat3_1 + 0.25*cat3_2 + 0.20*cat3_3 + 0.20*cat3_4 + 0.15*cat3_5), 2)
+        # cat3_overall = round((0.20*cat3_1 + 0.25*cat3_2 + 0.20*cat3_3 + 0.20*cat3_4 + 0.15*cat3_5), 2)
 
-        # Category 8 — Process Maturity (8.1–8.5) via CI/CD proxies
-        cat8_3 = round((0.65*_b(m19) + 0.35*_b(m20)), 2)  # QA: CFR + policy gates
-        cat8_4 = round((0.50*_b(m18) + 0.50*_b(m17)), 2)  # Operational Excellence: lead time + deploy freq
-        cat8_overall = round((0.55*cat8_4 + 0.45*cat8_3), 2)
+        # # Category 8 — Process Maturity (8.1–8.5) via CI/CD proxies
+        # cat8_3 = round((0.65*_b(m19) + 0.35*_b(m20)), 2)  # QA: CFR + policy gates
+        # cat8_4 = round((0.50*_b(m18) + 0.50*_b(m17)), 2)  # Operational Excellence: lead time + deploy freq
+        # cat8_overall = round((0.55*cat8_4 + 0.45*cat8_3), 2)
 
-        aimri = {
-            "1_technical_infrastructure":       {"overall": None, "subs": {}},
-            "2_data_management_quality":        {"overall": None, "subs": {}},
-            "3_ai_ml_capabilities":             {
-                "overall": cat3_overall,
-                "subs": {
-                    "3_1_model_development": cat3_1,
-                    "3_2_production_deployment": cat3_2,
-                    "3_3_mlops_maturity": cat3_3,
-                    "3_4_model_governance": cat3_4,
-                    "3_5_advanced_capabilities": cat3_5,
-                }
-            },
-            "4_talent_skills":                  {"overall": None, "subs": {}},
-            "5_governance_ethics":              {"overall": None, "subs": {}},
-            "6_strategic_alignment":            {"overall": None, "subs": {}},
-            "7_cultural_readiness":             {"overall": None, "subs": {}},
-            "8_process_maturity":               {
-                "overall": cat8_overall,
-                "subs": {
-                    "8_1_project_management": None,
-                    "8_2_documentation_practices": None,
-                    "8_3_quality_assurance": cat8_3,
-                    "8_4_operational_excellence": cat8_4,
-                    "8_5_measurement_metrics": None,
-                }
-            },
-            "9_foundation_model_ops":           {"overall": None, "subs": {}},
-            "10_generative_ai_capabilities":    {"overall": None, "subs": {}},
-            "11_responsible_ai_social_impact":  {"overall": None, "subs": {}},
-            "12_ai_business_value_roi":         {"overall": None, "subs": {}},
-            "13_ai_risk_resilience":            {"overall": None, "subs": {}},
-            "14_ai_ecosystem_external_integration": {"overall": None, "subs": {}},
-            "15_ai_leadership_vision":          {"overall": None, "subs": {}},
-        }
+        # aimri = {
+        #     "1_technical_infrastructure":       {"overall": None, "subs": {}},
+        #     "2_data_management_quality":        {"overall": None, "subs": {}},
+        #     "3_ai_ml_capabilities":             {
+        #         "overall": cat3_overall,
+        #         "subs": {
+        #             "3_1_model_development": cat3_1,
+        #             "3_2_production_deployment": cat3_2,
+        #             "3_3_mlops_maturity": cat3_3,
+        #             "3_4_model_governance": cat3_4,
+        #             "3_5_advanced_capabilities": cat3_5,
+        #         }
+        #     },
+        #     "4_talent_skills":                  {"overall": None, "subs": {}},
+        #     "5_governance_ethics":              {"overall": None, "subs": {}},
+        #     "6_strategic_alignment":            {"overall": None, "subs": {}},
+        #     "7_cultural_readiness":             {"overall": None, "subs": {}},
+        #     "8_process_maturity":               {
+        #         "overall": cat8_overall,
+        #         "subs": {
+        #             "8_1_project_management": None,
+        #             "8_2_documentation_practices": None,
+        #             "8_3_quality_assurance": cat8_3,
+        #             "8_4_operational_excellence": cat8_4,
+        #             "8_5_measurement_metrics": None,
+        #         }
+        #     },
+        #     "9_foundation_model_ops":           {"overall": None, "subs": {}},
+        #     "10_generative_ai_capabilities":    {"overall": None, "subs": {}},
+        #     "11_responsible_ai_social_impact":  {"overall": None, "subs": {}},
+        #     "12_ai_business_value_roi":         {"overall": None, "subs": {}},
+        #     "13_ai_risk_resilience":            {"overall": None, "subs": {}},
+        #     "14_ai_ecosystem_external_integration": {"overall": None, "subs": {}},
+        #     "15_ai_leadership_vision":          {"overall": None, "subs": {}},
+        # }
 
         return {
             "agent": "ml_ops",
@@ -204,7 +204,7 @@ class MLOpsOrchestrator:
                 "declared_slo": ml.declared_slo,
                 "policy_required_checks": ml.policy_required_checks
             },
-            "aimri_scores": aimri,
+            # "aimri_scores": aimri,
             "metric_breakdown": {
                 **m,
                 "cicd.artifact_lineage": artifact_lineage

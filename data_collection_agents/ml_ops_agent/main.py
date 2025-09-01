@@ -10,6 +10,7 @@ import os
 import sys
 from pathlib import Path
 from typing import Dict, Iterable, List, Tuple
+from logging_utils import setup_logger
 
 from dotenv import load_dotenv
 
@@ -125,6 +126,7 @@ def run_once(args: argparse.Namespace) -> None:
 
 def main() -> None:
     load_dotenv()
+    setup_logger("logs/bi_tracker.log", level="INFO", serialize=False)
     args = parse_args()
     run_once(args)
 
