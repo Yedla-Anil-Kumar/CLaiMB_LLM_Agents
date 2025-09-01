@@ -1,6 +1,6 @@
 {
   "metric_id": "data.lineage",
   "score": 4,
-  "rationale": "80% lineage coverage (40 tables undocumented). Coverage is good but there are critical gaps in the marketing domain with only 62.5% coverage and missing column-level lineage for 60 tables.",
-  "gap": "Implement automated lineage extraction for better coverage, focus on documenting marketing data flows, and enhance column-level lineage tracking across all domains."
+  "rationale": "80% lineage coverage (40 tables undocumented). Coverage is good but there are significant gaps, particularly in the marketing and HR domains where column-level lineage is also lacking.",
+  "gap": "Implement automated lineage extraction for all domains, prioritize documentation for marketing and HR tables, and enhance metadata catalog registration to include column-level lineage."
 }
