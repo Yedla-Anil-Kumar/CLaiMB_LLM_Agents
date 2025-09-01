@@ -4,6 +4,8 @@ import json
 import time
 import random
 from typing import Any, Dict, List, Optional
+from loguru import logger
+from bi_tracker_agent.logging_utils import timed
 
 from bi_tracker_agent.base_agent import BaseMicroAgent
 
@@ -747,7 +749,8 @@ def build_prompt(metric_id: str, task_input: dict) -> str:
 class BIUsageLLM(BaseMicroAgent):
     def _ask(self, user_prompt: str, max_tokens: int = 700) -> Dict[str, Any]:
         time.sleep(random.uniform(0.02, 0.07))
-        raw = self._call_llm(system_prompt="", prompt=user_prompt, max_tokens=max_tokens)
+        with timed("LLM.call"):
+            raw = self._call_llm(system_prompt="", prompt=user_prompt, max_tokens=max_tokens)
         try:
             out = self._parse_json_response(raw) or {}
         except Exception:
@@ -774,10 +777,21 @@ class BIUsageLLM(BaseMicroAgent):
         return out
 
     def score_metric(self, metric_id: str, task_input: Dict[str, Any]) -> Dict[str, Any]:
-        _ = METRIC_PROMPTS[metric_id]  # fail fast if unknown
+        _ = METRIC_PROMPTS[metric_id]
         prompt = build_prompt(metric_id, task_input)
-        out = self._ask(prompt)
-        out["metric_id"] = metric_id
+
+        logger.debug(f"Built prompt for {metric_id} (len={len(prompt)})")
+
+        with timed(f"metric.{metric_id}"):
+            out = self._ask(prompt)
+            out["metric_id"] = metric_id
+
+        logger.info(f"[{metric_id}] band={out['band']} | rationale={out['rationale']}")
+        if out.get("flags"):
+            logger.info(f"[{metric_id}] flags={out['flags']}")
+        if out.get("gaps"):
+            logger.info(f"[{metric_id}] gaps={out['gaps']}")
+
         return out
 
     # Backwards-compatible wrappers

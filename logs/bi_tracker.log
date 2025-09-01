@@ -1,0 +1,656 @@
+2025-09-01 11:56:05.681 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.dau_mau
+2025-09-01 11:56:05.709 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:09.143 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3433.72 ms)
+2025-09-01 11:56:09.143 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.dau_mau (3461.76 ms)
+2025-09-01 11:56:09.143 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.dau_mau] band=2 | rationale=The stickiness is low due to only 5 distinct users engaging in the last 30 days, indicating a material risk in user retention. Additionally, the activity events show a declining trend with sparse data, which further limits the assessment.
+2025-09-01 11:56:09.143 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.dau_mau] gaps=['Low user engagement → increase distinct user activity events in the last 30 days → achieve ≥10 distinct users (unlocks band 3).']
+2025-09-01 11:56:09.144 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.creators_ratio
+2025-09-01 11:56:09.196 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:12.396 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3199.39 ms)
+2025-09-01 11:56:12.396 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.creators_ratio (3252.51 ms)
+2025-09-01 11:56:12.396 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.creators_ratio] band=2 | rationale=The creator share is only 50% (2 out of 4 users), which is below the target threshold; there is no information on department spread, indicating a potential risk of skewed usage.
+2025-09-01 11:56:12.396 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [usage.creators_ratio] flags=['dept_spread_unknown']
+2025-09-01 11:56:12.396 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.creators_ratio] gaps=['Department spread unknown → report creators by department and coverage % → reach ≥60% dept coverage (unlocks band 4).']
+2025-09-01 11:56:12.397 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.session_depth
+2025-09-01 11:56:12.434 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:16.327 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3892.70 ms)
+2025-09-01 11:56:16.327 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.session_depth (3930.77 ms)
+2025-09-01 11:56:16.328 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.session_depth] band=2 | rationale=The average session duration of 210 seconds and 3.5 pages are decent, but the low repeat frequency of 1-2 sessions per week indicates material risks in user engagement. The significant variation in user sessions suggests inconsistent usage patterns.
+2025-09-01 11:56:16.328 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [usage.session_depth] flags=['repeat_freq_low']
+2025-09-01 11:56:16.328 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.session_depth] gaps=['Low repeat frequency indicates user disengagement → increase repeats_per_week for at least 50% of users → achieve weekly repeats for majority (unlocks band 4).']
+2025-09-01 11:56:16.328 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.drilldown
+2025-09-01 11:56:16.395 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:19.927 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3532.47 ms)
+2025-09-01 11:56:19.928 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.drilldown (3600.08 ms)
+2025-09-01 11:56:19.928 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.drilldown] band=2 | rationale=Only 3 out of 10 sessions include drill actions, indicating a low engagement level; the lack of stability data further limits the score.
+2025-09-01 11:56:19.928 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [usage.drilldown] flags=['low_engagement', 'stability_unknown']
+2025-09-01 11:56:19.928 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.drilldown] gaps=['Engagement level low → increase drill usage through targeted training → achieve ≥25% sessions including drill (unlocks band 4).', 'Stability unverified → include 4-week drilldown time series → demonstrate non-declining trend (supports band 4–5).']
+2025-09-01 11:56:19.929 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.refresh_timeliness
+2025-09-01 11:56:19.965 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:24.753 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (4787.48 ms)
+2025-09-01 11:56:24.754 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.refresh_timeliness (4825.26 ms)
+2025-09-01 11:56:24.754 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.refresh_timeliness] band=4 | rationale=100% of high-priority dashboards are within SLA, and there are no critical stales; however, the overall coverage of dashboard refreshes is unclear. 
+2025-09-01 11:56:24.755 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [reliability.refresh_timeliness] gaps=['Overall dashboard coverage unknown → report total dashboards and their SLA compliance → achieve ≥95% of all dashboards within SLA (unlocks band 5).']
+2025-09-01 11:56:24.755 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.cross_links
+2025-09-01 11:56:24.781 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:27.677 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2895.77 ms)
+2025-09-01 11:56:27.677 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.cross_links (2922.46 ms)
+2025-09-01 11:56:27.677 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.cross_links] band=2 | rationale=Only 2 dashboards exist, with 1 linked and very low usage overall. The lack of links in the second dashboard significantly limits the overall effectiveness.
+2025-09-01 11:56:27.678 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [features.cross_links] flags=['low_link_count', 'low_usage']
+2025-09-01 11:56:27.678 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.cross_links] gaps=['Link presence insufficient → increase links in all dashboards → achieve ≥15% dashboards with links (unlocks band 3).']
+2025-09-01 11:56:27.678 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.coverage
+2025-09-01 11:56:27.727 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:31.186 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3459.23 ms)
+2025-09-01 11:56:31.187 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.coverage (3508.86 ms)
+2025-09-01 11:56:31.187 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.coverage] band=2 | rationale=Only one dashboard is certified and owned, while the other lacks both certification and metadata, indicating significant governance issues.
+2025-09-01 11:56:31.187 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.coverage] flags=['certification_gaps', 'owner_gaps', 'metadata_gaps']
+2025-09-01 11:56:31.187 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.coverage] gaps=['Certification and ownership missing for one dashboard → establish ownership and certification for all dashboards → achieve ≥85% certified/owned (unlocks band 4).', 'Metadata incomplete → enforce template (description, owner, SLA, lineage) → reach ≥85% full profiles (unlocks band 4).']
+2025-09-01 11:56:31.187 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.data.source_diversity
+2025-09-01 11:56:31.216 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:33.787 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2571.11 ms)
+2025-09-01 11:56:33.788 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.data.source_diversity (2600.24 ms)
+2025-09-01 11:56:33.788 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [data.source_diversity] band=3 | rationale=Three distinct sources indicate a fair level of diversity; however, the lack of clarity on domain coverage presents a risk to the overall assessment.
+2025-09-01 11:56:33.788 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [data.source_diversity] flags=['domain_mix_unknown']
+2025-09-01 11:56:33.788 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [data.source_diversity] gaps=['Domain mix unknown → tag each source to domain (e.g., ERP/CRM) → show ≥3 domains represented (unlocks band 4).']
+2025-09-01 11:56:33.788 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.democratization.self_service
+2025-09-01 11:56:33.850 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:35.974 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2123.98 ms)
+2025-09-01 11:56:35.975 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.democratization.self_service (2186.68 ms)
+2025-09-01 11:56:35.975 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [democratization.self_service] band=2 | rationale=With only 50% of users being creators, the metric falls short of the target; the lack of department coverage data is a significant limiting factor.
+2025-09-01 11:56:35.975 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [democratization.self_service] flags=['coverage_unknown']
+2025-09-01 11:56:35.975 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [democratization.self_service] gaps=['Department coverage unknown → report creators by department and coverage % → reach ≥60% dept coverage (unlocks band 4).']
+2025-09-01 11:56:35.975 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.decision.traceability
+2025-09-01 11:56:36.008 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:38.242 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2234.39 ms)
+2025-09-01 11:56:38.242 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.decision.traceability (2267.11 ms)
+2025-09-01 11:56:38.243 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [decision.traceability] band=2 | rationale=Only one decision is linked to a dashboard with evidence, indicating a significant gap in decision traceability. The lack of consistent evidence and links to dashboards presents material risks.
+2025-09-01 11:56:38.243 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [decision.traceability] gaps=['Coverage unclear → compute exact % decisions linked with evidence in last 30–60d → achieve ≥15% recent linked decisions (unlocks band 3).']
+2025-09-01 11:56:38.243 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.weekly_active_trend
+2025-09-01 11:56:38.288 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:41.305 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3017.10 ms)
+2025-09-01 11:56:41.305 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.weekly_active_trend (3062.33 ms)
+2025-09-01 11:56:41.306 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.weekly_active_trend] band=2 | rationale=The data shows a limited number of distinct users engaging over the last four weeks, indicating a sustained decline in activity. The lack of consistent weekly engagement is a significant limiting factor.
+2025-09-01 11:56:41.306 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.weekly_active_trend] gaps=['Sustained decline indicated by low user engagement → increase user activity and engagement strategies → achieve at least 5 distinct users per week (unlocks band 3).']
+2025-09-01 11:56:41.306 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.retention_4w
+2025-09-01 11:56:41.354 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:43.655 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2300.84 ms)
+2025-09-01 11:56:43.655 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.retention_4w (2349.02 ms)
+2025-09-01 11:56:43.655 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.retention_4w] band=2 | rationale=Only 2 out of 4 distinct users returned, indicating a retention rate of 50%, which is below the target threshold. The lack of detailed user engagement data limits understanding of retention drivers.
+2025-09-01 11:56:43.655 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.retention_4w] gaps=['User engagement details missing → include user activity breakdown by week and content type → achieve ≥45% retention rate (unlocks band 4).']
+2025-09-01 11:56:43.655 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.export_rate
+2025-09-01 11:56:43.709 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:46.009 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2299.90 ms)
+2025-09-01 11:56:46.009 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.export_rate (2353.93 ms)
+2025-09-01 11:56:46.010 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.export_rate] band=1 | rationale=There are no export or download actions recorded, indicating a significant failure in usage; without any exports, governance cannot be assessed.
+2025-09-01 11:56:46.010 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.export_rate] gaps=['No export actions recorded → implement export functionality and track usage → achieve ≥5% export rate (unlocks band 2).']
+2025-09-01 11:56:46.010 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.alerts_usage
+2025-09-01 11:56:46.035 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:48.893 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2857.89 ms)
+2025-09-01 11:56:48.894 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.alerts_usage (2883.63 ms)
+2025-09-01 11:56:48.894 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.alerts_usage] band=2 | rationale=There is very low evidence of alert or subscription usage, with only view actions recorded and no alerts or subscriptions indicated. The lack of any alert or subscription actions suggests material risks in user engagement.
+2025-09-01 11:56:48.894 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.alerts_usage] gaps=['No alerts or subscriptions recorded → implement tracking for alert and subscription actions → achieve at least 5 unique alert/subscription actions (unlocks band 3).']
+2025-09-01 11:56:48.894 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.sla_breach_streaks
+2025-09-01 11:56:48.926 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:51.847 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2921.11 ms)
+2025-09-01 11:56:51.847 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.sla_breach_streaks (2952.90 ms)
+2025-09-01 11:56:51.847 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.sla_breach_streaks] band=2 | rationale=The high-priority dashboard has not been refreshed within its daily SLA, indicating a material risk. The presence of a single high-priority dashboard with a significant breach is a critical concern.
+2025-09-01 11:56:51.847 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [reliability.sla_breach_streaks] flags=['critical_breach']
+2025-09-01 11:56:51.847 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [reliability.sla_breach_streaks] gaps=['High-priority dashboard breach → ensure daily refresh compliance for critical dashboards → achieve 0 breaches for high-priority dashboards (unlocks band 4).']
+2025-09-01 11:56:51.848 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.error_rate_queries
+2025-09-01 11:56:51.876 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:53.779 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (1903.71 ms)
+2025-09-01 11:56:53.780 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.error_rate_queries (1932.12 ms)
+2025-09-01 11:56:53.780 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.error_rate_queries] band=5 | rationale=There are no error actions recorded, indicating a perfect error rate; additionally, there are no high-impact incidents reported. This strong performance supports a top rating.
+2025-09-01 11:56:53.780 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.pii_coverage
+2025-09-01 11:56:53.817 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:56.664 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2847.25 ms)
+2025-09-01 11:56:56.665 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.pii_coverage (2884.31 ms)
+2025-09-01 11:56:56.665 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.pii_coverage] band=2 | rationale=There is a lack of PII and access policy metadata on the majority of dashboards, indicating significant gaps in coverage. The absence of these critical labels poses material risks to data governance.
+2025-09-01 11:56:56.665 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.pii_coverage] flags=['coverage_inconsistent']
+2025-09-01 11:56:56.665 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.pii_coverage] gaps=['Lack of PII and access policy metadata → implement comprehensive labeling and access controls across all dashboards → achieve ≥80% dashboards with PII and access policy metadata (unlocks band 4).']
+2025-09-01 11:56:56.665 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.lineage_coverage
+2025-09-01 11:56:56.739 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:56:59.299 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2560.60 ms)
+2025-09-01 11:56:59.300 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.lineage_coverage (2634.66 ms)
+2025-09-01 11:56:59.300 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.lineage_coverage] band=2 | rationale=Only one dashboard is certified, indicating limited trust in the data, while the lack of ownership and metadata for the second dashboard presents significant risks.
+2025-09-01 11:56:59.300 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.lineage_coverage] flags=['owner_missing', 'metadata_missing']
+2025-09-01 11:56:59.300 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.lineage_coverage] gaps=['Missing ownership and metadata for one dashboard → assign owners and enhance metadata documentation → achieve ≥80% coverage (unlocks band 3).']
+2025-09-01 11:56:59.300 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.data.cost_efficiency
+2025-09-01 11:56:59.332 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:02.289 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2956.54 ms)
+2025-09-01 11:57:02.289 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.data.cost_efficiency (2989.00 ms)
+2025-09-01 11:57:02.290 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [data.cost_efficiency] band=3 | rationale=The source catalog shows a good mix of data warehouses, but there are signs of moderate egress and some stale content, leading to mixed signals regarding efficiency.
+2025-09-01 11:57:02.290 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [data.cost_efficiency] flags=['egress_present', 'stale_assets_present']
+2025-09-01 11:57:02.290 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [data.cost_efficiency] gaps=['Moderate egress and staleness present → quantify export session % and stale share by priority → reduce exports <15% and stale critical assets to 0 (unlocks band 4–5).']
+2025-09-01 11:57:02.290 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.democratization.dept_coverage
+2025-09-01 11:57:02.319 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:04.952 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2633.31 ms)
+2025-09-01 11:57:04.953 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.democratization.dept_coverage (2662.64 ms)
+2025-09-01 11:57:04.953 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [democratization.dept_coverage] band=3 | rationale=There are creators in two out of four departments, indicating some level of engagement; however, the overall coverage is below the target range. The lack of detailed department coverage limits the ability to assess the full impact of creators across the organization.
+2025-09-01 11:57:04.953 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [democratization.dept_coverage] flags=['creator_counts_unknown']
+2025-09-01 11:57:04.953 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [democratization.dept_coverage] gaps=['Department spread unknown → report creators by department and coverage % → reach ≥60% dept coverage (unlocks band 4).']
+2025-09-01 11:57:04.960 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.dau_mau
+2025-09-01 11:57:05.021 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:08.530 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3508.57 ms)
+2025-09-01 11:57:08.531 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.dau_mau (3571.02 ms)
+2025-09-01 11:57:08.531 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.dau_mau] band=2 | rationale=The stickiness is likely low due to sparse activity events, indicating a material risk in user engagement. The lack of a clear trend and insufficient events to calculate DAU/MAU reliably further limits the assessment.
+2025-09-01 11:57:08.531 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [usage.dau_mau] flags=['sparse_activity']
+2025-09-01 11:57:08.531 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.dau_mau] gaps=['Insufficient activity events for reliable DAU/MAU calculation → increase user engagement to gather more events → achieve at least 30 distinct users in the last 30 days (unlocks band 3).']
+2025-09-01 11:57:08.532 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.creators_ratio
+2025-09-01 11:57:08.561 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:11.773 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3211.16 ms)
+2025-09-01 11:57:11.773 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.creators_ratio (3241.42 ms)
+2025-09-01 11:57:11.773 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.creators_ratio] band=2 | rationale=The creator share is only 40% among active users, indicating a significant limitation; the lack of department spread data raises concerns about engagement across teams.
+2025-09-01 11:57:11.773 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.creators_ratio] gaps=['Department spread unknown → report creators by department and coverage % → reach ≥60% dept coverage (unlocks band 4).']
+2025-09-01 11:57:11.774 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.session_depth
+2025-09-01 11:57:11.799 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:16.318 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (4519.02 ms)
+2025-09-01 11:57:16.319 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.session_depth (4545.30 ms)
+2025-09-01 11:57:16.319 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.session_depth] band=3 | rationale=The average session duration of 260 seconds and 4 pages per session are positive indicators; however, the presence of a user with only 140 seconds and 2 pages significantly pulls down the overall performance.
+2025-09-01 11:57:16.319 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.session_depth] gaps=['User with low engagement (140s, 2 pages) → increase engagement for low-performing users → achieve ≥250s avg duration and ≥3 pages (unlocks band 4).']
+2025-09-01 11:57:16.319 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.drilldown
+2025-09-01 11:57:16.384 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:19.510 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3125.96 ms)
+2025-09-01 11:57:19.511 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.drilldown (3191.62 ms)
+2025-09-01 11:57:19.511 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.drilldown] band=2 | rationale=Only 66.67% of sessions include drill, but the lack of stability data and department spread limits the score significantly.
+2025-09-01 11:57:19.511 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [usage.drilldown] flags=['stability_unknown', 'spread_limited']
+2025-09-01 11:57:19.511 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.drilldown] gaps=['Stability unverified → include 4-week drilldown time series → demonstrate non-declining trend (supports band 4–5).', 'Spread by department unknown → report drilldown usage by dept/team → show broad spread across ≥3 BUs (unlocks band 4).']
+2025-09-01 11:57:19.511 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.refresh_timeliness
+2025-09-01 11:57:19.571 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:22.668 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3097.35 ms)
+2025-09-01 11:57:22.669 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.refresh_timeliness (3157.34 ms)
+2025-09-01 11:57:22.669 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.refresh_timeliness] band=4 | rationale=67% of dashboards are within SLA with no critical stales; however, the weekly dashboard is stale, which impacts overall performance. The presence of two daily dashboards that are fresh is a strong positive.
+2025-09-01 11:57:22.669 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [reliability.refresh_timeliness] gaps=['Weekly dashboard stale → ensure all dashboards refresh on time → achieve 85% within SLA (unlocks band 5).']
+2025-09-01 11:57:22.669 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.cross_links
+2025-09-01 11:57:22.709 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:25.413 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2704.12 ms)
+2025-09-01 11:57:25.414 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.cross_links (2744.44 ms)
+2025-09-01 11:57:25.414 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.cross_links] band=2 | rationale=Only 2 out of 3 dashboards have links, and overall link usage is low, indicating material risks in connectivity and engagement.
+2025-09-01 11:57:25.414 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [features.cross_links] flags=['low_link_usage', 'limited_distribution']
+2025-09-01 11:57:25.414 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.cross_links] gaps=['Link presence insufficient → increase link enablement across all dashboards → reach ≥15% dashboards with links and improved usage (unlocks band 3).']
+2025-09-01 11:57:25.414 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.coverage
+2025-09-01 11:57:25.450 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:28.631 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3180.64 ms)
+2025-09-01 11:57:28.631 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.coverage (3216.93 ms)
+2025-09-01 11:57:28.631 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.coverage] band=2 | rationale=Only two out of three dashboards are certified and owned, with one lacking any metadata, indicating material risks in governance. The absence of metadata for the sales dashboard significantly limits the overall quality and completeness of the governance metric.
+2025-09-01 11:57:28.631 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.coverage] flags=['metadata_gaps']
+2025-09-01 11:57:28.631 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.coverage] gaps=['Sales dashboard lacks metadata → require completion of metadata fields (description, refresh_rate, access_policy) → achieve ≥70% metadata coverage (unlocks band 3).']
+2025-09-01 11:57:28.632 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.data.source_diversity
+2025-09-01 11:57:28.699 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:32.358 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3658.05 ms)
+2025-09-01 11:57:32.359 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.data.source_diversity (3726.95 ms)
+2025-09-01 11:57:32.359 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [data.source_diversity] band=4 | rationale=Five distinct sources indicate a good level of diversity; however, the lack of clarity on domain coverage is a limiting factor.
+2025-09-01 11:57:32.359 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [data.source_diversity] flags=['domain_mix_unknown']
+2025-09-01 11:57:32.359 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [data.source_diversity] gaps=['Domain mix unknown → tag each source to domain (e.g., ERP/CRM/Support) → show ≥3 domains represented (unlocks band 5).']
+2025-09-01 11:57:32.359 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.democratization.self_service
+2025-09-01 11:57:32.403 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:34.852 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2449.38 ms)
+2025-09-01 11:57:34.852 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.democratization.self_service (2493.48 ms)
+2025-09-01 11:57:34.852 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [democratization.self_service] band=2 | rationale=Only 40% of users are creators, indicating a lack of engagement; the absence of department coverage data limits the assessment of breadth.
+2025-09-01 11:57:34.852 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [democratization.self_service] flags=['coverage_unknown']
+2025-09-01 11:57:34.852 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [democratization.self_service] gaps=['Department coverage unclear → report creators by department and coverage % → reach ≥60% dept coverage (unlocks band 4).']
+2025-09-01 11:57:34.853 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.decision.traceability
+2025-09-01 11:57:34.889 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:37.695 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2805.64 ms)
+2025-09-01 11:57:37.695 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.decision.traceability (2842.59 ms)
+2025-09-01 11:57:37.695 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [decision.traceability] band=2 | rationale=Only two decisions are linked to dashboards, and while there is some evidence, the overall percentage of linked decisions is low, indicating material risks.
+2025-09-01 11:57:37.696 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [decision.traceability] gaps=['Low percentage of linked decisions → calculate the exact % of decisions linked with evidence → achieve ≤15% linked decisions (unlocks band 3).']
+2025-09-01 11:57:37.696 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.weekly_active_trend
+2025-09-01 11:57:37.752 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:40.446 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2693.89 ms)
+2025-09-01 11:57:40.446 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.weekly_active_trend (2750.36 ms)
+2025-09-01 11:57:40.446 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.weekly_active_trend] band=2 | rationale=The activity events show limited engagement with only a few distinct users participating, indicating a sustained decline in activity. The lack of consistent weekly engagement data is a significant limiting factor.
+2025-09-01 11:57:40.447 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.weekly_active_trend] gaps=['Engagement levels unclear → provide distinct WAU counts for each of the last 4 weeks → demonstrate stable or increasing activity (unlocks band 3).']
+2025-09-01 11:57:40.447 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.retention_4w
+2025-09-01 11:57:40.503 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:43.800 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3296.72 ms)
+2025-09-01 11:57:43.801 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.retention_4w (3353.74 ms)
+2025-09-01 11:57:43.801 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.retention_4w] band=2 | rationale=The retention rate appears to be low, indicating significant risks in user engagement; the lack of data on distinct user returns over the specified weeks limits the assessment. The absence of a clear return rate for weeks 2-4 is a critical gap.
+2025-09-01 11:57:43.801 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.retention_4w] gaps=['Return rate for weeks 2-4 unknown → provide distinct user counts for weeks 2-4 → achieve ≥15% return rate (unlocks band 3).']
+2025-09-01 11:57:43.801 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.export_rate
+2025-09-01 11:57:43.829 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:46.834 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3004.53 ms)
+2025-09-01 11:57:46.834 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.export_rate (3033.35 ms)
+2025-09-01 11:57:46.835 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.export_rate] band=1 | rationale=There are no export or download actions recorded, indicating a significant failure in usage; without any governance information, risks remain high.
+2025-09-01 11:57:46.835 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [features.export_rate] flags=['no_exports']
+2025-09-01 11:57:46.835 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.export_rate] gaps=['No export actions recorded → implement export functionality and track usage → achieve ≥5% export rate (unlocks band 2).']
+2025-09-01 11:57:46.835 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.alerts_usage
+2025-09-01 11:57:46.876 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:50.521 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3644.55 ms)
+2025-09-01 11:57:50.522 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.alerts_usage (3687.14 ms)
+2025-09-01 11:57:50.522 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.alerts_usage] band=2 | rationale=There is very low adoption of alerts and subscriptions, with only two users engaging in these actions. The delivery success is present, but the overall user engagement is insufficient to indicate a healthy usage level.
+2025-09-01 11:57:50.523 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [features.alerts_usage] flags=['low_adoption']
+2025-09-01 11:57:50.523 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.alerts_usage] gaps=['User engagement is minimal → increase the number of users utilizing alerts/subscriptions → achieve at least 10 unique users (unlocks band 3).']
+2025-09-01 11:57:50.523 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.sla_breach_streaks
+2025-09-01 11:57:50.562 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:53.563 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3001.18 ms)
+2025-09-01 11:57:53.563 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.sla_breach_streaks (3040.21 ms)
+2025-09-01 11:57:53.563 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.sla_breach_streaks] band=4 | rationale=All high-priority dashboards were refreshed on time, indicating strong performance; however, the weekly dashboard has a recent refresh that does not meet its SLA. This introduces a minor risk to overall reliability.
+2025-09-01 11:57:53.563 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [reliability.sla_breach_streaks] gaps=['Weekly dashboard refresh status unclear → include refresh history for the weekly dashboard → ensure all dashboards meet their SLA consistently (unlocks band 5).']
+2025-09-01 11:57:53.564 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.error_rate_queries
+2025-09-01 11:57:53.612 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:55.506 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (1893.70 ms)
+2025-09-01 11:57:55.506 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.error_rate_queries (1942.49 ms)
+2025-09-01 11:57:55.506 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.error_rate_queries] band=5 | rationale=There are no recorded error actions in the activity events, indicating an excellent performance. Additionally, the absence of high-impact incidents further supports this high rating.
+2025-09-01 11:57:55.507 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.pii_coverage
+2025-09-01 11:57:55.561 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:57:58.813 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3252.54 ms)
+2025-09-01 11:57:58.814 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.pii_coverage (3306.89 ms)
+2025-09-01 11:57:58.814 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.pii_coverage] band=2 | rationale=Only one dashboard has both PII and access policy metadata, indicating significant gaps in coverage across the estate. The absence of PII and access policy in the other dashboards limits the overall effectiveness of governance.
+2025-09-01 11:57:58.814 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.pii_coverage] flags=['coverage_gaps']
+2025-09-01 11:57:58.814 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.pii_coverage] gaps=['Significant gaps in PII and access policy coverage → implement PII detection and access policy tagging across all dashboards → achieve 100% coverage of PII and access policy metadata (unlocks band 4).']
+2025-09-01 11:57:58.814 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.lineage_coverage
+2025-09-01 11:57:58.860 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:58:02.173 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3313.33 ms)
+2025-09-01 11:58:02.174 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.lineage_coverage (3359.57 ms)
+2025-09-01 11:58:02.174 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.lineage_coverage] band=2 | rationale=While two dashboards are certified and have some metadata, the lack of metadata for the sales dashboard and missing ownership details create material risks in coverage and governance confidence.
+2025-09-01 11:58:02.174 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.lineage_coverage] flags=['owner_missing', 'metadata_missing']
+2025-09-01 11:58:02.174 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.lineage_coverage] gaps=['Sales dashboard lacks metadata → ensure all dashboards have complete metadata → achieve 100% metadata coverage (unlocks band 3).', 'Owner missing for sales dashboard → assign an owner to all dashboards → achieve 100% owner assignment (unlocks band 3).']
+2025-09-01 11:58:02.175 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.data.cost_efficiency
+2025-09-01 11:58:02.216 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:58:05.575 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3359.42 ms)
+2025-09-01 11:58:05.576 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.data.cost_efficiency (3401.45 ms)
+2025-09-01 11:58:05.576 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [data.cost_efficiency] band=3 | rationale=The source catalog is diverse, indicating a strong warehouse mix, but the presence of stale content in the dashboards suggests inefficiencies. The KPI for sales has not been refreshed in over a week, which raises concerns about data relevance.
+2025-09-01 11:58:05.576 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [data.cost_efficiency] flags=['stale_assets_present']
+2025-09-01 11:58:05.576 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [data.cost_efficiency] gaps=['Stale content in dashboards → assess refresh frequency and prioritize updates → ensure all high-priority dashboards are refreshed daily (unlocks band 4).']
+2025-09-01 11:58:05.577 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.democratization.dept_coverage
+2025-09-01 11:58:05.627 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:58:08.657 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3029.83 ms)
+2025-09-01 11:58:08.657 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.democratization.dept_coverage (3080.45 ms)
+2025-09-01 11:58:08.657 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [democratization.dept_coverage] band=2 | rationale=There are creators in only 2 out of 3 departments, indicating limited coverage. The lack of creator presence in the Sales department is a significant limiting factor.
+2025-09-01 11:58:08.658 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [democratization.dept_coverage] flags=['low_department_coverage']
+2025-09-01 11:58:08.658 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [democratization.dept_coverage] gaps=['Department spread unknown → report creators by department and coverage % → reach ≥60% dept coverage (unlocks band 4).']
+2025-09-01 11:58:08.661 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.dau_mau
+2025-09-01 11:58:08.724 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:58:12.578 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3854.69 ms)
+2025-09-01 11:58:12.579 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.dau_mau (3917.84 ms)
+2025-09-01 11:58:12.579 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.dau_mau] band=2 | rationale=The stickiness is low due to only 3 distinct users engaging in the last 30 days, indicating a material risk in user retention. Additionally, the lack of a stable trend and insufficient activity events further limits the assessment.
+2025-09-01 11:58:12.580 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.dau_mau] gaps=['Insufficient activity events for reliable DAU/MAU calculation → increase user engagement to boost activity events → achieve ≥10 distinct users in 30 days (unlocks band 3).']
+2025-09-01 11:58:12.580 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.creators_ratio
+2025-09-01 11:58:12.634 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:58:15.409 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2774.27 ms)
+2025-09-01 11:58:15.409 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.creators_ratio (2829.29 ms)
+2025-09-01 11:58:15.409 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.creators_ratio] band=1 | rationale=There are no creators among the active users, which indicates a significant failure in user engagement; the lack of creator presence is the primary limiting factor.
+2025-09-01 11:58:15.409 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.creators_ratio] gaps=['No creators present → increase creator engagement initiatives → achieve ≥8% creators (unlocks band 2).']
+2025-09-01 11:58:15.409 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.session_depth
+2025-09-01 11:58:15.448 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:58:18.783 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3334.93 ms)
+2025-09-01 11:58:18.784 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.session_depth (3374.57 ms)
+2025-09-01 11:58:18.784 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.session_depth] band=1 | rationale=The average session duration is below 90 seconds and only 1 page is viewed, indicating significant engagement issues; the low duration is the primary limiting factor.
+2025-09-01 11:58:18.784 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.session_depth] gaps=['Low average session duration → increase duration to ≥90s for all users → achieve average duration of ≥90s (unlocks band 2).']
+2025-09-01 11:58:18.784 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.drilldown
+2025-09-01 11:58:18.845 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:58:21.728 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2882.85 ms)
+2025-09-01 11:58:21.728 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.drilldown (2943.99 ms)
+2025-09-01 11:58:21.729 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.drilldown] band=1 | rationale=No sessions include drill actions, indicating a significant failure in engagement with this feature. The absence of any drilldown usage suggests urgent action is needed to improve user interaction.
+2025-09-01 11:58:21.729 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [usage.drilldown] flags=['no_usage']
+2025-09-01 11:58:21.729 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.drilldown] gaps=['No drilldown sessions recorded → implement user training and awareness campaigns → achieve ≥8% sessions using drill (unlocks band 2).']
+2025-09-01 11:58:21.729 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.refresh_timeliness
+2025-09-01 11:58:21.794 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:58:24.591 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2796.31 ms)
+2025-09-01 11:58:24.591 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.refresh_timeliness (2862.13 ms)
+2025-09-01 11:58:24.591 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.refresh_timeliness] band=1 | rationale=Only 0% of dashboards are within SLA, with one critical stale dashboard; this indicates a significant failure in refresh timeliness.
+2025-09-01 11:58:24.592 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [reliability.refresh_timeliness] flags=['critical_stale']
+2025-09-01 11:58:24.592 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [reliability.refresh_timeliness] gaps=['Critical stale dashboard present → ensure all dashboards refresh on time → achieve ≥95% within SLA (unlocks band 5).']
+2025-09-01 11:58:24.592 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.cross_links
+2025-09-01 11:58:24.635 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:58:27.794 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3159.57 ms)
+2025-09-01 11:58:27.795 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.cross_links (3203.42 ms)
+2025-09-01 11:58:27.795 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.cross_links] band=1 | rationale=No dashboards have links, and there is no link usage, indicating a significant failure in cross-linking functionality.
+2025-09-01 11:58:27.795 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [features.cross_links] flags=['no_links', 'no_usage']
+2025-09-01 11:58:27.796 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.cross_links] gaps=['No links present → implement link functionality in dashboards → achieve ≥15% dashboards with links (unlocks band 2).']
+2025-09-01 11:58:27.796 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.coverage
+2025-09-01 11:58:27.834 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:58:30.871 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3036.74 ms)
+2025-09-01 11:58:30.871 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.coverage (3075.43 ms)
+2025-09-01 11:58:30.871 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.coverage] band=1 | rationale=No dashboards are certified or owned, and there is a complete lack of metadata, indicating a significant failure in governance.
+2025-09-01 11:58:30.872 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.coverage] flags=['certification_missing', 'owner_missing', 'metadata_gaps']
+2025-09-01 11:58:30.872 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.coverage] gaps=['Certification and ownership absent → establish certification process and assign owners → achieve ≥50% certified/owned dashboards (unlocks band 2).', 'Metadata incomplete → enforce template (description, owner, SLA, lineage) → reach ≥50% full profiles (unlocks band 2).']
+2025-09-01 11:58:30.872 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.data.source_diversity
+2025-09-01 11:58:30.949 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:59:38.536 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (8682.83 ms)
+2025-09-01 11:59:38.538 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.data.source_diversity (8761.25 ms)
+2025-09-01 11:59:38.538 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [data.source_diversity] band=1 | rationale=Only a single source is present, indicating a critical lack of diversity and significant risk to data reliability and insights.
+2025-09-01 11:59:38.538 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [data.source_diversity] gaps=['Single source limits diversity → add at least 3 distinct sources from different domains → achieve ≥3 sources across ≥3 domains (unlocks band 4).']
+2025-09-01 11:59:38.538 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.democratization.self_service
+2025-09-01 11:59:38.580 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:59:40.729 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2149.15 ms)
+2025-09-01 11:59:40.729 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.democratization.self_service (2191.15 ms)
+2025-09-01 11:59:40.729 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [democratization.self_service] band=1 | rationale=There are no creators identified, indicating a significant failure in user engagement; this lack of creator presence is the primary limiting factor.
+2025-09-01 11:59:40.729 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [democratization.self_service] flags=['no_creators']
+2025-09-01 11:59:40.730 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [democratization.self_service] gaps=['No creators present → increase creator recruitment efforts → achieve at least 8% creators (unlocks band 2).']
+2025-09-01 11:59:40.730 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.decision.traceability
+2025-09-01 11:59:40.769 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:59:43.276 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2506.76 ms)
+2025-09-01 11:59:43.276 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.decision.traceability (2546.57 ms)
+2025-09-01 11:59:43.276 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [decision.traceability] band=1 | rationale=Less than 15% of decisions are linked to dashboards, and there is no evidence provided, indicating a significant failure in decision traceability.
+2025-09-01 11:59:43.277 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [decision.traceability] gaps=['No decisions linked to dashboards → establish a process to link decisions with relevant dashboards and evidence → achieve ≥15% linked decisions (unlocks band 2).']
+2025-09-01 11:59:43.277 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.weekly_active_trend
+2025-09-01 11:59:43.350 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:59:45.913 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2562.80 ms)
+2025-09-01 11:59:45.913 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.weekly_active_trend (2636.33 ms)
+2025-09-01 11:59:45.913 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.weekly_active_trend] band=2 | rationale=There is a lack of consistent weekly activity, with only a few events recorded; the presence of an error event raises concerns about user experience. The limited number of distinct users and activities indicates a sustained decline in engagement.
+2025-09-01 11:59:45.914 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.weekly_active_trend] gaps=['Insufficient distinct user activity → provide distinct WAU counts for each of the last 4 weeks → show consistent engagement to reach band 3.']
+2025-09-01 11:59:45.914 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.retention_4w
+2025-09-01 11:59:45.979 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:59:48.898 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2918.78 ms)
+2025-09-01 11:59:48.898 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.retention_4w (2984.29 ms)
+2025-09-01 11:59:48.898 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.retention_4w] band=1 | rationale=Only 3 distinct users are recorded, with no evidence of returning users in weeks 2-4, indicating a critical failure in retention. The lack of sufficient user activity data limits the ability to assess trends or patterns.
+2025-09-01 11:59:48.899 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.retention_4w] gaps=['Insufficient user activity data → include a complete set of user activity events for weeks 2-4 → achieve ≥15% return rate (unlocks band 2).']
+2025-09-01 11:59:48.899 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.export_rate
+2025-09-01 11:59:48.954 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:59:52.793 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3839.54 ms)
+2025-09-01 11:59:52.793 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.export_rate (3894.44 ms)
+2025-09-01 11:59:52.793 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.export_rate] band=1 | rationale=There are no export or download actions recorded, indicating a significant failure in usage; the lack of governance information further complicates the assessment.
+2025-09-01 11:59:52.794 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [features.export_rate] flags=['no_exports']
+2025-09-01 11:59:52.794 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.export_rate] gaps=['No export actions recorded → include export/download activity data → achieve ≥5% export rate (unlocks band 2).', 'Export governance unclear → add export policy status + exception rate → show ≥95% governed exports (unlocks band 5).']
+2025-09-01 11:59:52.794 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.alerts_usage
+2025-09-01 11:59:52.824 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:59:56.751 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3926.53 ms)
+2025-09-01 11:59:56.751 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.alerts_usage (3957.47 ms)
+2025-09-01 11:59:56.751 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.alerts_usage] band=2 | rationale=There is very low adoption of alerts and subscriptions, with only a few users engaging and an error reported, indicating material risks in delivery success.
+2025-09-01 11:59:56.751 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [features.alerts_usage] flags=['low_adoption', 'delivery_error']
+2025-09-01 11:59:56.752 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.alerts_usage] gaps=['Adoption levels unclear → report total unique users for alerts/subscriptions → achieve at least 10 unique users (unlocks band 3).', 'Delivery success unknown → track successful vs. failed alert deliveries → ensure ≥90% delivery success rate (unlocks band 4).']
+2025-09-01 11:59:56.752 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.sla_breach_streaks
+2025-09-01 11:59:56.781 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 11:59:59.740 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2958.28 ms)
+2025-09-01 11:59:59.740 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.sla_breach_streaks (2988.23 ms)
+2025-09-01 11:59:59.740 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.sla_breach_streaks] band=1 | rationale=The high-priority dashboard has not been refreshed since August 12, leading to a significant breach of the weekly SLA. This chronic failure indicates an urgent need for action to restore reliability.
+2025-09-01 11:59:59.740 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [reliability.sla_breach_streaks] flags=['chronic_breach']
+2025-09-01 11:59:59.740 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [reliability.sla_breach_streaks] gaps=['Chronic breach of SLA → implement a monitoring system for refresh status → achieve zero breaches for critical dashboards (unlocks band 5).']
+2025-09-01 11:59:59.741 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.error_rate_queries
+2025-09-01 11:59:59.781 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:02.648 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2866.74 ms)
+2025-09-01 12:00:02.649 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.error_rate_queries (2908.25 ms)
+2025-09-01 12:00:02.649 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.error_rate_queries] band=4 | rationale=The error rate is approximately 20% based on the single error out of five total actions, which is within the acceptable range; however, the lack of information on the impact of the error limits the score. The volume of activity events indicates a reasonable level of engagement.
+2025-09-01 12:00:02.649 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [reliability.error_rate_queries] gaps=['Impact of error unknown → provide details on the severity and affected users for the error → show no high-impact incidents in the last 30 days (unlocks band 5).']
+2025-09-01 12:00:02.649 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.pii_coverage
+2025-09-01 12:00:02.704 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:05.722 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3017.46 ms)
+2025-09-01 12:00:05.722 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.pii_coverage (3072.77 ms)
+2025-09-01 12:00:05.722 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.pii_coverage] band=1 | rationale=There is a complete absence of PII labeling and access policy metadata across the dashboard, indicating a significant failure in governance. The lack of any certified dashboards further exacerbates the risk.
+2025-09-01 12:00:05.722 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.pii_coverage] flags=['no_pii_labeling', 'no_access_policy']
+2025-09-01 12:00:05.722 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.pii_coverage] gaps=['No PII labeling or access policy present → implement PII detection and access policy tagging across all dashboards → achieve 100% coverage of PII labeling and access policy (unlocks band 5).']
+2025-09-01 12:00:05.723 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.lineage_coverage
+2025-09-01 12:00:05.794 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:08.461 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2667.63 ms)
+2025-09-01 12:00:08.462 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.lineage_coverage (2739.20 ms)
+2025-09-01 12:00:08.462 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.lineage_coverage] band=2 | rationale=There is minimal metadata and no owner assigned, indicating significant gaps in governance. The lack of certification and metadata limits the reliability of the dashboards.
+2025-09-01 12:00:08.462 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.lineage_coverage] flags=['owner_missing', 'metadata_missing']
+2025-09-01 12:00:08.462 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.lineage_coverage] gaps=['No owners or metadata present → assign owners and document metadata → achieve at least 50% coverage (unlocks band 3).']
+2025-09-01 12:00:08.462 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.data.cost_efficiency
+2025-09-01 12:00:08.536 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:11.421 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2885.07 ms)
+2025-09-01 12:00:11.421 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.data.cost_efficiency (2958.75 ms)
+2025-09-01 12:00:11.421 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [data.cost_efficiency] band=2 | rationale=The reliance on a single source (Excel) indicates a lack of diversity, and the presence of stale content suggests material inefficiencies. Additionally, the error event raises concerns about the reliability of the data access.
+2025-09-01 12:00:11.421 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [data.cost_efficiency] flags=['single_source', 'stale_assets_present', 'error_events_present']
+2025-09-01 12:00:11.422 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [data.cost_efficiency] gaps=['Single source and stale content present → diversify source catalog and reduce stale assets → include at least 2 sources and eliminate stale content (unlocks band 3).']
+2025-09-01 12:00:11.422 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.democratization.dept_coverage
+2025-09-01 12:00:11.493 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:13.851 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2357.93 ms)
+2025-09-01 12:00:13.851 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.democratization.dept_coverage (2429.45 ms)
+2025-09-01 12:00:13.851 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [democratization.dept_coverage] band=1 | rationale=There are no creators identified in the provided data, which indicates a significant failure in creator distribution across departments. The lack of creator presence in any department is the primary limiting factor.
+2025-09-01 12:00:13.852 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [democratization.dept_coverage] flags=['no_creators']
+2025-09-01 12:00:13.852 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [democratization.dept_coverage] gaps=['No creators identified → identify and assign creator roles in departments → reach ≥20% dept coverage (unlocks band 2).']
+2025-09-01 12:00:13.855 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.dau_mau
+2025-09-01 12:00:13.893 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:17.058 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3165.76 ms)
+2025-09-01 12:00:17.059 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.dau_mau (3203.63 ms)
+2025-09-01 12:00:17.059 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.dau_mau] band=3 | rationale=The stickiness is likely around 0.30–0.44, indicating some engagement; however, the lack of a stable 7-day DAU and a clear multi-week trend presents risks that need addressing.
+2025-09-01 12:00:17.059 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.dau_mau] gaps=['Trend stability not demonstrated → provide 7d DAU and 4-week DAU trend with seasonality notes → show stable/non-declining trend (unlocks band 4).']
+2025-09-01 12:00:17.059 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.creators_ratio
+2025-09-01 12:00:17.125 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:19.147 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2022.14 ms)
+2025-09-01 12:00:19.147 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.creators_ratio (2087.84 ms)
+2025-09-01 12:00:19.147 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.creators_ratio] band=4 | rationale=The creator share is 20 out of 20 users, which is 100%, indicating strong engagement; however, the lack of department spread information limits the assessment.
+2025-09-01 12:00:19.147 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.creators_ratio] gaps=['Department spread unknown → report creators by department and coverage % → reach ≥60% dept coverage (unlocks band 5).']
+2025-09-01 12:00:19.148 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.session_depth
+2025-09-01 12:00:19.175 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:23.999 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (4824.13 ms)
+2025-09-01 12:00:24.000 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.session_depth (4852.69 ms)
+2025-09-01 12:00:24.000 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.session_depth] band=3 | rationale=The average session duration is 360 seconds and the average pages per session is 5, which are positive indicators; however, the repeat frequency is inconsistent, with some users not repeating sessions at all.
+2025-09-01 12:00:24.000 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [usage.session_depth] flags=['repeat_freq_sparse']
+2025-09-01 12:00:24.001 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.session_depth] gaps=['Inconsistent repeat frequency across users → ensure repeat sessions for at least 60% of users → achieve weekly repeats for majority (unlocks band 4).']
+2025-09-01 12:00:24.001 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.drilldown
+2025-09-01 12:00:24.033 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:27.709 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3676.07 ms)
+2025-09-01 12:00:27.710 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.drilldown (3708.83 ms)
+2025-09-01 12:00:27.710 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.drilldown] band=2 | rationale=Only 12% of sessions include drill actions, indicating a significant limitation in usage. The lack of stability over time further restricts the score.
+2025-09-01 12:00:27.710 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [usage.drilldown] flags=['low_usage', 'stability_issues']
+2025-09-01 12:00:27.710 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.drilldown] gaps=['Stability unverified → include 4-week drilldown time series → demonstrate non-declining trend (supports band 3).', 'Spread by user unknown → report drilldown usage by user demographics → show broader user engagement (unlocks band 3).']
+2025-09-01 12:00:27.710 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.refresh_timeliness
+2025-09-01 12:00:27.752 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:31.101 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3348.31 ms)
+2025-09-01 12:00:31.101 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.refresh_timeliness (3390.68 ms)
+2025-09-01 12:00:31.101 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.refresh_timeliness] band=2 | rationale=Only 60% of dashboards are within SLA, with several critical stales present; the last refresh dates indicate many dashboards are overdue. The presence of multiple dashboards with weekly and monthly SLAs that have not been refreshed on time is a significant concern.
+2025-09-01 12:00:31.101 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [reliability.refresh_timeliness] flags=['critical_stales_present']
+2025-09-01 12:00:31.101 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [reliability.refresh_timeliness] gaps=['Many dashboards overdue for refresh → prioritize timely updates for all dashboards → achieve ≥85% within SLA (unlocks band 4).']
+2025-09-01 12:00:31.102 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.cross_links
+2025-09-01 12:00:31.169 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:34.090 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2920.50 ms)
+2025-09-01 12:00:34.091 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.cross_links (2989.35 ms)
+2025-09-01 12:00:34.091 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.cross_links] band=4 | rationale=Over 45% of dashboards have links, and the link usage is relatively high, indicating good engagement. However, some dashboards have very low usage, which limits overall effectiveness.
+2025-09-01 12:00:34.091 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.cross_links] gaps=['Low usage in some dashboards → increase link engagement strategies for underperforming dashboards → achieve ≥60% dashboards with links and higher usage (unlocks band 5).']
+2025-09-01 12:00:34.092 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.coverage
+2025-09-01 12:00:34.131 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:38.161 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (4029.87 ms)
+2025-09-01 12:00:38.161 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.coverage (4069.34 ms)
+2025-09-01 12:00:38.161 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.coverage] band=2 | rationale=Only 6 out of 10 dashboards are certified, and several lack assigned owners, indicating material risks in governance. The incomplete ownership and certification status significantly limit the reliability of the dashboards.
+2025-09-01 12:00:38.161 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.coverage] flags=['certification_gaps', 'owner_gaps']
+2025-09-01 12:00:38.161 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.coverage] gaps=['Certification and ownership missing for 40% of dashboards → establish ownership and certification process → achieve ≥85% certified and owned dashboards (unlocks band 4).']
+2025-09-01 12:00:38.161 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.data.source_diversity
+2025-09-01 12:00:38.235 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:40.546 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2311.17 ms)
+2025-09-01 12:00:40.546 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.data.source_diversity (2384.75 ms)
+2025-09-01 12:00:40.546 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [data.source_diversity] band=5 | rationale=The presence of ten distinct sources indicates excellent diversity across multiple domains, which enhances data richness. Additionally, the recent addition of new sources strengthens the overall metric.
+2025-09-01 12:00:40.547 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.democratization.self_service
+2025-09-01 12:00:40.596 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:43.280 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2684.04 ms)
+2025-09-01 12:00:43.281 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.democratization.self_service (2734.15 ms)
+2025-09-01 12:00:43.281 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [democratization.self_service] band=4 | rationale=The creator share is 20 out of 20 users, indicating strong engagement; however, the lack of department coverage data limits the assessment of breadth.
+2025-09-01 12:00:43.281 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [democratization.self_service] flags=['coverage_unknown']
+2025-09-01 12:00:43.281 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [democratization.self_service] gaps=['Department spread unknown → report creators by department and coverage % → reach ≥60% dept coverage (unlocks band 5).']
+2025-09-01 12:00:43.281 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.decision.traceability
+2025-09-01 12:00:43.326 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:46.348 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3022.51 ms)
+2025-09-01 12:00:46.349 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.decision.traceability (3067.44 ms)
+2025-09-01 12:00:46.349 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [decision.traceability] band=2 | rationale=Only 15 out of 15 decisions are linked to dashboards, with many lacking evidence, indicating material risks in decision-making. The absence of evidence for several decisions significantly limits the reliability of the insights.
+2025-09-01 12:00:46.349 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [decision.traceability] gaps=['Evidence missing for multiple decisions → ensure all decisions have linked evidence → achieve ≥55% decisions with evidence (unlocks band 4).']
+2025-09-01 12:00:46.350 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.weekly_active_trend
+2025-09-01 12:00:46.405 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:00:56.425 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (10020.08 ms)
+2025-09-01 12:00:56.425 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.weekly_active_trend (10075.39 ms)
+2025-09-01 12:00:56.425 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.weekly_active_trend] band=3 | rationale=The data shows a flat trend with some activity, but there are notable errors and inconsistencies in user actions that raise concerns. The presence of multiple errors indicates potential issues affecting user engagement.
+2025-09-01 12:00:56.425 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [usage.weekly_active_trend] flags=['error_present']
+2025-09-01 12:00:56.426 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.weekly_active_trend] gaps=['Error occurrences impact user engagement → analyze error types and frequency → reduce errors to below 5% of total actions (unlocks band 4).']
+2025-09-01 12:00:56.426 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.retention_4w
+2025-09-01 12:00:56.476 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:01:04.882 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (8405.18 ms)
+2025-09-01 12:01:04.882 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.retention_4w (8456.00 ms)
+2025-09-01 12:01:04.882 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.retention_4w] band=2 | rationale=The retention rate appears to be below the target threshold, indicating material risks in user engagement. The lack of specific return data for weeks 2 to 4 limits the ability to assess the retention accurately.
+2025-09-01 12:01:04.882 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.retention_4w] gaps=['Return data for weeks 2-4 missing → include distinct user counts for weeks 2-4 → achieve ≥15% retention (unlocks band 3).']
+2025-09-01 12:01:04.883 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.export_rate
+2025-09-01 12:01:04.945 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:01:13.751 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (8806.54 ms)
+2025-09-01 12:01:13.753 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.export_rate (8869.82 ms)
+2025-09-01 12:01:13.753 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.export_rate] band=4 | rationale=Exports account for approximately 20% of sessions, indicating a good level of engagement with the export functionality. However, the governance around these exports is unclear, which poses a minor risk.
+2025-09-01 12:01:13.753 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [features.export_rate] flags=['governance_unknown']
+2025-09-01 12:01:13.753 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.export_rate] gaps=['Export governance unclear → add export policy status + exception rate → show ≥95% governed exports (unlocks band 5).']
+2025-09-01 12:01:13.754 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.alerts_usage
+2025-09-01 12:01:13.785 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:01:23.360 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (9575.10 ms)
+2025-09-01 12:01:23.361 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.alerts_usage (9607.45 ms)
+2025-09-01 12:01:23.361 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.alerts_usage] band=3 | rationale=There is a limited but meaningful adoption of alerts and subscriptions, with several users engaging in these actions. However, the overall adoption is still low, indicating clear risks to address for broader usage.
+2025-09-01 12:01:23.361 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.alerts_usage] gaps=['Overall adoption is low → increase user engagement through targeted training and awareness campaigns → achieve at least 30 unique users engaging with alerts/subscriptions (unlocks band 4).']
+2025-09-01 12:01:23.362 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.sla_breach_streaks
+2025-09-01 12:01:23.394 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:01:26.784 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3389.77 ms)
+2025-09-01 12:01:26.784 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.sla_breach_streaks (3422.40 ms)
+2025-09-01 12:01:26.784 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.sla_breach_streaks] band=2 | rationale=There are multiple dashboards that have not been refreshed according to their SLA, particularly high-priority ones, indicating material risks. The presence of chronic breaches in high-priority dashboards is a significant limiting factor.
+2025-09-01 12:01:26.784 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [reliability.sla_breach_streaks] flags=['chronic_breaches']
+2025-09-01 12:01:26.784 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [reliability.sla_breach_streaks] gaps=['Chronic breaches in high-priority dashboards → identify and address refresh issues for high-priority dashboards → achieve zero breaches on critical dashboards (unlocks band 5).']
+2025-09-01 12:01:26.785 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.error_rate_queries
+2025-09-01 12:01:26.819 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:01:33.730 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (6911.05 ms)
+2025-09-01 12:01:33.731 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.error_rate_queries (6946.15 ms)
+2025-09-01 12:01:33.731 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.error_rate_queries] band=2 | rationale=The error rate is concerning with multiple errors logged, indicating material risks to reliability. The presence of recurring errors suggests a significant failure in the system's performance.
+2025-09-01 12:01:33.731 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [reliability.error_rate_queries] gaps=['Error frequency high → implement error tracking and resolution processes → reduce errors to <1.5% (unlocks band 3).']
+2025-09-01 12:01:33.731 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.pii_coverage
+2025-09-01 12:01:33.785 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:01:36.335 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2550.03 ms)
+2025-09-01 12:01:36.335 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.pii_coverage (2604.01 ms)
+2025-09-01 12:01:36.336 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.pii_coverage] band=3 | rationale=Some dashboards have PII and access policy metadata, indicating partial coverage; however, several dashboards lack these critical labels, which limits overall effectiveness.
+2025-09-01 12:01:36.336 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.pii_coverage] flags=['coverage_inconsistent']
+2025-09-01 12:01:36.336 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.pii_coverage] gaps=['Several dashboards lack PII and access policy metadata → implement comprehensive labeling across all dashboards → achieve ≥80% dashboards with PII and access policy tags (unlocks band 4).']
+2025-09-01 12:01:36.336 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.lineage_coverage
+2025-09-01 12:01:36.377 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:01:39.595 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3217.72 ms)
+2025-09-01 12:01:39.595 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.lineage_coverage (3259.38 ms)
+2025-09-01 12:01:39.596 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.lineage_coverage] band=3 | rationale=There is a strong presence of certified dashboards and a variety of metadata across several dashboards, indicating good coverage. However, the presence of multiple uncertified dashboards and missing owners limits overall confidence in the lineage completeness.
+2025-09-01 12:01:39.596 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.lineage_coverage] flags=['owner_missing', 'certification_missing']
+2025-09-01 12:01:39.596 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.lineage_coverage] gaps=['Multiple dashboards lack owners and certification → assign owners and certify all dashboards → achieve 100% certification and owner assignment (unlocks band 5).']
+2025-09-01 12:01:39.596 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.data.cost_efficiency
+2025-09-01 12:01:39.628 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:01:47.686 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (8058.20 ms)
+2025-09-01 12:01:47.687 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.data.cost_efficiency (8090.12 ms)
+2025-09-01 12:01:47.687 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [data.cost_efficiency] band=2 | rationale=The source catalog is diverse, but there are significant issues with stale content and heavy egress, indicating material risks to efficiency.
+2025-09-01 12:01:47.687 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [data.cost_efficiency] flags=['heavy_egress_present', 'stale_assets_present']
+2025-09-01 12:01:47.687 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [data.cost_efficiency] gaps=['Heavy egress and staleness present → quantify export session % and stale share by priority → reduce exports <15% and stale critical assets to 0 (unlocks band 4–5).']
+2025-09-01 12:01:47.687 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.democratization.dept_coverage
+2025-09-01 12:01:47.756 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:01:50.226 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2470.03 ms)
+2025-09-01 12:01:50.226 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.democratization.dept_coverage (2538.82 ms)
+2025-09-01 12:01:50.226 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [democratization.dept_coverage] band=3 | rationale=There are creators in multiple departments, indicating some level of democratization; however, the exact number of departments and their coverage is unclear, which limits the assessment of overall effectiveness.
+2025-09-01 12:01:50.226 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [democratization.dept_coverage] flags=['department_coverage_unknown']
+2025-09-01 12:01:50.226 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [democratization.dept_coverage] gaps=['Department coverage unclear → report creators by department and total departments considered → reach ≥60% dept coverage (unlocks band 4).']
+2025-09-01 12:01:50.230 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.dau_mau
+2025-09-01 12:01:50.262 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:01:52.912 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2650.35 ms)
+2025-09-01 12:01:52.913 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.dau_mau (2682.58 ms)
+2025-09-01 12:01:52.913 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.dau_mau] band=2 | rationale=The stickiness is likely low due to sparse activity events, indicating a material risk in user engagement. The lack of a clear DAU/MAU ratio and declining multi-week trend further limits the score.
+2025-09-01 12:01:52.913 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.dau_mau] gaps=['Insufficient activity events for reliable DAU/MAU calculation → increase user engagement to boost activity events → achieve ≥30 distinct users in the last 30 days (unlocks band 3).']
+2025-09-01 12:01:52.913 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.creators_ratio
+2025-09-01 12:01:52.962 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:01:55.227 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2265.10 ms)
+2025-09-01 12:01:55.227 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.creators_ratio (2314.14 ms)
+2025-09-01 12:01:55.228 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.creators_ratio] band=3 | rationale=The creator share is 40% which is strong; however, the lack of department spread information raises concerns about potential skewness in creator distribution.
+2025-09-01 12:01:55.228 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [usage.creators_ratio] flags=['dept_spread_unknown']
+2025-09-01 12:01:55.228 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.creators_ratio] gaps=['Department spread unknown → report creators by department and coverage % → reach ≥60% dept coverage (unlocks band 4).']
+2025-09-01 12:01:55.228 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.session_depth
+2025-09-01 12:01:55.266 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:01:57.618 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2352.27 ms)
+2025-09-01 12:01:57.618 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.session_depth (2390.25 ms)
+2025-09-01 12:01:57.618 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.session_depth] band=3 | rationale=The average session duration of 320s and 5 pages are strong indicators; however, the repeat frequency is inconsistent, with some users only repeating once a week.
+2025-09-01 12:01:57.619 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [usage.session_depth] flags=['repeat_freq_sparse']
+2025-09-01 12:01:57.619 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.session_depth] gaps=['Inconsistent repeat frequency across users → increase repeat sessions to ≥3 per week for majority → achieve consistent weekly repeats for majority (unlocks band 4).']
+2025-09-01 12:01:57.619 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.drilldown
+2025-09-01 12:01:57.670 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:00.689 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3019.25 ms)
+2025-09-01 12:02:00.690 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.drilldown (3070.79 ms)
+2025-09-01 12:02:00.690 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.drilldown] band=3 | rationale=About 60% of sessions include drill, which is a strong positive; however, the lack of stability data limits the score.
+2025-09-01 12:02:00.690 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [usage.drilldown] flags=['stability_unknown']
+2025-09-01 12:02:00.690 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.drilldown] gaps=['Stability unverified → include 4-week drilldown time series → demonstrate non-declining trend (supports band 4–5).']
+2025-09-01 12:02:00.690 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.refresh_timeliness
+2025-09-01 12:02:00.735 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:03.924 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3188.53 ms)
+2025-09-01 12:02:03.924 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.refresh_timeliness (3234.13 ms)
+2025-09-01 12:02:03.925 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.refresh_timeliness] band=2 | rationale=Only 62.5% of dashboards are within SLA, with several stale dashboards; the presence of multiple stale weekly dashboards significantly impacts reliability.
+2025-09-01 12:02:03.925 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [reliability.refresh_timeliness] flags=['multiple_stale_dashboards']
+2025-09-01 12:02:03.925 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [reliability.refresh_timeliness] gaps=['Many dashboards stale → ensure all dashboards refresh within their SLA → achieve ≥70% within SLA (unlocks band 3).']
+2025-09-01 12:02:03.925 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.cross_links
+2025-09-01 12:02:03.986 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:07.397 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3410.60 ms)
+2025-09-01 12:02:07.397 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.cross_links (3472.28 ms)
+2025-09-01 12:02:07.398 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.cross_links] band=2 | rationale=Only 28% of dashboards have links, and overall link usage is low, indicating material risks in connectivity and engagement. The lack of links in several dashboards limits the potential for cross-navigation.
+2025-09-01 12:02:07.398 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [features.cross_links] flags=['low_link_percentage', 'low_usage']
+2025-09-01 12:02:07.398 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.cross_links] gaps=['Link presence low → increase linking across all dashboards → reach ≥45% dashboards with links (unlocks band 4).']
+2025-09-01 12:02:07.398 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.coverage
+2025-09-01 12:02:07.441 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:11.201 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3759.60 ms)
+2025-09-01 12:02:11.201 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.coverage (3803.31 ms)
+2025-09-01 12:02:11.202 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.coverage] band=3 | rationale=Most dashboards are certified and have assigned owners, but several lack complete metadata, which limits their usability and governance quality.
+2025-09-01 12:02:11.202 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.coverage] flags=['metadata_gaps']
+2025-09-01 12:02:11.202 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.coverage] gaps=['Metadata incomplete → ensure all dashboards have at least description, refresh_rate, and owner → reach ≥85% full profiles (unlocks band 4).']
+2025-09-01 12:02:11.202 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.data.source_diversity
+2025-09-01 12:02:11.268 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:13.634 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2366.09 ms)
+2025-09-01 12:02:13.634 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.data.source_diversity (2432.17 ms)
+2025-09-01 12:02:13.634 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [data.source_diversity] band=5 | rationale=The presence of ten distinct sources across multiple domains indicates excellent diversity and coverage. There are no material risks identified in the current data.
+2025-09-01 12:02:13.634 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.democratization.self_service
+2025-09-01 12:02:13.685 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:17.027 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3342.00 ms)
+2025-09-01 12:02:17.028 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.democratization.self_service (3393.17 ms)
+2025-09-01 12:02:17.028 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [democratization.self_service] band=2 | rationale=With only 40% of users being creators, there is a significant gap in creator share; the lack of department coverage data further limits the assessment.
+2025-09-01 12:02:17.028 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [democratization.self_service] flags=['coverage_unknown']
+2025-09-01 12:02:17.028 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [democratization.self_service] gaps=['Department spread unknown → report creators by department and coverage % → reach ≥25% creators with ≥3 BUs active (unlocks band 4).']
+2025-09-01 12:02:17.028 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.decision.traceability
+2025-09-01 12:02:17.054 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:19.660 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2606.48 ms)
+2025-09-01 12:02:19.661 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.decision.traceability (2632.33 ms)
+2025-09-01 12:02:19.661 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [decision.traceability] band=2 | rationale=Only 37.5% of decisions are linked to dashboards, and several decisions lack evidence, indicating material risks in decision-making processes.
+2025-09-01 12:02:19.661 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [decision.traceability] gaps=['Evidence quality unclear → increase the number of decisions with clear evidence linked to dashboards → achieve ≥55% linked decisions with evidence (unlocks band 4).']
+2025-09-01 12:02:19.661 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.weekly_active_trend
+2025-09-01 12:02:19.707 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:23.463 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3756.22 ms)
+2025-09-01 12:02:23.464 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.weekly_active_trend (3802.25 ms)
+2025-09-01 12:02:23.464 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.weekly_active_trend] band=2 | rationale=The data indicates a sustained decline in activity, with no clear growth trend over the last four weeks. The lack of distinct weekly active user counts makes it difficult to assess the overall engagement accurately.
+2025-09-01 12:02:23.464 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.weekly_active_trend] gaps=['Weekly active user counts unclear → provide distinct WAU counts for each of the last 4 weeks → show stable or increasing trend (unlocks band 3).']
+2025-09-01 12:02:23.464 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.usage.retention_4w
+2025-09-01 12:02:23.519 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:26.597 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3077.97 ms)
+2025-09-01 12:02:26.597 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.usage.retention_4w (3132.74 ms)
+2025-09-01 12:02:26.597 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [usage.retention_4w] band=2 | rationale=The retention rate appears to be low, indicating material risks in user engagement; the lack of data on the number of distinct users returning in weeks 2-4 is a significant limiting factor.
+2025-09-01 12:02:26.597 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [usage.retention_4w] gaps=['Return user count for weeks 2-4 unknown → include distinct user counts for weeks 2-4 → achieve ≥15% return rate (unlocks band 3).']
+2025-09-01 12:02:26.598 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.export_rate
+2025-09-01 12:02:26.657 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:29.228 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2570.84 ms)
+2025-09-01 12:02:29.229 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.export_rate (2631.06 ms)
+2025-09-01 12:02:29.229 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.export_rate] band=2 | rationale=Exports account for only 10% of sessions, indicating low engagement with export features; governance around exports is not provided, which raises concerns.
+2025-09-01 12:02:29.229 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [features.export_rate] flags=['governance_unknown']
+2025-09-01 12:02:29.229 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.export_rate] gaps=['Export governance unclear → add export policy status + exception rate → show ≥95% governed exports (unlocks band 5).']
+2025-09-01 12:02:29.229 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.features.alerts_usage
+2025-09-01 12:02:29.303 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:32.317 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3014.77 ms)
+2025-09-01 12:02:32.318 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.features.alerts_usage (3088.52 ms)
+2025-09-01 12:02:32.318 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [features.alerts_usage] band=2 | rationale=There is very low adoption of alerts and subscriptions, with only a few users engaging in these actions. The delivery success is present but does not compensate for the lack of broader user engagement.
+2025-09-01 12:02:32.318 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [features.alerts_usage] gaps=['Adoption levels unclear → report total unique users for alerts and subscriptions → achieve at least 20 unique users (unlocks band 3).']
+2025-09-01 12:02:32.318 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.sla_breach_streaks
+2025-09-01 12:02:32.385 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:35.575 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3190.50 ms)
+2025-09-01 12:02:35.576 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.sla_breach_streaks (3257.62 ms)
+2025-09-01 12:02:35.576 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.sla_breach_streaks] band=2 | rationale=There are multiple breaches on high-priority dashboards, indicating material risks. The longest breach streak is concerning, especially for critical assets.
+2025-09-01 12:02:35.576 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [reliability.sla_breach_streaks] flags=['critical_breach']
+2025-09-01 12:02:35.576 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [reliability.sla_breach_streaks] gaps=['Breach streak length unclear → provide max/median breach days for high-priority dashboards → keep max streak at 0 for critical assets (unlocks band 5).']
+2025-09-01 12:02:35.577 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.reliability.error_rate_queries
+2025-09-01 12:02:35.619 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:37.896 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (2276.93 ms)
+2025-09-01 12:02:37.896 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.reliability.error_rate_queries (2319.59 ms)
+2025-09-01 12:02:37.896 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [reliability.error_rate_queries] band=5 | rationale=There are no error actions recorded, indicating an excellent performance with no material risks. The absence of high-impact incidents further supports this high rating.
+2025-09-01 12:02:37.897 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.pii_coverage
+2025-09-01 12:02:37.953 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:41.343 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3390.22 ms)
+2025-09-01 12:02:41.344 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.pii_coverage (3447.12 ms)
+2025-09-01 12:02:41.344 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.pii_coverage] band=2 | rationale=There are some dashboards with PII labeling, but overall coverage is lacking, and many dashboards are uncertified or missing key metadata. The absence of access policy information across multiple dashboards significantly limits the effectiveness of PII governance.
+2025-09-01 12:02:41.344 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.pii_coverage] flags=['coverage_inconsistent', 'missing_access_policy']
+2025-09-01 12:02:41.344 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.pii_coverage] gaps=['Lack of access policy information → implement access policy tagging across all dashboards → achieve 100% coverage of access policies (unlocks band 4).']
+2025-09-01 12:02:41.345 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.governance.lineage_coverage
+2025-09-01 12:02:41.368 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:45.218 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (3850.36 ms)
+2025-09-01 12:02:45.220 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.governance.lineage_coverage (3875.20 ms)
+2025-09-01 12:02:45.220 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [governance.lineage_coverage] band=2 | rationale=While there are several certified dashboards, a significant number lack certification and metadata, indicating material risks in coverage. The absence of owners and metadata for multiple dashboards limits the overall confidence in lineage completeness.
+2025-09-01 12:02:45.220 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [governance.lineage_coverage] flags=['owner_missing', 'metadata_missing']
+2025-09-01 12:02:45.220 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [governance.lineage_coverage] gaps=['Multiple dashboards lack owners and metadata → establish ownership and complete metadata for all dashboards → achieve ≥80% certified dashboards with complete metadata (unlocks band 4).']
+2025-09-01 12:02:45.221 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.data.cost_efficiency
+2025-09-01 12:02:45.255 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:02:59.734 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (14479.77 ms)
+2025-09-01 12:02:59.735 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.data.cost_efficiency (14514.25 ms)
+2025-09-01 12:02:59.735 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [data.cost_efficiency] band=3 | rationale=The source catalog is diverse, indicating a strong warehouse mix, but there are signs of moderate egress and some stale content, leading to mixed signals overall.
+2025-09-01 12:02:59.735 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [data.cost_efficiency] flags=['egress_present', 'stale_assets_present']
+2025-09-01 12:02:59.735 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [data.cost_efficiency] gaps=['Moderate egress and staleness present → quantify export session % and stale share by priority → reduce exports <15% and stale critical assets to 0 (unlocks band 4–5).']
+2025-09-01 12:02:59.735 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: metric.democratization.dept_coverage
+2025-09-01 12:02:59.784 | INFO     | bi_tracker_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-01 12:03:18.147 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: LLM.call (18362.85 ms)
+2025-09-01 12:03:18.149 | INFO     | bi_tracker_agent.logging_utils:timed:42 - ✅ done: metric.democratization.dept_coverage (18413.03 ms)
+2025-09-01 12:03:18.149 | INFO     | bi_tracker_agent.llm_engine:score_metric:789 - [democratization.dept_coverage] band=3 | rationale=There are creators in four out of six departments, indicating a fair level of coverage. However, the exact number of creators per department is unclear, which limits the assessment of overall department engagement.
+2025-09-01 12:03:18.149 | INFO     | bi_tracker_agent.llm_engine:score_metric:791 - [democratization.dept_coverage] flags=['creator_counts_unknown']
+2025-09-01 12:03:18.149 | INFO     | bi_tracker_agent.llm_engine:score_metric:793 - [democratization.dept_coverage] gaps=['Per-dept counts unknown → publish creators per department and total departments considered → reach ≥60% dept coverage (unlocks band 4).']

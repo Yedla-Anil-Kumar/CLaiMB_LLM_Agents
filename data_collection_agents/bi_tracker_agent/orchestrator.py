@@ -52,43 +52,43 @@ class BIOrchestrator:
 
         # ---- Rollups (two only, per PRD Agent 5) ----
         # Business Integration: usage/adoption/feature use & growth signals
-        business_integration = round((
-            0.20*_s(m1) +  # DAU/MAU stickiness
-            0.12*_s(m2) +  # creators ratio
-            0.12*_s(m3) +  # session depth
-            0.08*_s(m4) +  # drilldown usage
-            0.10*_s(m6) +  # cross-links
-            0.08*_s(m8) +  # source diversity (proxy for breadth)
-            0.12*_s(m9) +  # self-service adoption
-            0.09*_s(m11) + # WAU trend
-            0.09*_s(m12)   # 4w retention
-        ), 2)
+        # business_integration = round((
+        #     0.20*_s(m1) +  # DAU/MAU stickiness
+        #     0.12*_s(m2) +  # creators ratio
+        #     0.12*_s(m3) +  # session depth
+        #     0.08*_s(m4) +  # drilldown usage
+        #     0.10*_s(m6) +  # cross-links
+        #     0.08*_s(m8) +  # source diversity (proxy for breadth)
+        #     0.12*_s(m9) +  # self-service adoption
+        #     0.09*_s(m11) + # WAU trend
+        #     0.09*_s(m12)   # 4w retention
+        # ), 2)
 
         # Decision Making: governance + freshness + decision traceability + reliability signals
-        decision_making = round((
-            0.20*_s(m5)  +  # refresh timeliness
-            0.18*_s(m7)  +  # governance coverage
-            0.08*_s(m8)  +  # source diversity (access to needed data)
-            0.22*_s(m10) +  # decision traceability
-            0.10*_s(m17) +  # PII coverage
-            0.12*_s(m18) +  # lineage coverage
-            0.10*_s(m16)    # query/visual error rate (reliability for decisioning)
-        ), 2)
+        # decision_making = round((
+        #     0.20*_s(m5)  +  # refresh timeliness
+        #     0.18*_s(m7)  +  # governance coverage
+        #     0.08*_s(m8)  +  # source diversity (access to needed data)
+        #     0.22*_s(m10) +  # decision traceability
+        #     0.10*_s(m17) +  # PII coverage
+        #     0.12*_s(m18) +  # lineage coverage
+        #     0.10*_s(m16)    # query/visual error rate (reliability for decisioning)
+        # ), 2)
 
         return {
             "agent": "bi_tracker",
-            "inputs_summary": {
-                "today_utc": bi.today_utc,
-                "counts": {
-                    "users": len(bi.user_roles) or len(bi.user_directory),
-                    "dashboards": len(bi.governance_data) or len(bi.dashboard_metadata),
-                    "activity_events": len(bi.activity_events),
-                },
-            },
-            "scores": {
-                "business_integration": business_integration,
-                "decision_making": decision_making,
-            },
+            # "inputs_summary": {
+            #     "today_utc": bi.today_utc,
+            #     "counts": {
+            #         "users": len(bi.user_roles) or len(bi.user_directory),
+            #         "dashboards": len(bi.governance_data) or len(bi.dashboard_metadata),
+            #         "activity_events": len(bi.activity_events),
+            #     },
+            # },
+            # "scores": {
+            #     "business_integration": business_integration,
+            #     "decision_making": decision_making,
+            # },
             "metric_breakdown": m,
             "mode": "single_inputs_json",
         }

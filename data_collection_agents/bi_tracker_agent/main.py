@@ -12,9 +12,11 @@ if str(ROOT) not in sys.path:
 
 from bi_tracker_agent.canonical import BIInputs  # noqa: E402
 from bi_tracker_agent.orchestrator import BIOrchestrator  # noqa: E402
+from bi_tracker_agent.logging_utils import setup_logger # noqa: E402
 
 def main() -> None:
     load_dotenv()
+    setup_logger("logs/bi_tracker.log", level="INFO", serialize=False)
 
     SAMPLES_DIR = Path("data/Sample_Inputs")
     OUTPUT_DIR  = Path("data/Outputs")
@@ -35,13 +37,6 @@ def main() -> None:
         result = orch.analyze_inputs(bi)
         out_file = OUTPUT_DIR / f"{sample.stem}_result.json"
         out_file.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
-
-        scores = result.get("scores", {})
-        print(
-            f"✅ {sample.name:<28} "
-            f"Business Integration: {scores.get('business_integration', 0):>4} | "
-            f"Decision Making: {scores.get('decision_making', 0):>4}"
-        )
 
 if __name__ == "__main__":
     main()
