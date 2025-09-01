@@ -1,0 +1,14 @@
+{
+  "databases": [
+    {
+      "id": "db-3",
+      "cpu_p95": 0.74,
+      "connections_p95": 0.7
+    },
+    {
+      "id": "db-4",
+      "cpu_p95": 0.18,
+      "connections_p95": 0.2
+    }
+  ]
+}

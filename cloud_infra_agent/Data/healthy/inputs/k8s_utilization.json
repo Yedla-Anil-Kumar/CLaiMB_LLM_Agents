@@ -1,0 +1,11 @@
+{
+  "nodes": {
+    "cpu_p95": 0.62,
+    "mem_p95": 0.59
+  },
+  "pods": {
+    "cpu_req_vs_used": 0.83
+  },
+  "binpack_efficiency": 0.86,
+  "pending_pods_p95": 1
+}

@@ -1,0 +1,13 @@
+{
+  "commit_inventory": [
+    {
+      "commit_usd_hour": 10.0
+    }
+  ],
+  "usage": [
+    {
+      "used_usd_hour": 9.7,
+      "hours": 720
+    }
+  ]
+}

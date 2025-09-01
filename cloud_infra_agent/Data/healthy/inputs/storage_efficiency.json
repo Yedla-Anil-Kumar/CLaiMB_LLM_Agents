@@ -1,0 +1,20 @@
+{
+  "block_volumes": [
+    {
+      "id": "vol-1",
+      "attached": true
+    }
+  ],
+  "snapshots": [
+    {
+      "id": "snap-1",
+      "source_volume": "vol-1"
+    }
+  ],
+  "objects": [
+    {
+      "storage_class": "INTELLIGENT_TIERING",
+      "last_modified": "2025-08-01T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "inventory": [
+    {
+      "id": "a"
+    },
+    {
+      "id": "b"
+    },
+    {
+      "id": "c"
+    },
+    {
+      "id": "d"
+    }
+  ],
+  "iac_index": {
+    "a": true,
+    "b": true,
+    "c": true,
+    "d": true
+  },
+  "policy_findings": []
+}

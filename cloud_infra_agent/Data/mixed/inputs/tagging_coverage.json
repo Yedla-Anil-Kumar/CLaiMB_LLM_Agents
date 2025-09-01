@@ -1,0 +1,31 @@
+{
+  "resources": [
+    {
+      "id": "i-3",
+      "tags": {
+        "env": "prod",
+        "owner": "search",
+        "service": "api"
+      }
+    },
+    {
+      "id": "i-4",
+      "tags": {
+        "env": "stage",
+        "owner": "search"
+      }
+    },
+    {
+      "id": "db-3",
+      "tags": {
+        "env": "prod"
+      }
+    }
+  ],
+  "required_tags": [
+    "env",
+    "owner",
+    "cost-center",
+    "service"
+  ]
+}

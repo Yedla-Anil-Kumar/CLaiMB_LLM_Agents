@@ -1,0 +1,14 @@
+{
+  "network_policies": [
+    {
+      "rule": "0.0.0.0/22:443"
+    }
+  ],
+  "storage_acls": [],
+  "inventory": [
+    {
+      "id": "i-3",
+      "public_ip": false
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "cost_rows": [
+    {
+      "cost": 220,
+      "tags": {
+        "env": "prod"
+      }
+    },
+    {
+      "cost": 260,
+      "tags": {}
+    }
+  ]
+}

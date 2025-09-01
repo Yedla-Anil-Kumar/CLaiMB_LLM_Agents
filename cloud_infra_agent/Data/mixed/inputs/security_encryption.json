@@ -1,0 +1,13 @@
+{
+  "resources": [
+    {
+      "id": "vol-31",
+      "encrypted_at_rest": true
+    },
+    {
+      "id": "lb-31",
+      "type": "load_balancer",
+      "tls_policy": "TLS1.2"
+    }
+  ]
+}

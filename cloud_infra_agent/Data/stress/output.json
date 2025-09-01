@@ -1,0 +1,300 @@
+{
+  "tagging.coverage": {
+    "llm_output": {
+      "metric_id": "tagging.coverage",
+      "score": 5,
+      "rationale": "All resources are fully tagged with all required tags, including the critical 'env' and 'owner' tags. This ensures strong traceability and cost attribution, with no material risks identified.",
+      "evidence": {
+        "coverage_pct": 1.0,
+        "critical_tags_present_pct": 1.0,
+        "missing_examples": []
+      },
+      "gaps": [
+        "1. Periodically audit tagging to maintain 100% coverage as new resources are added"
+      ],
+      "confidence": 1.0
+    }
+  },
+  "db.utilization": {
+    "llm_output": {
+      "metric_id": "db.utilization",
+      "score": 3,
+      "rationale": "Both databases show high CPU p95 values (0.82 and 0.76) and high connection loads (0.78 and 0.8), approaching or exceeding the 85% threshold for risk. This indicates clear risks of saturation and potential bottlenecks, though not yet a chronic or critical state.",
+      "evidence": {
+        "db-7_cpu_p95": 0.82,
+        "db-8_cpu_p95": 0.76,
+        "db-7_connections_p95": 0.78,
+        "db-8_connections_p95": 0.8,
+        "fleet_cpu_p95_avg": 0.79
+      },
+      "gaps": [
+        "1. Monitor for CPU and connection spikes above 85% to preempt saturation.",
+        "2. Review workload patterns and consider scaling up or load balancing.",
+        "3. Collect IOPS data to assess full resource balance."
+      ],
+      "confidence": 0.75
+    }
+  },
+  "lb.performance": {
+    "llm_output": {
+      "metric_id": "lb.performance",
+      "score": 2,
+      "rationale": "The load balancer 'alb-7' significantly exceeds SLOs for both p95 (360ms vs 200ms) and p99 (520ms vs 350ms) latency, and its 5xx error rate (0.02) is double the allowed maximum (0.01). It was also unhealthy for 25 minutes during the window, indicating material reliability risks.",
+      "evidence": {
+        "worst_lb": "alb-7",
+        "p95_ms": 360,
+        "p99_ms": 520,
+        "p95_slo_ms": 200,
+        "p99_slo_ms": 350,
+        "r5xx": 0.02,
+        "max_5xx_rate": 0.01,
+        "unhealthy_minutes": 25,
+        "requests": 2500000
+      },
+      "gaps": [
+        "1. Investigate root causes for high latency and 5xx errors on alb-7.",
+        "2. Review backend/service health and scaling for alb-7.",
+        "3. Reduce unhealthy minutes by improving monitoring and auto-healing.",
+        "4. Confirm if other LBs are similarly affected (sample size = 1)."
+      ],
+      "confidence": 0.65
+    }
+  },
+  "compute.utilization": {
+    "llm_output": {
+      "metric_id": "compute.utilization",
+      "score": 1,
+      "rationale": "No instances fall within the target 40-70% CPU/mem utilization range; both are significantly over-provisioned, with p95 CPU and memory above 80%. This indicates a risk of resource saturation and potential performance issues, rather than underutilization, but per rubric, <30% in target range is a critical miss.",
+      "evidence": {
+        "in_target_pct": 0.0,
+        "fleet_cpu_p95": 0.895,
+        "fleet_mem_p95": 0.82,
+        "low_util_pct": 0.0
+      },
+      "gaps": [
+        "1. No instances are in the 40-70% CPU/mem p95 range; review workload sizing and consider scaling up or distributing load.",
+        "2. Validate if workloads are at risk of throttling or OOM due to high sustained utilization.",
+        "3. Collect more data points to confirm if this is a persistent pattern or a short-term spike."
+      ],
+      "confidence": 0.95
+    }
+  },
+  "storage.efficiency": {
+    "llm_output": {
+      "metric_id": "storage.efficiency",
+      "score": 2,
+      "rationale": "There is an orphaned snapshot (snap-72) and a hot-tier object that appears stale (last modified 2025-05-01, outside the 2025-07-20..2025-08-19 window), both indicating avoidable storage cost. No unattached block volumes were found.",
+      "evidence": {
+        "unattached": 0,
+        "orphaned_snaps": 1,
+        "hot_stale_objects": 1
+      },
+      "gaps": [
+        "1. Delete orphaned snapshot snap-72",
+        "2. Apply lifecycle policies to move stale objects to infrequent access or archive tiers"
+      ],
+      "confidence": 0.9
+    }
+  },
+  "iac.coverage_drift": {
+    "llm_output": {
+      "metric_id": "iac.coverage_drift",
+      "score": 5,
+      "rationale": "All resources (4/4, or 100%) are managed by IaC, and there are no high or critical drift findings. Only a medium-severity issue is present, which does not materially impact the overall coverage or drift risk.",
+      "evidence": {
+        "coverage_pct": 1.0,
+        "high_critical": 0
+      },
+      "gaps": [
+        "1. Review and remediate the medium-severity drift finding"
+      ],
+      "confidence": 1.0
+    }
+  },
+  "k8s.utilization": {
+    "llm_output": {
+      "metric_id": "k8s.utilization",
+      "score": 1,
+      "rationale": "Despite excellent binpack efficiency (0.79) and strong alignment between requested and used CPU (0.94), the system is critically impacted by a very high p95 pending pod count (48), indicating severe scheduling or resource bottlenecks. This chronic backlog outweighs other positive indicators and represents a significant operational risk.",
+      "evidence": {
+        "binpack_efficiency": 0.79,
+        "pending_pods_p95": 48,
+        "nodes_cpu_p95": 0.86,
+        "nodes_mem_p95": 0.82,
+        "pods_cpu_req_vs_used": 0.94
+      },
+      "gaps": [
+        "1. Investigate root causes for high pending pod count (e.g., resource shortages, scheduling constraints, taints/tolerations).",
+        "2. Review node resource capacity and consider scaling up or optimizing workloads.",
+        "3. Analyze scheduler logs for errors or bottlenecks.",
+        "4. Monitor for recent changes in workload patterns or deployments.",
+        "5. Reassess after remediation to confirm pending pod reduction."
+      ],
+      "confidence": 0.7
+    }
+  },
+  "scaling.effectiveness": {
+    "llm_output": {
+      "metric_id": "scaling.effectiveness",
+      "score": 2,
+      "rationale": "The system missed target adherence on all samples, with a high violation rate (100%). Reaction time to the first breach was 180 seconds, which is slow, and the applied scaling delta was significantly less than needed (delta error 60%). Thrash was not observed, but overall risk is material and urgent improvements are needed.",
+      "evidence": {
+        "median_reaction_s": 180,
+        "target_violation_pct": 100.0,
+        "thrash_rate": 0.0,
+        "delta_error_pct": 60.0,
+        "events": 3,
+        "total_samples": 3,
+        "violating_samples": 3,
+        "first_breach_ts": "2025-08-15T18:00:00Z",
+        "first_corrective_ts": "2025-08-15T18:03:00Z",
+        "needed_delta": 7.5,
+        "applied_delta": 3
+      },
+      "gaps": [
+        "1. Only 3 samples provided; increase ts_metrics density to improve accuracy.",
+        "2. Review scaling step size: applied delta (3) is much less than needed (7.5); tune autoscaler logic.",
+        "3. Reduce reaction time to breaches; aim for <2 minutes.",
+        "4. Provide more data to assess thrash under varied conditions."
+      ],
+      "confidence": 0.5
+    }
+  },
+  "cost.idle_underutilized": {
+    "llm_output": {
+      "metric_id": "cost.idle_underutilized",
+      "score": 5,
+      "rationale": "Idle spend is well below the 2% threshold, as all instances show high utilization (cpu_p95 and mem_p95 both above 0.8). No material idle cost is present, indicating excellent resource efficiency.",
+      "evidence": {
+        "idle_cost": 0,
+        "idle_pct": 0.0,
+        "total_cost": 45000.0
+      },
+      "gaps": [],
+      "confidence": 1.0
+    }
+  },
+  "availability.incidents": {
+    "llm_output": {
+      "metric_id": "availability.incidents",
+      "score": 4,
+      "rationale": "There was one Sev2 incident in the window, resolved in 1.67 hours, and 2.0 hours of SLO breach. This meets the target with minor risks due to the SLO breach and nonzero incident count.",
+      "evidence": {
+        "sev12_30d": 1,
+        "mttr_h": 1.67,
+        "slo_breach_hours": 2.0,
+        "slo_target": 0.995
+      },
+      "gaps": [
+        "1. Confirm root cause and implement mitigations to prevent recurrence",
+        "2. Review SLO breach details and assess if target or alerting needs adjustment"
+      ],
+      "confidence": 0.85
+    }
+  },
+  "cost.commit_coverage": {
+    "llm_output": {
+      "metric_id": "cost.commit_coverage",
+      "score": 4,
+      "rationale": "Commitment coverage is 94% with 6% unused commitment, which meets the target with only minor risk. The majority of committed spend is utilized, but there is some room to optimize further.",
+      "evidence": {
+        "coverage_pct": 0.94,
+        "unused_commitment_pct": 0.06,
+        "waste_usd": 21600
+      },
+      "gaps": [
+        "1. Analyze usage patterns to further reduce the 6% unused commitment."
+      ],
+      "confidence": 0.95
+    }
+  },
+  "cost.allocation_quality": {
+    "llm_output": {
+      "metric_id": "cost.allocation_quality",
+      "score": 5,
+      "rationale": "All cost rows (100%) have both 'env' and 'owner' tags, allowing full attribution of spend. There are no material risks or missing data in the sample provided.",
+      "evidence": {
+        "total_cost": 1250,
+        "attributable_cost": 1250,
+        "attributable_pct": 1.0,
+        "tagged_rows": 2,
+        "total_rows": 2
+      },
+      "gaps": [],
+      "confidence": 1.0
+    }
+  },
+  "security.public_exposure": {
+    "llm_output": {
+      "metric_id": "security.public_exposure",
+      "score": 3,
+      "rationale": "No public IPs are present in the provided inventory, and there are no network policies or storage ACLs indicating public exposure. However, the absence of network policy and storage ACL data is a significant gap, making it difficult to fully assess public exposure risk.",
+      "evidence": {
+        "open_fw_rules": 0,
+        "public_buckets": 0,
+        "public_ips": 0
+      },
+      "gaps": [
+        "1. Provide network_policies data to assess open ingress or firewall rules",
+        "2. Provide storage_acls data to evaluate public object storage exposure",
+        "3. Confirm if inventory assets are sensitive or production workloads"
+      ],
+      "confidence": 0.6
+    }
+  },
+  "security.iam_risk": {
+    "llm_output": {
+      "metric_id": "security.iam_risk",
+      "score": 3,
+      "rationale": "All users have MFA enabled and no keys are older than 90 days, but there is a wildcard admin policy (ec2:* and autoscaling:* on all resources) attached to the 'core-sre' principal. This presents a clear risk that should be addressed.",
+      "evidence": {
+        "users_without_mfa": 0,
+        "old_keys": 0,
+        "overly_permissive_principals": 1
+      },
+      "gaps": [
+        "1. Review and restrict the 'core-sre' policy to follow least-privilege principles",
+        "2. Confirm whether 'core-sre' is used in production or non-production environments"
+      ],
+      "confidence": 0.93
+    }
+  },
+  "security.encryption": {
+    "llm_output": {
+      "metric_id": "security.encryption",
+      "score": 4,
+      "rationale": "All resources are either encrypted at rest or use TLS 1.2, meeting the target for encryption and modern TLS. There are no clear signs of legacy TLS or unencrypted storage, but the TLS policy is not specified as 'modern', which is a minor gap.",
+      "evidence": {
+        "at_rest_pct": 1.0,
+        "tls_1_2_endpoints": 1,
+        "legacy_tls_endpoints": 0
+      },
+      "gaps": [
+        "1. Confirm that the TLS1.2 policy on lb-71 enforces only strong ciphers and does not allow legacy fallback.",
+        "2. Ensure all future resources maintain at-rest encryption and modern TLS policies."
+      ],
+      "confidence": 0.95
+    }
+  },
+  "security.vuln_patch": {
+    "llm_output": {
+      "metric_id": "security.vuln_patch",
+      "score": 4,
+      "rationale": "Patch agent coverage is 91%, meeting the target for a good score, and average patch age is 21 days, which is at the threshold for this level. No critical or high vulnerabilities are open, only one unresolved medium. Minor risks remain due to patch latency and coverage not being excellent.",
+      "evidence": {
+        "critical_open": 0,
+        "high_open": 0,
+        "agent_coverage_pct": 0.91,
+        "avg_patch_age_days": 21,
+        "scanned_assets": 520,
+        "total_assets": 540
+      },
+      "gaps": [
+        "1. Reduce average patch age below 21 days to approach 14-day target",
+        "2. Raise patch agent coverage from 91% to at least 95%",
+        "3. Confirm no unreported critical or high vulnerabilities exist in unscanned assets"
+      ],
+      "confidence": 0.9
+    }
+  }
+}

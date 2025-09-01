@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "name": "carol",
+      "mfa_enabled": true
+    },
+    {
+      "name": "dave",
+      "mfa_enabled": false
+    }
+  ],
+  "keys": [
+    {
+      "user": "carol",
+      "age_days": 50
+    }
+  ],
+  "policies": []
+}

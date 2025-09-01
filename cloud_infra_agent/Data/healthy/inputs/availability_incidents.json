@@ -1,0 +1,8 @@
+{
+  "incidents": [],
+  "slo_breaches": [],
+  "slo": {
+    "objective": "availability",
+    "target": 0.999
+  }
+}
