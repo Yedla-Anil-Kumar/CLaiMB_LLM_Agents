@@ -1,0 +1,6 @@
+{
+  "metric_id": "pipeline.success_rate",
+  "score": 3,
+  "rationale": "73% success (8/11). Below SLA. Key failures: inventory_load (1 failure), customer_dim_refresh (1 failure), analytics_snapshot (1 failure). Notable runtimes: failures had 0 runtime, while successes varied from 122 to 400 seconds.",
+  "gap": "Implement job retries, investigate causes of failures in inventory_load, customer_dim_refresh, and analytics_snapshot, enhance monitoring and alerting for these jobs."
+}

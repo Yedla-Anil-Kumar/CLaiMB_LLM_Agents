@@ -1,0 +1,6 @@
+{
+  "metric_id": "security.config",
+  "score": 3,
+  "rationale": "Encryption settings are compliant for both at rest and in transit. Public access is disabled as required. Firewall is enabled, and multi-factor authentication is active. However, the IAM role 'guest' has 'read_only_limited' permission instead of the required 'no_access', which constitutes a misconfiguration.",
+  "gap": "Adjust the 'guest' IAM role permissions to 'no_access' to fully comply with the policy."
+}

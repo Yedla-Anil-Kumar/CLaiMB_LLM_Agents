@@ -1,0 +1,6 @@
+{
+  "metric_id": "sensitive.tagging",
+  "score": 1,
+  "rationale": "Across all datasets, 4 out of 10 sensitive fields are tagged (40%). Critical sensitive fields such as 'ssn' in 'users' and 'credit_card' and 'customer_id' in 'orders' remain untagged, posing significant compliance risks.",
+  "gap": "Implement automated data classification tools to identify sensitive data, establish mandatory tagging policies, assign data stewards for oversight, and conduct regular audits to ensure sensitive data is properly tagged."
+}

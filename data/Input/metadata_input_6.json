@@ -1,0 +1,33 @@
+{
+  "catalog_entries": [
+    {
+      "table": "orders",
+      "description": "Customer purchase orders",
+      "owner": "data-sales",
+      "classification": "confidential",
+      "tags": ["finance", "transactions"]
+    },
+    {
+      "table": "customers",
+      "description": "",
+      "owner": "data-marketing",
+      "classification": "pii",
+      "tags": []
+    },
+    {
+      "table": "inventory",
+      "description": "Warehouse stock levels",
+      "owner": "",
+      "classification": "internal",
+      "tags": ["supply-chain"]
+    },
+    {
+      "table": "transactions",
+      "description": "Payment processing logs",
+      "owner": "data-finance",
+      "classification": "confidential",
+      "tags": ["finance"]
+    }
+  ],
+  "required_fields": ["description", "owner", "classification"]
+}

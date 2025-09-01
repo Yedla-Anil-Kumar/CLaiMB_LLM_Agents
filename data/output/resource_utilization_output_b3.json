@@ -1,0 +1,6 @@
+{
+  "metric_id": "resource.utilization",
+  "score": 3,
+  "rationale": "Average resource utilization across clusters is approximately 52.67%. 'analytics-prod' is performing well with high utilization, while 'etl-dev' and 'training-gpu' show lower utilization, indicating potential overprovisioning. The total monthly cost of $14,600 is reasonable but suggests inefficiencies in the underutilized clusters.",
+  "gap": "Right-size 'etl-dev' and 'training-gpu' clusters, implement dynamic scaling, and conduct regular FinOps reviews to optimize costs."
+}

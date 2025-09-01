@@ -1,0 +1,6 @@
+{
+  "metric_id": "schema.consistency",
+  "score": 2,
+  "rationale": "Missing fields in users (`created_at`), orders (`shipping_address`), products (`discontinued_flag`); extra field in reviews (`helpful_count`); ~20% of required fields are absent or different.",
+  "gap": "Add the missing fields `created_at`, `shipping_address`, and `discontinued_flag` to the actual schema. Remove the extra field `helpful_count` from reviews. Implement a schema validation process to ensure consistency."
+}

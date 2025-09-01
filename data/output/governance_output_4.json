@@ -1,0 +1,6 @@
+{
+  "metric_id": "governance.compliance",
+  "score": 3,
+  "rationale": "1000 requests total, 80 were violations (~8% rate). Moderate issues present, indicating a need for improvement in access governance.",
+  "gap": "Implement stricter IAM policies, enhance monitoring of access requests, and conduct regular audits to identify and mitigate risks."
+}

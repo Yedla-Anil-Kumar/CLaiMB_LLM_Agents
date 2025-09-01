@@ -1,0 +1,6 @@
+{
+  "metric_id": "query.performance",
+  "score": 2,
+  "rationale": "Avg query runtime ~10.1s. The query 'q105' had a very slow runtime of 33.5s. Users 'bob' and 'eve' experienced failures with queries 'q102' and 'q110' respectively.",
+  "gap": "Optimize joins, consider query rewrites, and implement caching."
+}
