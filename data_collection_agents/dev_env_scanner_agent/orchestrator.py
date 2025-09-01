@@ -2,41 +2,39 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Dict, Iterable, List
 import os
+from typing import Set
 from utils.file_utils import list_source_files, list_all_files
 
 from dotenv import load_dotenv
 
-from dev_env_scanner_agent.code_quality_agents import (
-    CyclomaticComplexityAgent,
-    DocstringCoverageAgent,
-    MaintainabilityAgent,
-    NestedLoopsAgent,
-)
-from dev_env_scanner_agent.file_system_agents import (
-    CICDAgent,
-    DeploymentAgent,
-    EnvironmentConfigAgent,
-    ExperimentDetectionAgent,
-    ProjectStructureAgent,
-    TestDetectionAgent,
-)
-from dev_env_scanner_agent.infrastructure_agents import (
-    DataPipelineAgent,
-    FeatureEngineeringAgent,
-    InferenceEndpointAgent,
-    ModelExportAgent,
-    ParallelPatternsAgent,
-    SecurityAgent,
-)
-from dev_env_scanner_agent.ml_framework_agents import (
-    DataValidationAgent,
-    ExperimentTrackingAgent,
-    HyperparameterOptimizationAgent,
-    MLFrameworkAgent,
-    ModelEvaluationAgent,
-    ModelTrainingAgent,
-)
-from utils.aimri_mapping import compute_aimri_summary
+from dev_env_scanner_agent.code_quality.cyclomatic_complexity import CyclomaticComplexityAgent
+from dev_env_scanner_agent.code_quality.maintainability_index import MaintainabilityAgent
+from dev_env_scanner_agent.code_quality.docstring_coverage import DocstringCoverageAgent
+from dev_env_scanner_agent.code_quality.nested_loops import NestedLoopsAgent
+
+from dev_env_scanner_agent.file_system.ci_cd import CICDAgent
+from dev_env_scanner_agent.file_system.deployment import DeploymentAgent
+from dev_env_scanner_agent.file_system.environment_config import EnvironmentConfigAgent
+from dev_env_scanner_agent.file_system.experiment_detection import ExperimentDetectionAgent
+from dev_env_scanner_agent.file_system.project_structure import ProjectStructureAgent
+from dev_env_scanner_agent.file_system.test_detection import TestDetectionAgent
+
+from dev_env_scanner_agent.infrastructure.parallel_patterns import ParallelPatternsAgent
+from dev_env_scanner_agent.infrastructure.data_pipeline import DataPipelineAgent
+from dev_env_scanner_agent.infrastructure.feature_engineering import FeatureEngineeringAgent
+from dev_env_scanner_agent.infrastructure.model_export import ModelExportAgent
+from dev_env_scanner_agent.infrastructure.inference_endpoint import InferenceEndpointAgent
+from dev_env_scanner_agent.infrastructure.security_hygiene import SecurityAgent
+
+from dev_env_scanner_agent.ml_framework.data_validation import DataValidationAgent
+from dev_env_scanner_agent.ml_framework.experiment_tracking import ExperimentTrackingAgent
+from dev_env_scanner_agent.ml_framework.hyperparameter_optimization import HyperparameterOptimizationAgent
+from dev_env_scanner_agent.ml_framework.ml_framework_agent import MLFrameworkAgent
+from dev_env_scanner_agent.ml_framework.model_evaluation import ModelEvaluationAgent
+from dev_env_scanner_agent.ml_framework.model_training import ModelTrainingAgent
+
+#from utils.aimri_mapping import compute_aimri_summary
+from dev_env_scanner_agent.base_agent import BaseMicroAgent
 load_dotenv()
 
 def clamp01(x: float) -> float:
@@ -100,7 +98,7 @@ def calculate_scores(signals: Dict[str, Any], num_py_files: int) -> Dict[str, fl
 
 # ---- Budget caps (env-overridable) ----
 
-MAX_FILES_PER_REPO = int(os.getenv("MA_MAX_FILES_PER_REPO", "40"))
+MAX_FILES_PER_REPO = int(os.getenv("MA_MAX_FILES_PER_REPO", "50"))
 MAX_SNIPPET_BYTES = int(os.getenv("MA_MAX_SNIPPET_BYTES", "3000"))
 MAX_PATHS_PER_AGENT = int(os.getenv("MA_MAX_PATHS_PER_AGENT", "400"))
 
@@ -154,40 +152,176 @@ class MicroAgentOrchestrator:
 
     # ---------- public API ----------
 
-    def analyze_repo(self, repo_path: str) -> Dict[str, Any]:
-        root = Path(repo_path)
+    def _collect_raw_outputs(self, snippets: List[str], agents: List[BaseMicroAgent]) -> List[Dict[str, Any]]:
+        """Run all given agents on each snippet, return flat list of raw JSON outputs."""
+        results = []
+        for snippet in snippets:
+            for agent in agents:
+                res = agent.evaluate([snippet])
+                results.append(res)
+        return results
 
-        # Per-file contents (source .py only) → sample + trim
+    # def analyze_repo(self, repo_path: str) -> Dict[str, Any]:
+    #     root = Path(repo_path)
+
+    #     # Per-file contents (source .py only) → sample + trim
+    #     all_source = self._get_source_files(repo_path)
+    #     picked = self._pick_representative_files(all_source)
+    #     source_texts = self._read_files_snippets(picked)
+
+    #     # All file paths (for FS-style agents) → trim per agent later
+    #     all_paths = self._get_all_paths(repo_path)
+
+    #     # Aggregate signals across per-file LLM calls
+    #     signals: Dict[str, Any] = self._aggregate_code_signals(source_texts)
+    #     tests_signals = self.agents_fs[0].evaluate(source_texts)
+    #     signals.update(tests_signals)
+    #     signals.update(self._aggregate_ml_signals(source_texts))
+    #     signals.update(self._aggregate_infra_signals(source_texts))
+    #     signals.update(self._aggregate_fs_signals(all_paths))
+
+    #     # Compute scores
+    #     scores = self._calculate_scores(signals, len(picked))
+    #     aimri = compute_aimri_summary(signals)
+
+    #     return {
+    #         "agent": "micro_agent_orchestrator",
+    #         "repo": root.name,
+    #         # "signals": signals,  # keep commented if you don't want raw signals returned
+    #         "scores": scores,
+    #         "micro_agent_results": {
+    #             "source_files_analyzed": len(picked),
+    #             "total_files_analyzed": len(all_source),
+    #         },
+    #         "aimri_summary": aimri,
+    #     }
+
+    def analyze_repo(self, repo_path: str) -> Dict[str, Any]:
+        """
+        Run all agents, consolidate repeated metric_id entries into a single
+        per-metric object, and return a bi_tracker-style JSON:
+        {
+          "agent": "micro_agent_orchestrator",
+          "metric_breakdown": { "<metric_id>": {...}, ... }
+        }
+        """
         all_source = self._get_source_files(repo_path)
         picked = self._pick_representative_files(all_source)
         source_texts = self._read_files_snippets(picked)
-
-        # All file paths (for FS-style agents) → trim per agent later
         all_paths = self._get_all_paths(repo_path)
 
-        # Aggregate signals across per-file LLM calls
-        signals: Dict[str, Any] = self._aggregate_code_signals(source_texts)
-        tests_signals = self.agents_fs[0].evaluate(source_texts)
-        signals.update(tests_signals)
-        signals.update(self._aggregate_ml_signals(source_texts))
-        signals.update(self._aggregate_infra_signals(source_texts))
-        signals.update(self._aggregate_fs_signals(all_paths))
+        # Gather raw LLM outputs (many duplicates across files)
+        outputs: List[Dict[str, Any]] = []
+        outputs.extend(self._collect_raw_outputs(source_texts, self.agents_code))
+        outputs.extend(self._collect_raw_outputs(source_texts, self.agents_ml))
+        outputs.extend(self._collect_raw_outputs(source_texts, self.agents_infra))
+        outputs.extend(self._collect_fs_outputs(all_paths, source_texts))  # FS agents
 
-        # Compute scores
-        scores = self._calculate_scores(signals, len(picked))
-        aimri = compute_aimri_summary(signals)
+        # Consolidate to single entry per metric_id
+        metric_breakdown = self._consolidate_metrics(outputs)
 
         return {
             "agent": "micro_agent_orchestrator",
-            "repo": root.name,
-            # "signals": signals,  # keep commented if you don't want raw signals returned
-            "scores": scores,
-            "micro_agent_results": {
-                "source_files_analyzed": len(picked),
-                "total_files_analyzed": len(all_source),
-            },
-            "aimri_summary": aimri,
+            "metric_breakdown": metric_breakdown,
         }
+
+    # ---------- helpers for raw -> consolidated ----------
+
+    def _collect_raw_outputs(self, snippets: List[str], agents: List[BaseMicroAgent]) -> List[Dict[str, Any]]:
+        """Run all given agents on each snippet, return flat list of raw JSON outputs."""
+        results: List[Dict[str, Any]] = []
+        for snippet in snippets:
+            for agent in agents:
+                res = agent.evaluate([snippet])
+                if isinstance(res, dict):
+                    results.append(res)
+                elif isinstance(res, list):
+                    # Some agents might (rarely) return a list of metrics
+                    results.extend([r for r in res if isinstance(r, dict)])
+        return results
+
+    def _collect_fs_outputs(self, all_paths: List[str], source_texts: List[str]) -> List[Dict[str, Any]]:
+        outputs: List[Dict[str, Any]] = []
+        # Tests is based on source snippets
+        outputs.append(self.agents_fs[0].evaluate(source_texts))     # TestDetectionAgent
+        # The rest are path-based
+        outputs.append(self.agents_fs[1].evaluate(all_paths))         # EnvironmentConfigAgent
+        outputs.append(self.agents_fs[2].evaluate(all_paths))         # CICDAgent
+        outputs.append(self.agents_fs[3].evaluate(all_paths))         # DeploymentAgent
+        outputs.append(self.agents_fs[4].evaluate(all_paths))         # ExperimentDetectionAgent
+        outputs.append(self.agents_fs[5].evaluate(all_paths))         # ProjectStructureAgent
+        # Flatten if any agent returned a list
+        flat: List[Dict[str, Any]] = []
+        for r in outputs:
+            if isinstance(r, dict):
+                flat.append(r)
+            elif isinstance(r, list):
+                flat.extend([x for x in r if isinstance(x, dict)])
+        return flat
+
+    def _consolidate_metrics(self, outputs: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
+        """
+        Many agents run per file, so the same metric_id can appear multiple times.
+        We collapse to ONE entry per metric_id using conservative rules:
+          - Keep the lowest (worst) band observed.
+          - Union unique flags/gaps.
+          - Prefer a non-empty rationale; if multiple, keep the longest text.
+          - Add `score` mirroring `band` to match your bi_tracker shape.
+        """
+        consolidated: Dict[str, Dict[str, Any]] = {}
+
+        for obj in outputs:
+            if not isinstance(obj, dict):
+                continue
+            metric_id = obj.get("metric_id")
+            if not metric_id:
+                # Skip anything that doesn't identify the metric
+                continue
+
+            band = obj.get("band", 3)
+            try:
+                band = max(1, min(5, int(band)))
+            except Exception:
+                band = 3
+
+            rationale = obj.get("rationale", "")
+            flags_in: List[str] = obj.get("flags", []) or []
+            gaps_in: List[str] = obj.get("gaps", []) or []
+
+            if metric_id not in consolidated:
+                consolidated[metric_id] = {
+                    "metric_id": metric_id,
+                    "band": band,
+                    "rationale": rationale or "",
+                    "flags": list(dict.fromkeys([str(f) for f in flags_in])),
+                    "gaps": list(dict.fromkeys([str(g) for g in gaps_in])),
+                    "score": band,  # mirror band -> score
+                }
+                continue
+
+            # Merge into existing
+            cur = consolidated[metric_id]
+            # Keep the worst band (lowest number)
+            cur["band"] = min(cur.get("band", band), band)
+            # Prefer the longest non-empty rationale
+            old_rat = cur.get("rationale", "")
+            if rationale and (len(rationale) > len(old_rat)):
+                cur["rationale"] = rationale
+            # Union flags/gaps preserving order & uniqueness
+            def _merge_list(dst: List[str], src: List[str]) -> List[str]:
+                seen: Set[str] = set(map(str, dst))
+                for x in src:
+                    s = str(x)
+                    if s not in seen:
+                        dst.append(s)
+                        seen.add(s)
+                return dst
+            cur["flags"] = _merge_list(cur.get("flags", []), flags_in)
+            cur["gaps"] = _merge_list(cur.get("gaps", []), gaps_in)
+            # Keep score in sync with band
+            cur["score"] = cur["band"]
+
+        return consolidated
 
     # ---------- file helpers ----------
 
@@ -240,40 +374,45 @@ class MicroAgentOrchestrator:
 
     # ---------- aggregation per category ----------
 
+    def _band_to_score(b: int) -> float:
+        # Simple linear map: 1->0.2, 2->0.4, 3->0.6, 4->0.8, 5->1.0
+        return max(1, min(5, int(b))) / 5.0
+
     def _aggregate_code_signals(self, code_snippets: List[str]) -> Dict[str, Any]:
-        """
-        Per-file LLM calls; averages numeric quality metrics and ORs booleans.
-        """
-        accum: Dict[str, Any] = {
-            "avg_cyclomatic_complexity": 0.0,
-            "avg_maintainability_index": 0.0,
-            "docstring_coverage": 0.0,
+        accum = {
+            "avg_maintainability_index": 0.0,  # use band proxy
+            "docstring_coverage": 0.0,         # use band proxy
+            "avg_cyclomatic_complexity": 0.0,  # derive a proxy complexity from band
             "nested_loop_files": 0,
         }
         n = max(1, len(code_snippets))
         for snippet in code_snippets:
-            # each agent sees a single snippet (per-file call)
-            cc = self.agents_code[0].evaluate([snippet])
-            mi = self.agents_code[1].evaluate([snippet])
-            ds = self.agents_code[2].evaluate([snippet])
-            nl = self.agents_code[3].evaluate([snippet])
+            b_cc = self.agents_code[0].evaluate([snippet])  # complexity band
+            b_mi = self.agents_code[1].evaluate([snippet])  # maintainability band
+            b_ds = self.agents_code[2].evaluate([snippet])  # docstring band
+            b_nl = self.agents_code[3].evaluate([snippet])  # nested loops band
 
-            # averages
-            accum["avg_cyclomatic_complexity"] += float(
-                cc.get("avg_cyclomatic_complexity", 0.0)
-            )
-            accum["avg_maintainability_index"] += float(
-                mi.get("avg_maintainability_index", 0.0)
-            )
-            accum["docstring_coverage"] += float(ds.get("docstring_coverage", 0.0))
+            # map bands to the legacy normalized signals you score on
+            accum["avg_maintainability_index"] += max(1, min(5, int(b_mi.get("band", 3)))) / 5.0
+            accum["docstring_coverage"]        += max(1, min(5, int(b_ds.get("band", 3)))) / 5.0
 
-            # count of files with nested loops (treat >1 depth as 1 file)
-            if int(nl.get("max_nesting_depth", 0)) > 1 or bool(nl.get("has_nested_loops", False)):
+            # for complexity your formula expects a small "avg complexity" number (lower is better)
+            # pick representative midpoints for each band threshold in your rubric:
+            # 5: ≤5, 4: ≤7, 3: ≤10, 2: ≤12, 1: >12
+            band_to_complexity_mid = {5: 4.5, 4: 6.0, 3: 9.0, 2: 11.0, 1: 14.0}
+            accum["avg_cyclomatic_complexity"] += band_to_complexity_mid.get(int(b_cc.get("band", 3)), 9.0)
+
+            # nested loops "file had problematic nesting?" — use flags or band
+            flags = [str(f).lower() for f in b_nl.get("flags", [])]
+            has_nested_flag = any("nested" in f or "depth" in f for f in flags)
+            # be conservative: count as nested if band ≤3 OR flags indicate nesting
+            if int(b_nl.get("band", 3)) <= 3 or has_nested_flag:
                 accum["nested_loop_files"] += 1
 
-        accum["avg_cyclomatic_complexity"] /= n
+        # averages
         accum["avg_maintainability_index"] /= n
-        accum["docstring_coverage"] /= n
+        accum["docstring_coverage"]        /= n
+        accum["avg_cyclomatic_complexity"] /= n
         return accum
 
     def _aggregate_ml_signals(self, code_snippets: List[str]) -> Dict[str, Any]:

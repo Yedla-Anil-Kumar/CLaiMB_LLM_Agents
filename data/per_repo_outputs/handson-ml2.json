@@ -1,0 +1,204 @@
+{
+  "agent": "micro_agent_orchestrator",
+  "metric_breakdown": {
+    "code.cyclomatic_complexity_band": {
+      "metric_id": "code.cyclomatic_complexity_band",
+      "band": 2,
+      "rationale": "The function has a moderate level of complexity due to multiple conditional checks and subprocess calls, which can lead to potential issues in maintainability. The presence of multiple exit points and subprocess invocations increases the risk of errors and makes the code harder to follow.",
+      "flags": [
+        "multiple_exit_points",
+        "subprocess_calls"
+      ],
+      "gaps": [
+        "Multiple conditional checks and subprocess calls increase complexity → simplify logic and reduce subprocess usage → target avg complexity ≤ 10 and ≤20% high/very_high (unlocks band 3)."
+      ],
+      "score": 2
+    },
+    "code.maintainability_band": {
+      "metric_id": "code.maintainability_band",
+      "band": 2,
+      "rationale": "The code snippet demonstrates some readability with clear function naming and structure; however, it lacks error handling and has mixed responsibilities, which significantly hampers maintainability.",
+      "flags": [
+        "mixed_responsibilities",
+        "lack_of_error_handling"
+      ],
+      "gaps": [
+        "Mixed responsibilities in export function → separate export logic into distinct functions → improve maintainability ≥0.75 (unlocks band 4).",
+        "No error handling for subprocess calls → implement try-except blocks to manage subprocess errors → enhance robustness and readability ≥0.75 (unlocks band 4)."
+      ],
+      "score": 2
+    },
+    "code.docstring_coverage_band": {
+      "metric_id": "code.docstring_coverage_band",
+      "band": 1,
+      "rationale": "The provided code snippet lacks any docstrings, which severely limits its documentation quality and coverage. Without any documentation, it is difficult to understand the purpose and usage of the functions, leading to critical gaps in clarity.",
+      "flags": [
+        "missing_function_docs"
+      ],
+      "gaps": [
+        "No docstrings present → implement docstrings for all functions → achieve coverage ≥0.65 and quality ≥0.60 (unlocks band 3)."
+      ],
+      "score": 1
+    },
+    "code.nested_loops_band": {
+      "metric_id": "code.nested_loops_band",
+      "band": 2,
+      "rationale": "The code snippet exhibits a nesting depth of 3, which is concerning as it can lead to performance and complexity issues. Additionally, there are no evident mitigations or tests to address these risks, further limiting its robustness.",
+      "flags": [
+        "nested_depth_3",
+        "performance_risk",
+        "lack_of_tests"
+      ],
+      "gaps": [
+        "Nesting depth = 3 with subprocess calls → refactor to reduce nesting and improve error handling → target depth ≤ 2 (unlocks band 3).",
+        "No tests present → implement unit tests for the export functionality → ensure reliability and robustness (unlocks band 3)."
+      ],
+      "score": 2
+    },
+    "ml.framework_maturity": {
+      "metric_id": "ml.framework_maturity",
+      "band": 3,
+      "rationale": "The code snippet shows a clear use of Jupyter's nbconvert for exporting notebooks, but it lacks a consistent framework or idiomatic usage across the snippet. The reliance on subprocess calls and the absence of shared utilities or wrappers indicate a mixed approach that detracts from clarity.",
+      "flags": [
+        "subprocess_usage",
+        "lack_of_shared_utilities"
+      ],
+      "gaps": [
+        "Inconsistent framework usage → implement shared utilities for notebook handling → improve clarity and consistency (unlocks band 4)."
+      ],
+      "score": 3
+    },
+    "notebook_export_tracking": {
+      "metric_id": "notebook_export_tracking",
+      "band": 2,
+      "rationale": "The code snippet shows an attempt to export Jupyter notebooks to scripts and HTML views, but there is no evidence of tracking parameters, metrics, or artifacts. This lack of structured logging and tracking limits the ability to assess the model's performance or lineage effectively.",
+      "flags": [
+        "no_logging",
+        "no_artifacts",
+        "no_signature"
+      ],
+      "gaps": [
+        "No logging present → implement logging for parameters and metrics during model training → structured tracking (unlocks band 3).",
+        "No artifacts generated → save model outputs and evaluation results → enable reproducibility (unlocks band 3)."
+      ],
+      "score": 2
+    },
+    "ml.hpo_practice": {
+      "metric_id": "ml.hpo_practice",
+      "band": 1,
+      "rationale": "The provided code snippet does not demonstrate any hyperparameter optimization (HPO) practices; it focuses on exporting Jupyter notebook content instead. There is no evidence of a search strategy, parameters, or persistence mechanisms.",
+      "flags": [
+        "no_hpo"
+      ],
+      "gaps": [
+        "No HPO strategy → implement a search method (e.g., Optuna) → enable parameter optimization (unlocks band 4)."
+      ],
+      "score": 1
+    },
+    "ml.data_validation": {
+      "metric_id": "ml.data_validation",
+      "band": 1,
+      "rationale": "There are no schema or validation checks present in the provided code snippet, which primarily focuses on exporting Jupyter notebooks. Without any validation mechanisms, the integrity of the data cannot be ensured.",
+      "flags": [
+        "no_validation"
+      ],
+      "gaps": [
+        "Implement schema checks for notebook types and file names → ensure valid data formats → establish basic validation (unlocks band 2)."
+      ],
+      "score": 1
+    },
+    "ml.training_practice": {
+      "metric_id": "ml.training_practice",
+      "band": 1,
+      "rationale": "The provided code snippet does not demonstrate any credible training infrastructure, as it focuses on exporting Jupyter notebooks rather than initiating a training process. There are no entrypoints, configurations, or reproducibility mechanisms present.",
+      "flags": [
+        "no_training_entrypoint",
+        "no_configs_or_checkpoints"
+      ],
+      "gaps": [
+        "No training entrypoint present → implement a main function to start training → establish a training framework (unlocks band 3).",
+        "Lack of configuration management → introduce config files for hyperparameters → enable reproducibility (unlocks band 4)."
+      ],
+      "score": 1
+    },
+    "export_script_view": {
+      "metric_id": "export_script_view",
+      "band": 2,
+      "rationale": "The code snippet demonstrates a specific functionality for exporting Jupyter notebooks but lacks a comprehensive evaluation methodology or metrics for assessing performance. There is no evidence of calibration or fairness considerations in the implementation.",
+      "flags": [
+        "evaluation_methodology_missing",
+        "calibration_fairness_absent"
+      ],
+      "gaps": [
+        "No evaluation metrics → implement performance metrics for exports → enhance credibility (unlocks band 3).",
+        "Lack of calibration/fairness checks → integrate validation steps for outputs → improve robustness (unlocks band 3)."
+      ],
+      "score": 2
+    },
+    "infra.parallel_patterns": {
+      "metric_id": "infra.parallel_patterns",
+      "band": 1,
+      "rationale": "The code uses subprocess calls in a synchronous manner without any concurrency or parallelism, which can lead to blocking behavior. There are no safety mechanisms like timeouts or graceful shutdowns, and the approach is not suitable for handling multiple requests efficiently.",
+      "flags": [],
+      "gaps": [
+        "Blocking subprocess calls → implement threading or multiprocessing for concurrent execution → unlocks band 3.",
+        "No timeouts or error handling → add exception management and timeouts for subprocess calls → unlocks band 3."
+      ],
+      "score": 1
+    },
+    "infra.inference_endpoint": {
+      "metric_id": "infra.inference_endpoint",
+      "band": 1,
+      "rationale": "The provided code snippet does not implement any serving endpoints for ML predictions, lacks schema validation, and does not include error handling or health checks. The absence of a clear serving mechanism and operational hooks indicates critical risks in deployment.",
+      "flags": [],
+      "gaps": [
+        "Implement serving endpoints with schema validation and error handling → establish a robust serving framework → unlocks band 4."
+      ],
+      "score": 1
+    },
+    "infra.model_export": {
+      "metric_id": "infra.model_export",
+      "band": 1,
+      "rationale": "There is no evidence of model export or serialization methods in the provided code snippets. The code focuses on exporting Jupyter notebooks rather than model persistence, which is critical for reproducibility.",
+      "flags": [],
+      "gaps": [
+        "Implement model serialization using a method like joblib or ONNX → ensure model persistence → unlocks band 3."
+      ],
+      "score": 1
+    },
+    "infra.data_pipeline": {
+      "metric_id": "infra.data_pipeline",
+      "band": 1,
+      "rationale": "The provided code snippet does not demonstrate any pipeline orchestration or reliability controls; it appears to be a standalone function without scheduling, retries, SLAs, or validation steps.",
+      "flags": [],
+      "gaps": [
+        "Implement a structured pipeline framework (e.g., Airflow) → establish orchestration and reliability controls → unlocks band 3."
+      ],
+      "score": 1
+    },
+    "infra.feature_engineering": {
+      "metric_id": "infra.feature_engineering",
+      "band": 1,
+      "rationale": "The provided code snippet lacks any structured feature engineering or transformation processes, relying instead on a manual script export function. This absence of a defined pipeline or reproducible feature engineering limits its readiness for serving and automation.",
+      "flags": [],
+      "gaps": [
+        "Implement structured feature engineering pipelines using libraries like sklearn or featuretools → establish reproducibility and automation → unlocks band 4."
+      ],
+      "score": 1
+    },
+    "infra.security_hygiene": {
+      "metric_id": "infra.security_hygiene",
+      "band": 3,
+      "rationale": "The code does not expose hardcoded secrets, but it lacks input validation for the `os_path` parameter, which could lead to directory traversal vulnerabilities. The use of subprocess without proper sanitization of inputs is a concern.",
+      "flags": [
+        "unsafe_subprocess_usage",
+        "lax_input_validation"
+      ],
+      "gaps": [
+        "Implement input validation for os_path to prevent directory traversal attacks → enhance security posture (unlocks band 4).",
+        "Use safer subprocess methods or libraries to handle command execution → reduce risk of command injection (supports band 4)."
+      ],
+      "score": 3
+    }
+  }
+}

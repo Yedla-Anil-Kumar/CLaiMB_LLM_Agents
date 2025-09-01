@@ -24,6 +24,7 @@ if str(ROOT) not in sys.path:
 from dev_env_scanner_agent.orchestrator import (  # noqa: E402
     MicroAgentOrchestrator,
 )
+from dev_env_scanner_agent.logging_utils import setup_logger  # noqa: E402
 
 def find_git_repos(base: Path) -> Iterable[Path]:
     """Yield repo roots that contain a .git directory."""
@@ -40,11 +41,12 @@ def scan_single_repo(
     temperature: float,
     per_repo_dir: Path,
 ) -> Tuple[str, Dict]:
-    """Scan one repository with a fresh orchestrator instance."""
+    """Scan one repository with a fresh orchestrator instance and return a consolidated object:
+       { "agent": "...", "metric_breakdown": { "<metric_id>": {...} } }"""
     orchestrator = MicroAgentOrchestrator(model=model, temperature=temperature)
     result = orchestrator.analyze_repo(str(repo_path))
 
-    # Write per-repo JSON immediately (safe in parallel; unique filenames)
+    # Write one valid JSON object per repo (bi_tracker-style)
     per_repo_dir.mkdir(parents=True, exist_ok=True)
     out_file = per_repo_dir / f"{repo_path.name}.json"
     with out_file.open("w", encoding="utf-8") as f:
@@ -93,8 +95,8 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
-    load_dotenv()  # picks up OPENAI_API_KEY, OPENAI_MODEL, etc.
-
+    load_dotenv()
+    setup_logger("logs/dev_env_scanner.log", level="INFO", serialize=False)
     args = parse_args()
     base_dir = Path(args.base).resolve()
     out_path = Path(args.out).resolve()
@@ -109,9 +111,7 @@ def main() -> None:
     aggregate: List[Dict] = []
     errors: List[Tuple[str, str]] = []
 
-    # NOTE: ThreadPoolExecutor is ideal here (I/O-bound LLM calls).
-    # If you prefer processes, swap in ProcessPoolExecutor, but keep in mind
-    # OpenAI rate limits and process spawn overhead.
+    # ThreadPoolExecutor is ideal here (I/O-bound LLM calls).
     with ThreadPoolExecutor(max_workers=args.max_workers) as executor:
         futures = {
             executor.submit(
@@ -129,21 +129,21 @@ def main() -> None:
             name = repo_path.name
             try:
                 repo_name, result = future.result()
-                scores = result.get("scores", {})
-                print(
-                    f"✅ {repo_name:<30} "
-                    f"Dev: {scores.get('development_maturity', 0):>4} | "
-                    f"Innov: {scores.get('innovation_pipeline', 0):>4}"
-                )
-                aggregate.append(result)
+                mb = result.get("metric_breakdown", {}) or {}
+                print(f"✅ {repo_name:<30} wrote {len(mb)} metrics")
+                aggregate.append({
+                    "repo": repo_name,
+                    "agent": result.get("agent", "micro_agent_orchestrator"),
+                    "metric_breakdown": mb,
+                })
             except Exception as exc:
                 msg = f"{type(exc).__name__}: {exc}"
                 print(f"❌ Error scanning {name}: {msg}")
                 errors.append((name, msg))
 
-    # Write aggregate results
+    # Write aggregate results as a single JSON array of metric objects
     with out_path.open("w", encoding="utf-8") as f:
-        json.dump(aggregate, f, indent=2, ensure_ascii=False)
+       json.dump(aggregate, f, indent=2, ensure_ascii=False)
 
     print(f"\n📝 Per-repo results written to: {per_repo_dir}")
     print(f"🧾 Aggregate JSON written to : {out_path}")
