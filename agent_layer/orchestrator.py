@@ -2,10 +2,9 @@
 from __future__ import annotations
 
 import json
-import os
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 from dotenv import load_dotenv
 
@@ -15,9 +14,9 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from agent_layer.registry import LEVEL0, LEVEL1_DEPS, CATEGORIES
-from agent_layer.tool_loader import load_tool
-from langchain_core.runnables import RunnableLambda, RunnableParallel
+from agent_layer.registry import LEVEL0, LEVEL1_DEPS, CATEGORIES # noqa: E402
+from agent_layer.tool_loader import load_tool # noqa: E402
+from langchain_core.runnables import RunnableLambda, RunnableParallel # noqa: E402
 
 
 def _now_id(prefix: str = "bi-tracker") -> str:
