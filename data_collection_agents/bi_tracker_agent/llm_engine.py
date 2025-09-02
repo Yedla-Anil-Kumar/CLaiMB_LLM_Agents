@@ -5,9 +5,8 @@ import time
 import random
 from typing import Any, Dict, List, Optional
 from loguru import logger
-from bi_tracker_agent.logging_utils import timed
-
-from bi_tracker_agent.base_agent import BaseMicroAgent
+from .logging_utils import timed
+from .base_agent import BaseMicroAgent
 
 """
 BI Metric Prompt Builder (Updated Schema)
