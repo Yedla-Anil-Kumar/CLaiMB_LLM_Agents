@@ -1,0 +1,246 @@
+{
+  "run_id": "bi-tracker-2025-09-02T16-03-00Z",
+  "metrics": {
+    "usage.dau_mau": {
+      "metric_id": "usage.dau_mau",
+      "band": 2,
+      "rationale": "The stickiness is low due to sparse activity events, indicating a material risk in user engagement. The limited number of distinct users and actions suggests a significant drop in user activity.",
+      "flags": [
+        "sparse_activity"
+      ],
+      "gaps": [
+        "Activity events too sparse for reliable denominator → increase user engagement and activity events → achieve ≥30 distinct users in the last 30 days (unlocks band 3)."
+      ],
+      "score": 2
+    },
+    "usage.creators_ratio": {
+      "metric_id": "usage.creators_ratio",
+      "band": 1,
+      "rationale": "The creator share is below 8%, indicating a significant failure in user engagement; the lack of department spread data further exacerbates the issue.",
+      "flags": [],
+      "gaps": [
+        "Creator share is below 8% → increase the number of creators significantly → achieve ≥8% creators (unlocks band 2).",
+        "Department spread unknown → report creators by department and coverage % → reach ≥60% dept coverage (unlocks band 4)."
+      ],
+      "score": 1
+    },
+    "usage.session_depth": {
+      "metric_id": "usage.session_depth",
+      "band": 3,
+      "rationale": "The average session duration of 250s and 3.5 pages are positive indicators; however, the lack of repeat session data for one user limits the overall assessment.",
+      "flags": [
+        "repeat_freq_missing"
+      ],
+      "gaps": [
+        "Repeat session data missing for one user → ensure all users have repeat session data → achieve weekly repeats for majority (unlocks band 4)."
+      ],
+      "score": 3
+    },
+    "usage.drilldown": {
+      "metric_id": "usage.drilldown",
+      "band": 2,
+      "rationale": "Only 1 out of 2 sessions includes a drill action, indicating 50% usage; however, the lack of stability data and spread across users limits the score.",
+      "flags": [
+        "stability_unknown",
+        "spread_limited"
+      ],
+      "gaps": [
+        "Stability unverified → include 4-week drilldown time series → demonstrate non-declining trend (supports band 4–5).",
+        "Spread by user unknown → report drilldown usage by user → show broad spread across ≥3 users (unlocks band 4)."
+      ],
+      "score": 2
+    },
+    "usage.weekly_active_trend": {
+      "metric_id": "usage.weekly_active_trend",
+      "band": 2,
+      "rationale": "There is a sustained decline in weekly active users, with only a few events recorded over the last four weeks. The presence of only four distinct events indicates material risks to user engagement.",
+      "flags": [],
+      "gaps": [
+        "Insufficient events over 4 weeks → increase event tracking to capture all user interactions weekly → achieve consistent engagement across all weeks (unlocks band 3)."
+      ],
+      "score": 2
+    },
+    "usage.retention_4w": {
+      "metric_id": "usage.retention_4w",
+      "band": 1,
+      "rationale": "Only 2 distinct users are identified, with no clear return data for weeks 2-4, indicating a significant failure in user retention. The lack of sufficient user activity data limits the ability to assess retention accurately.",
+      "flags": [],
+      "gaps": [
+        "Insufficient user activity data for weeks 2-4 → include distinct user counts for weeks 2-4 → achieve ≥60% return rate (unlocks band 5)."
+      ],
+      "score": 1
+    },
+    "features.cross_links": {
+      "metric_id": "features.cross_links",
+      "band": 2,
+      "rationale": "Only 1 out of 2 dashboards has links, and the overall link usage is low, indicating material risks in engagement and connectivity.",
+      "flags": [
+        "low_link_usage",
+        "limited_distribution"
+      ],
+      "gaps": [
+        "Link presence insufficient → increase the number of dashboards with links and promote usage → reach ≤15% dashboards with links (unlocks band 3)."
+      ],
+      "score": 2
+    },
+    "features.export_rate": {
+      "metric_id": "features.export_rate",
+      "band": 1,
+      "rationale": "Exports account for only 25% of sessions, indicating a significant failure in usage; there is no information on governance controls for exports.",
+      "flags": [
+        "governance_unknown"
+      ],
+      "gaps": [
+        "Export governance unclear → add export policy status + exception rate → show ≥95% governed exports (unlocks band 5)."
+      ],
+      "score": 1
+    },
+    "features.alerts_usage": {
+      "metric_id": "features.alerts_usage",
+      "band": 2,
+      "rationale": "There is very low adoption of alerts and subscriptions, with only a few users engaging in actions, and no successful deliveries noted. The presence of errors indicates potential issues with the system's reliability.",
+      "flags": [
+        "low_adoption",
+        "delivery_success_unknown"
+      ],
+      "gaps": [
+        "Adoption metrics unclear → report total unique users for alerts/subscriptions → achieve at least 10 unique users (unlocks band 3).",
+        "Delivery success unknown → include successful delivery counts for alerts/subscriptions → show ≥80% delivery success rate (unlocks band 3)."
+      ],
+      "score": 2
+    },
+    "governance.coverage": {
+      "metric_id": "governance.coverage",
+      "band": 2,
+      "rationale": "Only one dashboard is certified and owned, while the second lacks both certification and metadata, indicating significant governance issues.",
+      "flags": [
+        "metadata_gaps"
+      ],
+      "gaps": [
+        "Certification and ownership missing for one dashboard → ensure all dashboards are certified and owned → achieve ≥85% certified/owned coverage (unlocks band 4)."
+      ],
+      "score": 2
+    },
+    "governance.pii_coverage": {
+      "metric_id": "governance.pii_coverage",
+      "band": 2,
+      "rationale": "There is a lack of PII and access policy metadata on the majority of dashboards, indicating significant gaps in governance. The presence of metadata on only one certified dashboard limits overall coverage.",
+      "flags": [
+        "coverage_inconsistent"
+      ],
+      "gaps": [
+        "Lack of PII and access policy metadata → implement comprehensive labeling and access controls across all dashboards → achieve ≥80% dashboards with PII and access policy metadata (unlocks band 4)."
+      ],
+      "score": 2
+    },
+    "governance.lineage_coverage": {
+      "metric_id": "governance.lineage_coverage",
+      "band": 2,
+      "rationale": "One dashboard is certified with complete metadata, but the second dashboard lacks certification and metadata, indicating sparse coverage overall. The absence of ownership and metadata for the uncertified dashboard significantly limits the metric's reliability.",
+      "flags": [
+        "owner_missing",
+        "metadata_missing"
+      ],
+      "gaps": [
+        "Missing ownership and metadata for uncertified dashboard → assign owners and complete metadata for all dashboards → achieve 100% certified dashboards with complete metadata (unlocks band 4)."
+      ],
+      "score": 2
+    },
+    "reliability.refresh_timeliness": {
+      "metric_id": "reliability.refresh_timeliness",
+      "band": 2,
+      "rationale": "Only 50% of dashboards are within SLA, with one critical stale dashboard; this indicates material risks to data reliability.",
+      "flags": [
+        "critical_stale_present"
+      ],
+      "gaps": [
+        "Critical stale dashboard present → refresh the stale dashboard → achieve 100% freshness for all critical assets (unlocks band 4)."
+      ],
+      "score": 2
+    },
+    "reliability.sla_breach_streaks": {
+      "metric_id": "reliability.sla_breach_streaks",
+      "band": 2,
+      "rationale": "The high-priority dashboard has not been refreshed within its daily SLA, indicating a material risk. The presence of a low-priority dashboard that is also overdue does not mitigate the criticality of the high-priority breach.",
+      "flags": [
+        "critical_breach"
+      ],
+      "gaps": [
+        "High-priority dashboard overdue → ensure daily refresh compliance for critical dashboards → achieve 0 breaches on high-priority dashboards (unlocks band 5)."
+      ],
+      "score": 2
+    },
+    "reliability.error_rate_queries": {
+      "metric_id": "reliability.error_rate_queries",
+      "band": 4,
+      "rationale": "The error rate is approximately 20% based on the single error event out of five total actions, which is within the acceptable range; however, the lack of information on the impact of the error limits the score. The overall activity shows a variety of actions, indicating user engagement.",
+      "flags": [],
+      "gaps": [
+        "Impact of error unknown → provide details on the severity and user impact of the error → demonstrate no high-impact incidents in the last 30 days (unlocks band 5)."
+      ],
+      "score": 4
+    },
+    "data.source_diversity": {
+      "metric_id": "data.source_diversity",
+      "band": 2,
+      "rationale": "Three distinct sources indicate some diversity, but they are all from a single domain, which limits the overall effectiveness of the data. The lack of domain variety presents a material risk to comprehensive insights.",
+      "flags": [
+        "domain_mix_unknown"
+      ],
+      "gaps": [
+        "Domain mix unknown → tag each source to domain (ERP/CRM/Support) → show ≥3 domains represented (unlocks band 4)."
+      ],
+      "score": 2
+    },
+    "democratization.dept_coverage": {
+      "metric_id": "democratization.dept_coverage",
+      "band": 2,
+      "rationale": "Only one department has a creator, indicating significant limitations in creator distribution. The lack of creator presence in other departments poses a material risk to overall engagement.",
+      "flags": [
+        "creator_counts_low"
+      ],
+      "gaps": [
+        "Creator presence limited to one department → report creators by department and total departments considered → reach ≥20% dept coverage (unlocks band 3)."
+      ],
+      "score": 2
+    },
+    "democratization.self_service": {
+      "metric_id": "democratization.self_service",
+      "band": 1,
+      "rationale": "With only 33% of users being creators, the metric falls below the critical threshold; there is no department coverage information available to assess broader engagement.",
+      "flags": [
+        "coverage_unknown"
+      ],
+      "gaps": [
+        "Department coverage unknown → report creators by department and coverage % → reach ≥8% creators (unlocks band 2)."
+      ],
+      "score": 1
+    },
+    "decision.traceability": {
+      "band": 3,
+      "rationale": "Unknown metric_id.",
+      "metric_id": "decision.traceability",
+      "gaps": [],
+      "flags": [],
+      "score": 3
+    },
+    "data.cost_efficiency": {
+      "metric_id": "data.cost_efficiency",
+      "band": 3,
+      "rationale": "The source catalog shows a good mix of data sources, but there is evidence of some egress and staleness in the dashboards, indicating mixed signals. The presence of stale content, particularly in the low-priority dashboard, limits overall efficiency.",
+      "flags": [
+        "egress_present",
+        "stale_assets_present"
+      ],
+      "gaps": [
+        "Egress and staleness present → quantify export session % and stale share by priority → reduce exports <15% and stale critical assets to 0 (unlocks band 4–5)."
+      ],
+      "score": 3
+    }
+  },
+  "aggregates": {
+    "business_integration": 1.72,
+    "decision_making": 2.44,
+    "overall_score": 2.08
+  }
+}

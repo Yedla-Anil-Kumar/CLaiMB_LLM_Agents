@@ -1,50 +1,126 @@
 # agent_layer/registry.py
-from __future__ import annotations
+from typing import List, Dict
 
-# Category weights (50/50 per the MVP)
-CATEGORY_WEIGHTS = {
-    "business_integration": 0.5,
-    "decision_making": 0.5,
+"""
+BI Tracker registry (DAG + category weights), cloud-infra style.
+
+- LEVEL0: metrics with no dependencies (run in parallel)
+- LEVEL1_DEPS: metrics that depend on Level-0 results
+- CATEGORIES: category-level weights and per-metric weights (sum to 1 within category)
+
+Top-level categories use a simple 50/50 split as requested:
+  - business_integration: 0.50
+  - decision_making:      0.50
+"""
+
+# -----------------------------
+# Level 0 (parallel, no deps)
+# -----------------------------
+LEVEL0: List[str] = [
+    # Usage & Adoption
+    "usage.dau_mau",
+    "usage.creators_ratio",
+    "usage.session_depth",
+    "usage.drilldown",
+    "usage.weekly_active_trend",
+    "usage.retention_4w",
+
+    # Features
+    "features.cross_links",
+    "features.export_rate",
+    "features.alerts_usage",
+
+    # Governance
+    "governance.coverage",
+    "governance.pii_coverage",
+    "governance.lineage_coverage",
+
+    # Reliability
+    "reliability.refresh_timeliness",
+    "reliability.sla_breach_streaks",
+    "reliability.error_rate_queries",
+
+    # Data breadth
+    "data.source_diversity",
+
+    # Democratization (independent)
+    "democratization.dept_coverage",
+]
+
+# ----------------------------------------
+# Level 1 (depends on one or more Level 0)
+# ----------------------------------------
+LEVEL1_DEPS: Dict[str, List[str]] = {
+    # Self-service depends on core adoption signals
+    "democratization.self_service": [
+        "usage.creators_ratio",
+        "usage.dau_mau",
+        "governance.coverage",
+    ],
+
+    # Decision traceability depends on governance and cross-linking
+    "decision.traceability": [
+        "governance.lineage_coverage",
+        "governance.coverage",
+        "features.cross_links",
+    ],
+
+    # Cost efficiency depends on freshness & error rate (proxy for wasted runs / unreliable views)
+    "data.cost_efficiency": [
+        "reliability.refresh_timeliness",
+        "reliability.error_rate_queries",
+    ],
 }
 
-# 20 BI metrics: category + dependencies (for simple 2-level DAG)
-REGISTRY = {
-    # ---- Level 0 (no deps) ------------------------------------
-    "usage.dau_mau":                   {"category": "business_integration", "depends_on": []},
-    "usage.creators_ratio":            {"category": "business_integration", "depends_on": []},
-    "usage.session_depth":             {"category": "business_integration", "depends_on": []},
-    "usage.drilldown":                 {"category": "business_integration", "depends_on": []},
-    "usage.weekly_active_trend":       {"category": "business_integration", "depends_on": []},
-    "usage.retention_4w":              {"category": "business_integration", "depends_on": []},
-    "features.cross_links":            {"category": "business_integration", "depends_on": []},
-    "features.export_rate":            {"category": "business_integration", "depends_on": []},
-    "features.alerts_usage":           {"category": "business_integration", "depends_on": []},
-    "democratization.dept_coverage":   {"category": "business_integration", "depends_on": []},
+# ------------------------------------------------------
+# Categories & weights (each metric weights sum to 1.00)
+# ------------------------------------------------------
+CATEGORIES: Dict[str, Dict] = {
+    "business_integration": {
+        "weight": 0.50,
+        "metrics": {
+            # Core adoption / stickiness
+            "usage.dau_mau":               0.14,
+            "usage.creators_ratio":        0.12,
+            "usage.session_depth":         0.08,
+            "usage.drilldown":             0.06,
 
-    "reliability.refresh_timeliness":  {"category": "decision_making",      "depends_on": []},
-    "reliability.sla_breach_streaks":  {"category": "decision_making",      "depends_on": []},
-    "reliability.error_rate_queries":  {"category": "decision_making",      "depends_on": []},
-    "governance.coverage":             {"category": "decision_making",      "depends_on": []},
-    "governance.pii_coverage":         {"category": "decision_making",      "depends_on": []},
-    "governance.lineage_coverage":     {"category": "decision_making",      "depends_on": []},
+            # Feature usage
+            "features.cross_links":        0.08,
+            "features.alerts_usage":       0.06,
+            "features.export_rate":        0.06,
 
-    "data.source_diversity":           {"category": "business_integration", "depends_on": []},
+            # Breadth / coverage
+            "data.source_diversity":       0.08,
+            "democratization.self_service":0.12,  # Level-1
 
-    # ---- Level 1 (has deps) -----------------------------------
-    # Examples from your spec:
-    #  self_service ← creators_ratio, dau_mau, governance_coverage
-    "democratization.self_service":    {
-        "category": "business_integration",
-        "depends_on": ["usage.creators_ratio", "usage.dau_mau", "governance.coverage"],
+            # Growth signals
+            "usage.weekly_active_trend":   0.10,
+            "usage.retention_4w":          0.06,
+
+            # Democratization spread
+            "democratization.dept_coverage": 0.04,
+        },
     },
-    #  decision_traceability ← lineage_coverage, governance_coverage, cross_links
-    "decision.traceability":           {
-        "category": "decision_making",
-        "depends_on": ["governance.lineage_coverage", "governance.coverage", "features.cross_links"],
-    },
-    #  cost_efficiency ← refresh_timeliness, error_rate_queries
-    "data.cost_efficiency":            {
-        "category": "decision_making",
-        "depends_on": ["reliability.refresh_timeliness", "reliability.error_rate_queries"],
+
+    "decision_making": {
+        "weight": 0.50,
+        "metrics": {
+            # Freshness & reliability
+            "reliability.refresh_timeliness": 0.22,
+            "reliability.sla_breach_streaks": 0.14,
+            "reliability.error_rate_queries": 0.16,
+
+            # Governance
+            "governance.coverage":        0.16,
+            "governance.pii_coverage":    0.10,
+            "governance.lineage_coverage":0.10,
+
+            # Traceability (Level-1)
+            "decision.traceability":      0.08,
+
+            # Efficiency (Level-1)
+            "data.cost_efficiency":       0.04,
+        },
     },
 }
