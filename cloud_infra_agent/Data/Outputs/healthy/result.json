@@ -1,0 +1,402 @@
+{
+  "metrics": {
+    "cost.commit_coverage": {
+      "metric_id": "cost.commit_coverage",
+      "category": "cost",
+      "platform": "aws",
+      "score": 4.0,
+      "confidence": 1.0,
+      "rationale": "The commitment coverage is approximately 97.5%, with less than 5% of the commitment unused, indicating good management of resources.",
+      "evidence": {
+        "coverage_pct": 0.975,
+        "waste_usd": 18
+      },
+      "gaps": []
+    },
+    "iac.coverage_drift": {
+      "metric_id": "iac.coverage_drift",
+      "category": "security",
+      "platform": "aws",
+      "score": 5.0,
+      "confidence": 1.0,
+      "rationale": "All resources are managed by Infrastructure as Code (IaC) with no policy findings indicating drift or security issues. This indicates excellent coverage and no material risks.",
+      "evidence": {
+        "coverage_pct": 1.0,
+        "high_critical": 0
+      },
+      "gaps": []
+    },
+    "db.utilization": {
+      "metric_id": "db.utilization",
+      "category": "efficiency",
+      "platform": "aws",
+      "score": 4.0,
+      "confidence": 0.85,
+      "rationale": "The CPU utilization for both databases is within acceptable limits, indicating good performance. However, there are minor risks due to the connection load being slightly higher than average, suggesting occasional spikes that could lead to imbalances.",
+      "evidence": {
+        "cpu_p95_avg": 0.525,
+        "connections_p95_avg": 0.57
+      },
+      "gaps": [
+        "1. Monitor connection loads more closely to identify potential spikes.",
+        "2. Consider optimizing connection handling to prevent future imbalances."
+      ]
+    },
+    "availability.incidents": {
+      "metric_id": "availability.incidents",
+      "category": "reliability",
+      "platform": "aws",
+      "score": 5.0,
+      "confidence": 1.0,
+      "rationale": "There are no incidents or SLO breaches reported, indicating excellent performance in terms of availability. The service exceeds the target availability objective.",
+      "evidence": {
+        "sev12_30d": 0,
+        "mttr_h": 0.0,
+        "slo_breach_hours": 0.0,
+        "slo_target": 0.999
+      },
+      "gaps": []
+    },
+    "cost.allocation_quality": {
+      "metric_id": "cost.allocation_quality",
+      "category": "cost",
+      "platform": "aws",
+      "score": 3.0,
+      "confidence": 0.8,
+      "rationale": "Approximately 75% of the costs can be attributed to specific tags, but there are some costs without sufficient tagging, indicating clear risks in cost allocation.",
+      "evidence": {
+        "attributable_pct": 0.75
+      },
+      "gaps": [
+        "1. Implement a policy to ensure all cost rows are tagged with owner and environment.",
+        "2. Review and backfill missing tags for existing cost rows."
+      ]
+    },
+    "cost.idle_underutilized": {
+      "metric_id": "cost.idle_underutilized",
+      "category": "cost",
+      "platform": "aws",
+      "score": 3.0,
+      "confidence": 0.75,
+      "rationale": "The idle spend is significant, with instances showing moderate utilization levels. The total cost indicates that there are clear risks associated with underutilization that need to be addressed.",
+      "evidence": {
+        "idle_cost": 300,
+        "idle_pct": 0.1,
+        "total_cost": 1500
+      },
+      "gaps": [
+        "1. Analyze utilization patterns of instances to identify potential downsizing opportunities.",
+        "2. Implement monitoring to track idle resources more effectively.",
+        "3. Consider scheduling instances to run only during peak usage times."
+      ]
+    },
+    "compute.utilization": {
+      "metric_id": "compute.utilization",
+      "category": "efficiency",
+      "platform": "aws",
+      "score": 3.0,
+      "confidence": 0.8,
+      "rationale": "The overall CPU and memory utilization is within acceptable ranges for some instances, but there are clear risks due to low utilization hours across multiple instances. The presence of instances with low utilization indicates potential inefficiencies.",
+      "evidence": {
+        "fleet_cpu_p95": 0.53,
+        "fleet_mem_p95": 0.53,
+        "low_util_pct": 0.25,
+        "total_instances": 4
+      },
+      "gaps": [
+        "1. Analyze and optimize instance 'i-2' and 'i-4' for better utilization.",
+        "2. Consider implementing auto-scaling or rightsizing for instances with low utilization.",
+        "3. Monitor utilization trends over the next 30 days to identify persistent low-util instances."
+      ]
+    },
+    "k8s.utilization": {
+      "metric_id": "k8s.utilization",
+      "category": "efficiency",
+      "platform": "aws",
+      "score": 4.0,
+      "confidence": 0.9,
+      "rationale": "The cluster shows good resource utilization with a high request-to-usage ratio and efficient packing. Pending pods are minimal, indicating that the system is functioning well overall, though there are minor risks to monitor.",
+      "evidence": {
+        "binpack_efficiency": 0.86,
+        "pending_pods_p95": 1,
+        "nodes_cpu_p95": 0.62,
+        "pods_cpu_req_vs_used": 0.83
+      },
+      "gaps": [
+        "1. Monitor CPU and memory utilization trends to ensure they remain within optimal ranges.",
+        "2. Review pending pod counts regularly to prevent potential bottlenecks."
+      ]
+    },
+    "security.encryption": {
+      "metric_id": "security.encryption",
+      "category": "security",
+      "platform": "aws",
+      "score": 5.0,
+      "confidence": 1.0,
+      "rationale": "All resources are encrypted at rest and utilize a modern TLS policy, indicating a strong security posture with no material risks.",
+      "evidence": {
+        "at_rest_pct": 1.0,
+        "legacy_tls_endpoints": 0
+      },
+      "gaps": []
+    },
+    "security.public_exposure": {
+      "metric_id": "security.public_exposure",
+      "category": "security",
+      "platform": "aws",
+      "score": 4.0,
+      "confidence": 0.9,
+      "rationale": "There is one network policy allowing SSH access from a specific CIDR in production, which is a minor risk. The storage bucket is not publicly accessible, and there are no public IPs associated with sensitive assets, indicating good overall security posture.",
+      "evidence": {
+        "open_fw_rules": 1,
+        "public_buckets": 0,
+        "public_ips": 0
+      },
+      "gaps": []
+    },
+    "security.iam_risk": {
+      "metric_id": "security.iam_risk",
+      "category": "security",
+      "platform": "aws",
+      "score": 4.0,
+      "confidence": 0.8,
+      "rationale": "All users have MFA enabled, and there are no keys older than 90 days. However, there is a wildcard policy that allows broad access, which introduces minor risks.",
+      "evidence": {
+        "users_without_mfa": 0,
+        "old_keys": 0,
+        "overly_permissive_principals": 1
+      },
+      "gaps": [
+        "1. Review and restrict the wildcard policy to limit access",
+        "2. Implement monitoring for policy changes",
+        "3. Conduct regular audits of IAM policies"
+      ]
+    },
+    "security.vuln_patch": {
+      "metric_id": "security.vuln_patch",
+      "category": "security",
+      "platform": "aws",
+      "score": 4.0,
+      "confidence": 1.0,
+      "rationale": "The patch coverage is excellent at 97%, and the average patch age is well within the target at 10 days. There are no critical vulnerabilities open, but there is one high severity finding that has been resolved.",
+      "evidence": {
+        "agent_coverage_pct": 0.97,
+        "avg_patch_age_days": 10,
+        "resolved_highs": 1,
+        "scanned_assets": 495,
+        "total_assets": 500
+      },
+      "gaps": []
+    },
+    "storage.efficiency": {
+      "metric_id": "storage.efficiency",
+      "category": "efficiency",
+      "platform": "aws",
+      "score": 4.0,
+      "confidence": 0.75,
+      "rationale": "The system has one attached block volume and a corresponding snapshot, indicating good management of block storage. However, the object storage is using an intelligent tiering class, and the last modified date suggests potential for stale data, which could lead to minor waste.",
+      "evidence": {
+        "attached_volumes": 1,
+        "orphaned_snaps": 0,
+        "hot_stale_objects": 1
+      },
+      "gaps": [
+        "1. Review the last modified date of objects to identify and manage stale data",
+        "2. Consider implementing lifecycle policies for object storage to optimize costs",
+        "3. Monitor the usage of intelligent tiering to ensure it aligns with access patterns"
+      ]
+    },
+    "lb.performance": {
+      "metric_id": "lb.performance",
+      "category": "reliability",
+      "platform": "aws",
+      "score": 4.0,
+      "confidence": 0.85,
+      "rationale": "The p95 and p99 latencies are below the SLO thresholds, and the 5xx error rate is also within acceptable limits. However, there is a minor risk due to the presence of 1 minute marked as unhealthy, which could indicate occasional instability.",
+      "evidence": {
+        "breaches": 0,
+        "worst_lb": "alb-1",
+        "p95_ms": 120,
+        "p99_ms": 240,
+        "r5xx": 0.002,
+        "requests": 1800000
+      },
+      "gaps": [
+        "1. Investigate the cause of the 1 minute of unhealthy status.",
+        "2. Monitor for any spikes in latency or error rates.",
+        "3. Ensure load balancer capacity is sufficient to handle peak requests.",
+        "4. Review health check configurations for potential improvements."
+      ]
+    },
+    "scaling.effectiveness": {
+      "metric_id": "scaling.effectiveness",
+      "category": "efficiency",
+      "platform": "aws",
+      "score": 2.0,
+      "confidence": 0.6,
+      "rationale": "The system experienced significant violations and a delayed reaction to the overload, indicating material risks. The reaction time was too long, and the violation rate exceeded acceptable limits.",
+      "evidence": {
+        "median_reaction_s": 150,
+        "target_violation_pct": 33.33,
+        "thrash_rate": 0.0,
+        "delta_error_pct": 20.0,
+        "events": 2,
+        "total_samples": 3,
+        "violating_samples": 1,
+        "first_breach_ts": "2025-08-10T12:00:00Z",
+        "first_corrective_ts": "2025-08-10T12:00:35Z",
+        "needed_delta": 5,
+        "applied_delta": 5
+      },
+      "gaps": [
+        "1. Analyze the cause of the delayed reaction and implement faster scaling actions.",
+        "2. Review the scaling thresholds to reduce violation rates.",
+        "3. Increase monitoring frequency to better capture load changes.",
+        "4. Consider adjusting the target CPU to better align with actual usage patterns."
+      ]
+    },
+    "tagging.coverage": {
+      "metric_id": "tagging.coverage",
+      "category": "efficiency",
+      "platform": "aws",
+      "score": 3.0,
+      "confidence": 0.7,
+      "rationale": "Approximately 75% of the resources are fully tagged, but there are gaps in critical tags for production resources. Specifically, one production resource is missing the 'cost-center' tag, which is essential for proper cost management.",
+      "evidence": {
+        "coverage_pct": 0.75,
+        "missing_examples": [
+          {
+            "id": "r3",
+            "missing": [
+              "cost-center"
+            ]
+          }
+        ]
+      },
+      "gaps": [
+        "1. Ensure all production resources have the 'cost-center' tag assigned.",
+        "2. Review tagging policies to enforce critical tags on all resources.",
+        "3. Conduct a tagging audit to identify and rectify missing tags.",
+        "4. Implement automated checks for required tags during resource provisioning.",
+        "5. Provide training for teams on the importance of tagging for resource management."
+      ]
+    }
+  },
+  "summary": {
+    "overall_score": 3.8089999999999997,
+    "category_scores": {
+      "cost": 3.3499999999999996,
+      "efficiency": 3.3799999999999994,
+      "reliability": 4.6,
+      "security": 4.3500000000000005
+    },
+    "breakdown": [
+      {
+        "name": "cost",
+        "weight": 0.3,
+        "effective_weight_sum": 1.0,
+        "metrics": [
+          {
+            "metric": "cost.commit_coverage",
+            "weight": 0.35,
+            "score": 4.0
+          },
+          {
+            "metric": "cost.allocation_quality",
+            "weight": 0.35,
+            "score": 3.0
+          },
+          {
+            "metric": "cost.idle_underutilized",
+            "weight": 0.3,
+            "score": 3.0
+          }
+        ]
+      },
+      {
+        "name": "efficiency",
+        "weight": 0.3,
+        "effective_weight_sum": 1.0,
+        "metrics": [
+          {
+            "metric": "compute.utilization",
+            "weight": 0.22,
+            "score": 3.0
+          },
+          {
+            "metric": "k8s.utilization",
+            "weight": 0.22,
+            "score": 4.0
+          },
+          {
+            "metric": "db.utilization",
+            "weight": 0.18,
+            "score": 4.0
+          },
+          {
+            "metric": "storage.efficiency",
+            "weight": 0.18,
+            "score": 4.0
+          },
+          {
+            "metric": "scaling.effectiveness",
+            "weight": 0.2,
+            "score": 2.0
+          }
+        ]
+      },
+      {
+        "name": "reliability",
+        "weight": 0.2,
+        "effective_weight_sum": 1.0,
+        "metrics": [
+          {
+            "metric": "availability.incidents",
+            "weight": 0.6,
+            "score": 5.0
+          },
+          {
+            "metric": "lb.performance",
+            "weight": 0.4,
+            "score": 4.0
+          }
+        ]
+      },
+      {
+        "name": "security",
+        "weight": 0.2,
+        "effective_weight_sum": 0.9999999999999999,
+        "metrics": [
+          {
+            "metric": "security.encryption",
+            "weight": 0.25,
+            "score": 5.0
+          },
+          {
+            "metric": "security.iam_risk",
+            "weight": 0.25,
+            "score": 4.0
+          },
+          {
+            "metric": "security.public_exposure",
+            "weight": 0.2,
+            "score": 4.0
+          },
+          {
+            "metric": "security.vuln_patch",
+            "weight": 0.2,
+            "score": 4.0
+          },
+          {
+            "metric": "iac.coverage_drift",
+            "weight": 0.1,
+            "score": 5.0
+          }
+        ]
+      }
+    ],
+    "simple_average_debug": 3.8125,
+    "count_metrics": 16,
+    "scored_metrics": 16
+  }
+}

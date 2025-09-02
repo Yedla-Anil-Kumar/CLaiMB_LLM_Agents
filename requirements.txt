@@ -1,3 +1,9 @@
 python-dotenv
 loguru
 openai
+fastapi
+uvicorn
+google-generativeai==0.8.3
+APScheduler
+PyYAML
+

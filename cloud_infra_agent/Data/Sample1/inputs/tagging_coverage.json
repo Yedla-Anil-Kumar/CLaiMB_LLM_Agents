@@ -1,8 +1,0 @@
-{
-            "resources": [
-                {"id": "r1", "tags": {"env": "prod"}},  
-                {"id": "r2", "tags": {}},               
-                {"id": "r3", "tags": {"owner": "ml"}}
-            ],
-            "required_tags": ["env", "owner", "cost-center", "service"]
-        }

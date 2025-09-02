@@ -3,3 +3,6 @@ venv/
 *.env
 .env
 .DS_Store
+__pycache__
+cloud_infra_agent/__pycache__
+test.py

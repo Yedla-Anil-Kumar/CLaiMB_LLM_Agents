@@ -760,7 +760,7 @@ def build_prompt(metric_id: str, task_input: dict) -> str:
         f"EXAMPLE INPUT:\n{json.dumps(meta['example_input'], indent=2)}\n\n"
         f"EXAMPLE OUTPUT:\n{json.dumps(meta['example_output'], indent=2)}"
     )
-    logger.debug(prompt)
+    # logger.debug(prompt)
     # --- add these 3 lines ---
     # try:
     #     existing = json.load(open("all_metric_prompts.json"))  # load if exists

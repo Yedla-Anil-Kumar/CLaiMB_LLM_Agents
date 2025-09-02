@@ -1,172 +1,238 @@
-# CloudInfraAgent
+# Cloud Infrastructure Agent — Batch Runner Mode
 
-**CloudInfraAgent** is a modular framework for assessing cloud infrastructure across **FinOps, security, scaling, availability, and utilization**.  
-It ingests JSON inputs, an **LLM** for consistent scoring (1–5).  
+This project runs Cloud Infrastructure Agent.  
+A lightweight **scheduler** wakes up on a fixed interval, launches a **runner** to pick **one pending batch**, and the **engine** evaluates only the metrics present in that batch.
+---
 
+## 🚀 Quick Start
+
+```bash
+# 1) Setup
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# 2) Cloud Infrastructure Agent ENV
+CLOUD_INFRA_DATA_DIR=cloud_infra_agent/Data
+LLM_PROVIDER=openai
+# --- OpenAI ---
+OPENAI_API_KEY=sk-proj-
+OPENAI_MODEL=
+# --- Google Gemini ---
+GOOGLE_GENAI_USE_VERTEXAI=FALSE
+GOOGLE_API_KEY=
+GOOGLE_MODEL=
+BACKBONE_MODULE=cloud_infra_agent.agent_wrappers
+DEFAULT_PLATFORM=aws
+
+# 3) Start the scheduler (runs once immediately, then every 10 minutes by default)
+python -m batch_runner.scheduler
+```
+- Drop a folder with JSON inputs under:  
+  `cloud_infra_agent/Data/Inputs/<batch_name>/`
+- On each tick the runner processes **one** pending batch and writes:  
+  `cloud_infra_agent/Data/Outputs/<batch_name>/result.json`
 
 ---
 
-## 📂 Project Structure
+## 📁 Repository Layout (relevant paths)
 
 ```
 cloud_infra_agent/
-├── main.py                  # Entry point for running agent
-├── base_agents.py           # Base classes for agent orchestration     
-├── call_llm_.py             # LLM call wrappers
-├── compute_functions.py     # Functions for metric computation
-├── config.py                # Configurations and constants
-├── metric_input_loader.py   # Load JSON inputs for metrics
-├── metrics.py               # Metric registry and prompts
-├── utility_functions.py     # Shared helpers (aggregation, scoring, utils)
-└── Data/
-    └── Sample2/
-        ├── inputs/          # Input JSONs per metric
-        └── output.json      # Generated output
+  Data/
+    Inputs/                 # put one subfolder per batch here
+      Sample1/
+        lb_performance.json
+        availability_incidents.json
+    Outputs/                # runner writes outputs here
+      Sample1/result.json
+    state/
+      processed.json        # runner state (absolute paths of processed batches)
+
+batch_runner/
+  scheduler.py              # interval loop (run -> sleep -> run)
+  runner.py                 # picks one pending batch and executes it
+  engine_bridge.py          # runs engine (callable or external command)
+  engine_adapter.py         # loads per-metric inputs, calls workflow
+  config.yaml               # paths, patterns, engine wiring
+
+workflows/
+  monitor_workflow.py       # strict single-flow: run only metrics present
+
+agent_layer/
+  registry.py               # metric ids & category weights (dotted ids)
+  tool_loader.py            # turns metric_id into callable
 ```
 
 ---
 
-## 🚀 Features
+## ⚙️ Configuration
 
-- **Multi-domain Metric Coverage**  
-  - Tagging coverage  
-  - Compute utilization  
-  - Database and load balancer metrics  
-  - Kubernetes efficiency  
-  - Scaling effectiveness  
-  - Cost allocation, idle/waste tracking  
-  - IAM risks, vulnerabilities, CSPM findings  
+**`batch_runner/config.yaml`** (defaults shown):
 
-- **LLM Scoring**  
-  **LLM-powered reasoning** for structured outputs.
+```yaml
+# === Batch Runner Config ===
+inputs_root: "cloud_infra_agent/Data/Inputs"
+outputs_root: "cloud_infra_agent/Data/Outputs"
+state_file:  "cloud_infra_agent/Data/state/processed.json"
 
-- **Pluggable Design**  
-  Add new metrics by extending `DEFAULT_METRICS` in `config.py` and mapping them in `metrics.py`.
+# A batch is processable if it has at least one file matching any glob here (at the batch root)
+file_glob_patterns:
+  - "*.json"
 
-- **Sample Datasets**  
-  Ready-to-run JSONs included in `Data/Sample2/inputs`.
-
----
-
-## ⚙️ Installation
-
-```bash
-git clone <your-repo-url>
-python3 -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
+# Engine: call the Python adapter that loads per-metric JSONs and runs the workflow
+engine_command: ""  # leave empty to use callable
+engine_callable: "batch_runner.engine_adapter:run_engine"
 ```
 
-Set environment variables (via `.env`):
-
-```env
-GOOGLE_GENAI_USE_VERTEXAI=FALSE
-GOOGLE_API_KEY=your-google-key
-OPENAI_KEY=your-openai-key
-CLOUD_INFRA_DATA_DIR=cloud_infra_agent/Data
-```
-
----
-
-## ▶️ Usage
-
-### Run with Sample Data
-
-```bash
-python -m cloud_infra_agent.main <sample_data_folder_name>
-```
-
-This will:
-1. Load mappings from `Data/<sample_data_folder_name>/inputs/`
-2. Ccall LLM for scoring
-3. Generate structured output (`output.json`)
+**Scheduler interval:**  
+The simple loop sleeps **600 seconds (10 minutes)** by default. Override:
 
 
 ---
 
-## 📊 Example Input → Output
+## 🧱 Preparing a Batch
 
-### Input (`Data/Sample2/inputs/tagging_coverage.json`)
+Create a **new subfolder** under `cloud_infra_agent/Data/Inputs/` and drop top-level JSON files:
 
-```json
-{
-  "resources": [
-    {
-      "id": "i-3",
-      "tags": {
-        "env": "prod",
-        "owner": "search",
-        "service": "api"
-      }
-    },
-    {
-      "id": "i-4",
-      "tags": {
-        "env": "stage",
-        "owner": "search"
-      }
-    },
-    {
-      "id": "db-3",
-      "tags": {
-        "env": "prod"
-      }
-    }
-  ],
-  "required_tags": [
-    "env",
-    "owner",
-    "cost-center",
-    "service"
-  ]
+```
+cloud_infra_agent/Data/Inputs/Sample1/
+  lb_performance.json
+  availability_incidents.json
+  compute_utilization.json
+  ...
+```
+
+> **One folder = one batch.** The runner records processed folders by **absolute path** in `Data/state/processed.json`.  
+> To re-run, create a **new folder name** (e.g., `Sample2/`).
+
+### Canonical Metric IDs & Filenames
+
+Metric identifiers are **dotted** (canonical), and the adapter reads files via a single map:
+
+```python
+# engine_adapter.py (excerpt)
+Input_File_For_Metric_map = {
+  "tagging.coverage":         "tagging_coverage.json",
+  "compute.utilization":      "compute_utilization.json",
+  "k8s.utilization":          "k8s_utilization.json",
+  "scaling.effectiveness":    "scaling_effectiveness.json",
+  "db.utilization":           "db_utilization.json",
+  "lb.performance":           "lb_performance.json",
+  "storage.efficiency":       "storage_efficiency.json",
+  "iac.coverage_drift":       "iac_coverage_drift.json",
+  "availability.incidents":   "availability_incidents.json",
+  "cost.idle_underutilized":  "cost_idle_underutilized.json",
+  "cost.commit_coverage":     "cost_commit_coverage.json",
+  "cost.allocation_quality":  "cost_allocation_quality.json",
+  "security.public_exposure": "security_public_exposure.json",
+  "security.encryption":      "security_encryption.json",
+  "security.iam_risk":        "security_iam_risk.json",
+  "security.vuln_patch":      "security_vuln_patch.json"
 }
 ```
 
-### LLM Evaluation Output
+Only metrics with a corresponding file present in the batch will run (**strict single flow**).
 
+### Minimal JSON Examples
+
+`lb_performance.json`
 ```json
 {
-      "metric_id": "tagging.coverage",
-      "score": 2,
-      "rationale": "Only 1 out of 3 resources (33%) are fully tagged with all required tags. Critical tags like 'owner' are missing on a production resource, and 'cost-center' is absent on all resources, posing material risks to cost tracking and accountability.",
-      "evidence": {
-        "coverage_pct": 0.33,
-        "fully_tagged_ids": [
-          "i-3"
-        ],
-        "missing_examples": [
-          {
-            "id": "i-4",
-            "missing": [
-              "cost-center",
-              "service"
-            ]
-          },
-          {
-            "id": "db-3",
-            "missing": [
-              "owner",
-              "cost-center",
-              "service"
-            ]
-          }
-        ],
-        "prod_missing_critical": [
-          {
-            "id": "db-3",
-            "missing": [
-              "owner"
-            ]
-          }
-        ]
-      },
-      "gaps": [
-        "1. Add 'cost-center' and 'service' tags to all resources.",
-        "2. Ensure 'owner' tag is present on all production resources.",
-        "3. Implement automated checks to enforce required tags at provisioning."
-      ],
-      "confidence": 0.8
-    }
-
+  "load_balancers": [
+    { "id": "alb-1", "lat_p95": 120, "lat_p99": 240, "r5xx": 0.002, "unhealthy_minutes": 1, "requests": 1800000 }
+  ],
+  "slo": { "p95_ms": 200, "p99_ms": 400, "5xx_rate_max": 0.005 }
+}
 ```
 
+`availability_incidents.json`
+```json
+{
+  "incidents": [],
+  "slo_breaches": [],
+  "slo": { "objective": "availability", "target": 0.999 }
+}
+```
+
+---
+
+## 🔁 How the Scheduler/Runner Work
+
+**On start:** scheduler immediately launches the runner once.  
+**Every interval:** scheduler launches runner again.
+
+**Runner steps each time:**
+1. List batch folders under `Inputs/`.
+2. Filter to **pending**:
+   - has at least one file matching `file_glob_patterns` at the batch root,
+   - **not** already in `state/processed.json`,
+   - **no** `.lock` file present.
+3. Pick **one** pending folder (newest by mtime), create a `.lock`, and run the engine.
+4. Write output to `Outputs/<batch>/result.json`.
+5. Mark batch as processed (absolute path) and remove `.lock`.
+
+**One batch per tick** by design. If you drop multiple batches, they will be processed **one per interval** (e.g., every 10 minutes).
+
+---
+
+## 📄 Output
+
+Per-batch result: `cloud_infra_agent/Data/Outputs/<batch_name>/result.json`
+
+Shape:
+```json
+{
+  "metrics": {
+    "lb.performance":{ "metric_id": "lb.performance", "score": 4.0, "confidence": 0.9, "rationale": "...", "evidence": {}, "gaps": [] },
+    "availability.incidents": { "metric_id": "availability.incidents", "score": 5.0, "confidence": 0.85, "rationale": "...", "evidence": {}, "gaps": [] }
+  },
+  "summary": {
+    "overall_score": 4.1,
+    "category_scores": { "reliability": 4.5, "cost": 3.7, "security": 4.0, "efficiency": 3.9 },
+    "breakdown": [ /* category -> metrics & weights */ ],
+    "scored_metrics": 12
+  }
+}
+```
+
+---
+
+
+## ❗ Exit Codes (runner)
+
+- `0` — Success (processed a batch **or** nothing pending)
+- `1` — Engine failure (callable/command failed)
+- `2` — Couldn’t write result file (I/O error)
+
+The scheduler logs the runner’s exit code each tick.
+
+---
+
+## 🛠️ Troubleshooting
+
+**“New batch not picked up”**
+- Ensure it’s a **new folder** under `Data/Inputs/` (unique name).
+- Ensure there is at least **one** `*.json` at the **batch root** (default globs are not recursive).
+  - If you must put JSONs under a subfolder, add a glob in `config.yaml`:
+    ```yaml
+    file_glob_patterns:
+      - "*.json"
+      - "inputs/*.json"
+    ```
+- Check for a stale `.lock` inside the batch folder.
+- Inspect logs; runner prints:
+  - `[runner] subdirs: [...]`
+  - `skip <name>: already processed | locked | no input files`
+  - `pending candidates: [...]`
+
+**“Missing mapped files” in engine logs**  
+→ The adapter prints which metric files weren’t found. Add those files (or ignore those metrics for that batch).
+
+---
+
+## 📚 Notes
+
+- **Re-runs:** Recommended approach is **new folder per batch** (e.g., timestamped dirs).
+- **IDs:** Keep metric IDs **dotted** everywhere; only filenames map underscores.
+- **Time:** Runner/scheduler timestamps are written in **UTC**.
