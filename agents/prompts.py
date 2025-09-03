@@ -1,9 +1,8 @@
-# prompts.py
 # All prompts for the Data Management and Analytics Readiness Metrics
 
 class DataManagementPrompts:
     """Prompts for Data Management Metrics evaluators"""
-    
+
     @staticmethod
     def get_schema_consistency_prompt(task_input_json: str) -> str:
         return (
@@ -22,22 +21,22 @@ class DataManagementPrompts:
             "3. Calculate approximate percentage of mismatch (fields present in baseline but missing or different in actual).\n"
             "4. Based on that, assign a score (1–5).\n"
             "5. Provide detailed rationale (list the issues clearly, quantify % mismatch).\n"
-            "6. Provide actionable gap recommendations (e.g., 'add missing field X', 'remove deprecated Y', 'enforce schema registry').\n\n"
+            "6. Provide actionable gap recommendations as a list of points (e.g., ['Add missing field X', 'Remove deprecated Y', 'Enforce schema registry']).\n\n"
             "EXAMPLE INPUT:\n"
             '{"baseline_schema":{"users":["id","email","created_at"]},"actual_schema":{"users":["id","email"]}}\n\n'
             "EXAMPLE OUTPUT:\n"
             '{"metric_id":"schema.consistency","score":3,'
             '"rationale":"Missing field `created_at` in users; ~33% of required fields are absent.",'
-            '"gap":"Add the missing field `created_at` to actual schema. Implement automated schema drift detection and establish version control."}\n\n'
+            '"gap":["Add the missing field `created_at` to actual schema.", "Implement automated schema drift detection.", "Establish version control."]}\n\n'
             "EXAMPLE PERFECT MATCH OUTPUT:\n"
             '{"metric_id":"schema.consistency","score":5,'
             '"rationale":"All tables and fields match exactly between baseline and actual schema.",'
-            '"gap":"No action required"}\n\n'
+            '"gap":["No action required"]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
-            '{"metric_id":"schema.consistency","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"schema.consistency","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
-    
+
     @staticmethod
     def get_data_freshness_prompt(task_input_json: str) -> str:
         return (
@@ -55,20 +54,20 @@ class DataManagementPrompts:
             "2. Identify SLA breaches and quantify how big the drift is.\n"
             "3. Provide a score from 1 to 5 based on severity.\n"
             "4. Rationale must be clear and structured: list which tables are healthy vs stale, quantify average/maximum lag.\n"
-            "5. Gap should include actionable items such as rescheduling pipelines, monitoring, alerts, or architectural fixes.\n\n"
+            "5. Gap should include actionable items as a list (e.g., ['Reschedule pipelines', 'Add alerts', 'Architectural fixes']).\n\n"
             "EXAMPLE INPUT:\n"
             '{"tables":[{"table":"sales","expected_frequency":"hourly","last_updated":"5h ago"}]}\n\n'
             "EXAMPLE OUTPUT:\n"
             '{"metric_id":"data.freshness","score":3,"rationale":"Table sales expected hourly, last updated 5h ago; indicates 4h SLA breach (~5h lag).",'
-            '"gap":"Reschedule or debug the sales ingestion pipeline, add late-arrival alerts and SLA monitoring."}\n\n'
+            '"gap":["Reschedule the sales ingestion pipeline.", "Debug late arrivals.", "Add SLA breach monitoring."]}\n\n'
             "EXAMPLE PERFECT MATCH OUTPUT:\n"
             '{"metric_id":"data.freshness","score":5,"rationale":"All tables updated within SLA. No significant freshness issues detected.",'
-            '"gap":"No action needed — maintain SLA compliance"}\n\n'
+            '"gap":["No action needed — maintain SLA compliance"]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
-            '{"metric_id":"data.freshness","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"data.freshness","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
-    
+
     @staticmethod
     def get_data_quality_prompt(task_input_json: str) -> str:
         return (
@@ -85,22 +84,22 @@ class DataManagementPrompts:
             "1. For each table (if multiple provided), consider null_pct + duplicate_pct + outlier_pct as the total issue rate.\n"
             "2. Assign a quality score based on the highest degradation (worst case dominates).\n"
             "3. Provide a rationale: highlight which dimensions caused issues (nulls, duplicates, outliers) and quantify them.\n"
-            "4. Provide a gap: actionable recommendations to improve this score (validation, deduplication, anomaly detection, data contracts, etc.).\n\n"
+            "4. Provide a gap: actionable recommendations as a list to improve this score (e.g., ['Implement NOT NULL constraints', 'Enforce uniqueness', 'Deploy deduplication']).\n\n"
             "EXAMPLE INPUT:\n"
             '{"table":"users","null_pct":0.07,"duplicate_pct":0.05,"outlier_pct":0.00}\n\n'
             "EXAMPLE OUTPUT:\n"
             '{"metric_id":"data.quality","score":3,'
             '"rationale":"Users table has ~12% issues (7% nulls, 5% duplicates). Outliers 0%.",'
-            '"gap":"Implement NOT NULL constraints, enforce uniqueness in user_id, deploy duplicate detection and cleansing pipeline."}\n\n'
+            '"gap":["Implement NOT NULL constraints.", "Enforce uniqueness in user_id.", "Deploy duplicate detection and cleansing pipeline."]}\n\n'
             "EXAMPLE PERFECT MATCH OUTPUT:\n"
             '{"metric_id":"data.quality","score":5,'
             '"rationale":"All quality dimensions (nulls, duplicates, outliers) <1%.",'
-            '"gap":"No gaps — maintain monitoring and quality checks."}\n\n'
+            '"gap":["No gaps — maintain monitoring and quality checks."]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
-            '{"metric_id":"data.quality","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"data.quality","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
-    
+
     @staticmethod
     def get_governance_compliance_prompt(task_input_json: str) -> str:
         return (
@@ -119,22 +118,22 @@ class DataManagementPrompts:
             "3. Compute percentage of violations = violations / total.\n"
             "4. Score according to rubric.\n"
             "5. Rationale must state violation % clearly and highlight risks.\n"
-            "6. Gap must provide concrete recommendations, such as better monitoring, stricter IAM rules, role-based access, audits, or staff training.\n\n"
+            "6. Gap must provide concrete recommendations as a list (e.g., ['Better monitoring', 'Stricter IAM rules', 'Quarterly audits', 'Staff training']).\n\n"
             "EXAMPLE INPUT:\n"
             '{"valid_access":95,"violations":5}\n\n'
             "EXAMPLE OUTPUT:\n"
             '{"metric_id":"governance.compliance","score":4,'
             '"rationale":"100 requests total, 5 were violations (~5% rate). Mostly compliant but minor breaches exist.",'
-            '"gap":"Tighten IAM policies, conduct quarterly access audits, enforce role-based least-privilege access."}\n\n'
+            '"gap":["Tighten IAM policies.", "Conduct quarterly access audits.", "Enforce role-based least-privilege access."]}\n\n'
             "EXAMPLE PERFECT MATCH OUTPUT:\n"
             '{"metric_id":"governance.compliance","score":5,'
             '"rationale":"100% valid accesses, no governance violations observed.",'
-            '"gap":"No governance gaps. Maintain access policies and monitoring."}\n\n'
+            '"gap":["No governance gaps. Maintain access policies and monitoring."]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra commentary):\n"
-            '{"metric_id":"governance.compliance","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"governance.compliance","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
-    
+
     @staticmethod
     def get_data_lineage_prompt(task_input_json: str) -> str:
         return (
@@ -151,22 +150,22 @@ class DataManagementPrompts:
             "1. Calculate lineage coverage percentage = tables_with_lineage ÷ tables_total × 100.\n"
             "2. Assign score using the rubric.\n"
             "3. Rationale: state coverage percentage, highlight critical gaps (e.g., missing tables, missing column-level lineage).\n"
-            "4. Gap: give actionable steps — e.g., implement automated lineage extraction, enforce metadata catalog registration, integrate pipeline-level lineage, encourage documentation.\n\n"
+            "4. Gap: give actionable steps as a list (e.g., ['Implement automated lineage extraction', 'Enforce metadata catalog registration', 'Document missing flows']).\n\n"
             "EXAMPLE INPUT:\n"
             '{"tables_total":100,"tables_with_lineage":85}\n\n'
             "EXAMPLE OUTPUT:\n"
             '{"metric_id":"data.lineage","score":3,'
             '"rationale":"85% lineage coverage (15 tables undocumented). Coverage is moderate but below enterprise-grade standards.",'
-            '"gap":"Deploy automated lineage extraction tooling, document missing data flows, implement pipeline instrumentation for column-level lineage."}\n\n'
+            '"gap":["Deploy automated lineage extraction tooling.", "Document missing data flows.", "Implement pipeline instrumentation for column-level lineage."]}\n\n'
             "EXAMPLE PERFECT MATCH OUTPUT:\n"
             '{"metric_id":"data.lineage","score":5,'
             '"rationale":"Lineage documented for 100% of tables (complete coverage).",'
-            '"gap":"No gap — maintain current lineage tracking practices."}\n\n'
+            '"gap":["No gap — maintain current lineage tracking practices."]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only):\n"
-            '{"metric_id":"data.lineage","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"data.lineage","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
-    
+
     @staticmethod
     def get_metadata_coverage_prompt(task_input_json: str) -> str:
         return (
@@ -185,22 +184,22 @@ class DataManagementPrompts:
             "3. Compute percentage of documented entries.\n"
             "4. Score according to the rubric.\n"
             "5. Rationale should include % documented and highlight missing fields/tables.\n"
-            "6. Gap should recommend actions like enforcing metadata policies, assigning data stewards, or using automated validation.\n\n"
+            "6. Gap should recommend actions as a list (e.g., ['Enforce metadata policies', 'Assign data stewards', 'Automated validation']).\n\n"
             "EXAMPLE INPUT:\n"
             '{"catalog_entries":[{"table":"orders","description":"Customer orders","owner":"data-team"},{"table":"customers","description":"","owner":"data-team"}],"required_fields":["description","owner"]}\n\n'
             "EXAMPLE OUTPUT:\n"
             '{"metric_id":"metadata.coverage","score":3,'
             '"rationale":"50% of tables are fully documented (orders has all fields, customers missing description).",'
-            '"gap":"Mandate metadata documentation standards, implement automated metadata validation checks, and assign data stewards to fill gaps."}\n\n'
+            '"gap":["Mandate metadata documentation standards.", "Implement automated metadata validation checks.", "Assign data stewards to fill gaps."]}\n\n'
             "EXAMPLE PERFECT MATCH OUTPUT:\n"
             '{"metric_id":"metadata.coverage","score":5,'
             '"rationale":"All catalog entries documented with required fields completed (100% coverage).",'
-            '"gap":"No governance gaps — continue metadata stewardship and monitoring."}\n\n'
+            '"gap":["No governance gaps — continue metadata stewardship and monitoring."]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only):\n"
-            '{"metric_id":"metadata.coverage","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"metadata.coverage","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
-    
+
     @staticmethod
     def get_sensitive_tagging_prompt(task_input_json: str) -> str:
         return (
@@ -222,16 +221,16 @@ class DataManagementPrompts:
             "3. Aggregate across all datasets to calculate overall sensitive field tagging coverage percentage.\n"
             "4. Assign a score from 1 to 5 based on the rubric.\n"
             "5. Provide a detailed rationale indicating overall coverage, datasets or fields with missing tagging, and highlight critical untagged fields if present.\n"
-            "6. Provide actionable recommendations to improve tagging completeness, such as deploying automated data classification tools, establishing mandatory tagging policies, performing audits, and assigning data stewards.\n\n"
+            "6. Provide actionable recommendations as a list to improve tagging completeness (e.g., ['Deploy automated classification tools', 'Enforce tagging policies', 'Conduct regular audits']).\n\n"
             "EXAMPLE INPUT:\n"
             '{"datasets": [{"dataset": "users", "total_fields": 6, "fields": [{"name": "id", "sensitive": false, "tagged": false}, {"name": "email", "sensitive": true, "tagged": true}, {"name": "ssn", "sensitive": true, "tagged": false}, {"name": "phone", "sensitive": true, "tagged": true}, {"name": "address", "sensitive": true, "tagged": true}, {"name": "created_at", "sensitive": false, "tagged": false}]}, {"dataset": "orders", "total_fields": 5, "fields": [{"name": "order_id", "sensitive": false, "tagged": false}, {"name": "customer_id", "sensitive": true, "tagged": false}, {"name": "credit_card", "sensitive": true, "tagged": false}, {"name": "amount", "sensitive": false, "tagged": false}, {"name": "order_date", "sensitive": false, "tagged": false}]}]}\n\n'
             "EXAMPLE OUTPUT:\n"
-            '{"metric_id": "sensitive.tagging", "score": 2, "rationale": "Across all datasets, 3 out of 6 sensitive fields are tagged (50%). Critical sensitive fields such as \'ssn\' in \'users\' and \'credit_card\' in \'orders\' remain untagged, posing compliance risks.", "gap": "Deploy automated PII detection and classification tools, enforce mandatory tagging workflows, assign data stewards to ensure compliance, and conduct regular audits of sensitive data tagging."}\n\n'
+            '{"metric_id": "sensitive.tagging", "score": 2, "rationale": "Across all datasets, 3 out of 6 sensitive fields are tagged (50%). Critical sensitive fields such as \'ssn\' in \'users\' and \'credit_card\' in \'orders\' remain untagged, posing compliance risks.", "gap": ["Deploy automated PII detection and classification tools.", "Enforce mandatory tagging workflows.", "Assign data stewards to ensure compliance.", "Conduct regular audits of sensitive data tagging."]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
-            '{"metric_id": "sensitive.tagging", "score": <1-5>, "rationale": "...", "gap": "..."}'
+            '{"metric_id": "sensitive.tagging", "score": <1-5>, "rationale": "...", "gap": ["...","..."]}'
         )
-    
+
     @staticmethod
     def get_duplication_prompt(task_input_json: str) -> str:
         return (
@@ -248,16 +247,16 @@ class DataManagementPrompts:
             "2. Evaluate duplication severity per domain using the rubric.\n"
             "3. Aggregate findings to provide an overall score that reflects the highest duplication severity across all domains.\n"
             "4. Provide a rationale summarizing duplication levels per domain, highlighting domains with the highest duplication.\n"
-            "5. Provide actionable recommendations such as instituting domain-specific deduplication initiatives, enforcing single source of truth policies, and creating a prioritized data consolidation roadmap.\n\n"
+            "5. Provide actionable recommendations as a list (e.g., ['Implement deduplication algorithms', 'Enforce single source of truth', 'Develop data consolidation roadmap']).\n\n"
             "EXAMPLE INPUT:\n"
             '{"domains":[{"name":"finance","datasets_total":40,"duplicate_groups":4},{"name":"marketing","datasets_total":30,"duplicate_groups":8},{"name":"operations","datasets_total":50,"duplicate_groups":10}]}\n\n'
             "EXAMPLE OUTPUT:\n"
-            '{"metric_id":"duplication","score":3,"rationale":"Finance domain has low duplication (~10%), marketing shows moderate duplication (~27%), and operations has moderate duplication (~20%). Overall, moderate duplication exists primarily in marketing and operations.","gap":"Implement domain-specific deduplication algorithms, enforce single source of truth principles, and develop a data consolidation roadmap prioritizing marketing and operations."}\n\n'
+            '{"metric_id":"duplication","score":3,"rationale":"Finance domain has low duplication (~10%), marketing shows moderate duplication (~27%), and operations has moderate duplication (~20%). Overall, moderate duplication exists primarily in marketing and operations.","gap":["Implement domain-specific deduplication algorithms.","Enforce single source of truth principles.","Develop a data consolidation roadmap prioritizing marketing and operations."]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
-            '{"metric_id":"duplication","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"duplication","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
-    
+
     @staticmethod
     def get_backup_recovery_prompt(task_input_json: str) -> str:
         return (
@@ -275,16 +274,16 @@ class DataManagementPrompts:
             "1. For each backup system, evaluate success rate, RPO, RTO against the rubric, emphasizing critical systems.\n"
             "2. Aggregate a global score reflecting the weighted impact of all systems, prioritizing critical systems.\n"
             "3. Provide rationale detailing each system's performance, noting breaches and risks.\n"
-            "4. Provide actionable gaps focusing on infrastructure upgrades, scheduling improvements, incremental backups, monitoring, and disaster recovery enhancements.\n\n"
+            "4. Provide actionable gaps as a list, focusing on infrastructure upgrades, scheduling improvements, incremental backups, monitoring, and disaster recovery enhancements.\n\n"
             "EXAMPLE INPUT:\n"
             '{"backup_systems":[{"system_name":"primary_db_backup","criticality":"high","backup_success_rate":0.98,"avg_rpo_hours":0.8,"avg_rto_hours":0.9,"last_backup_timestamp":"2025-08-28T02:00:00Z"},{"system_name":"analytics_warehouse_backup","criticality":"medium","backup_success_rate":0.93,"avg_rpo_hours":3,"avg_rto_hours":2.5,"last_backup_timestamp":"2025-08-27T22:00:00Z"},{"system_name":"log_data_backup","criticality":"low","backup_success_rate":0.85,"avg_rpo_hours":10,"avg_rto_hours":7,"last_backup_timestamp":"2025-08-27T10:00:00Z"}]}\n\n'
             "EXAMPLE OUTPUT:\n"
-            '{"metric_id":"backup.recovery","score":4,"rationale":"Primary DB backup meets high criticality SLAs with 98% success, RPO 0.8h, RTO 0.9h. Analytics warehouse backup has moderate success (93%) and RPO/RTO within acceptable ranges for medium criticality. Log data backup shows lower success (85%) and longer RPO/RTO but is low criticality.","gap":"Focus on improving backup success for medium and low criticality systems through incremental backups and optimization. Maintain rigorous standards for critical systems, including enhanced monitoring and disaster recovery drills."}\n\n'
+            '{"metric_id":"backup.recovery","score":4,"rationale":"Primary DB backup meets high criticality SLAs with 98% success, RPO 0.8h, RTO 0.9h. Analytics warehouse backup has moderate success (93%) and RPO/RTO within acceptable ranges for medium criticality. Log data backup shows lower success (85%) and longer RPO/RTO but is low criticality.","gap":["Improve backup success for medium and low criticality systems with incremental backups and optimization.","Maintain rigorous standards for critical systems.","Enhance monitoring and disaster recovery drills."]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
-            '{"metric_id":"backup.recovery","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"backup.recovery","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
-    
+
     @staticmethod
     def get_security_config_prompt(task_input_json: str) -> str:
         return (
@@ -304,20 +303,19 @@ class DataManagementPrompts:
             "- 2: 16–30%\n"
             "- 1: >30%\n\n"
             "5. Provide a detailed rationale explaining misconfigurations and areas meeting compliance.\n"
-            "6. Provide specific, actionable recommendations to remediate detected issues.\n\n"
+            "6. Provide specific, actionable recommendations as a list to remediate detected issues.\n\n"
             "EXAMPLE INPUT:\n"
             '{"security_settings":{"encryption":{"at_rest":"AES256","in_transit":"TLS1.0"},"iam_roles":[{"role":"admin","permissions":["full_access"],"assigned_users":3},{"role":"analyst","permissions":["read_only"],"assigned_users":15},{"role":"guest","permissions":["read_only"],"assigned_users":5}],"public_access":true,"firewall_enabled":false,"multi_factor_auth":true},"compliance_rules":{"encryption":{"at_rest":"AES256","in_transit":"TLS1.2"},"require_public_access":false,"require_firewall":true,"require_mfa":true,"iam_role_policies":{"admin":["full_access"],"analyst":["read_only"],"guest":["no_access"]}}}\n\n'
             "EXAMPLE OUTPUT:\n"
-            '{"metric_id": "security.config", "score": 2, "rationale": "Encryption in transit uses TLS1.0 instead of required TLS1.2. Public access is enabled despite policy forbidding it. Firewall is disabled although required. IAM role \'guest\' has \'read_only\' permission instead of \'no_access\'.", "gap": "Upgrade encryption to TLS1.2 or higher, disable public access, enable firewall protections, and restrict \'guest\' IAM role permissions to comply with policy."}\n\n'
+            '{"metric_id": "security.config", "score": 2, "rationale": "Encryption in transit uses TLS1.0 instead of required TLS1.2. Public access is enabled despite policy forbidding it. Firewall is disabled although required. IAM role \'guest\' has \'read_only\' permission instead of \'no_access\'.", "gap": ["Upgrade encryption to TLS1.2 or higher.", "Disable public access.", "Enable firewall protections.", "Restrict \'guest\' IAM role permissions to comply with policy."]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
-            '{"metric_id":"security.config","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"security.config","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
-
 
 class AnalyticsReadinessPrompts:
     """Prompts for Analytics Readiness Metrics evaluators"""
-    
+
     @staticmethod
     def get_pipeline_success_rate_prompt(task_input_json: str) -> str:
         return (
@@ -335,18 +333,18 @@ class AnalyticsReadinessPrompts:
             "2. Compute the pipeline success rate as (number of successes / total runs) * 100.\n"
             "3. Assign a score using the rubric above.\n"
             "4. Provide rationale showing overall success percentage, key failed pipelines, and any notable runtime anomalies.\n"
-            "5. Recommend actionable steps such as improving retry mechanisms, investigating frequent failures, and enhancing monitoring/alerting.\n\n"
+            "5. Recommend actionable steps as a list (e.g., ['Improve retry mechanisms', 'Investigate frequent failures', 'Enhance monitoring/alerting']).\n\n"
             "EXAMPLE INPUT:\n"
             '{"pipeline_runs":[{"id":1,"status":"success"},{"id":2,"status":"failure"},{"id":3,"status":"success"}]}\n\n'
             "EXAMPLE OUTPUT:\n"
             '{"metric_id":"pipeline.success_rate","score":3,'
             '"rationale":"66% success (2/3). Below SLA. Job 2 failed once; others healthy.",'
-            '"gap":"Implement job retries, investigate cause of failures, add monitoring and alerting for jobs."}\n\n'
+            '"gap":["Implement job retries.","Investigate cause of failures.","Add monitoring and alerting for jobs."]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
-            '{"metric_id":"pipeline.success_rate","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"pipeline.success_rate","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
-    
+
     @staticmethod
     def get_pipeline_latency_throughput_prompt(task_input_json: str) -> str:
         return (
@@ -363,18 +361,18 @@ class AnalyticsReadinessPrompts:
             "1. For each pipeline, examine avg_runtime_minutes, rows_processed, queue_wait_minutes.\n"
             "2. Assign a score reflecting the worst-performing pipeline, as it affects overall analytics readiness.\n"
             "3. Summarize rationale including runtime and throughput statistics for each pipeline, and especially highlight long-running or low-throughput jobs.\n"
-            "4. Recommend actionable optimization steps, such as parallelization, query tuning, scaling infrastructure, and improving scheduling.\n\n"
+            "4. Recommend actionable optimization steps as a list (e.g., ['Parallelize ETL tasks', 'Optimize queries', 'Improve cluster resources', 'Enhance scheduling']).\n\n"
             "EXAMPLE INPUT:\n"
             '{"avg_runtime_minutes":45,"rows_processed":600000,"queue_wait_minutes":10}\n\n'
             "EXAMPLE OUTPUT:\n"
             '{"metric_id":"pipeline.latency_throughput","score":3,'
             '"rationale":"45m avg runtime, 600k rows processed. Queue wait 10m. Performance is moderate but improvable.",'
-            '"gap":"Parallelize ETL tasks, optimize queries, improve cluster resources."}\n\n'
+            '"gap":["Parallelize ETL tasks.", "Optimize queries.", "Improve cluster resources."]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
-            '{"metric_id":"pipeline.latency_throughput","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"pipeline.latency_throughput","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
-    
+
     @staticmethod
     def get_resource_utilization_prompt(task_input_json: str) -> str:
         return (
@@ -392,19 +390,18 @@ class AnalyticsReadinessPrompts:
             "3. Compare utilization and total monthly cost data to determine if cost matches usage (no major overspending on underutilized resources).\n"
             "4. Assign a score using the rubric—lowest performers impact final score.\n"
             "5. Rationale should detail cluster-by-cluster utilization and highlight cost vs efficiency, naming clusters that need attention.\n"
-            "6. Gap should recommend right-sizing, dynamic scaling, and cost optimization (FinOps).\n\n"
+            "6. Gap should recommend actions as a list (e.g., ['Right-size clusters', 'Implement auto-scaling', 'Schedule FinOps reviews for cost reduction']).\n\n"
             "EXAMPLE INPUT:\n"
             '{"resource_usage":{"cpu":55,"memory":40,"storage":60},"cost_data":{"monthly_cost_usd":12000}}\n\n'
             "EXAMPLE OUTPUT:\n"
-            '{"metric_id":"resource.utilization",'
-            '"score":3,'
+            '{"metric_id":"resource.utilization","score":3,'
             '"rationale":"Average resource utilization is ~50% for CPU, memory, storage with $12k monthly spend. Several clusters underused.",'
-            '"gap":"Right-size clusters, implement auto-scaling, schedule FinOps reviews for cost reduction."}\n\n'
+            '"gap":["Right-size clusters.", "Implement auto-scaling.", "Schedule FinOps reviews for cost reduction."]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
-            '{"metric_id":"resource.utilization","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"resource.utilization","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
-    
+
     @staticmethod
     def get_query_performance_prompt(task_input_json: str) -> str:
         return (
@@ -421,16 +418,16 @@ class AnalyticsReadinessPrompts:
             "1. Consider only successful queries for scoring average runtime.\n"
             "2. Assign a score based on the rubric.\n"
             "3. In your rationale, summarize avg runtime, mention any very slow queries, and identify users who experienced failures or delays.\n"
-            "4. Gap: recommend indexing, join optimization, query rewrite, caching, or user training where needed.\n\n"
+            "4. Gap: recommend actions as a list (e.g., ['Add indexes', 'Optimize joins', 'Introduce caching', 'User training']).\n\n"
             "EXAMPLE INPUT:\n"
             '{"query_logs":[{"id":"q1","runtime":4,"user":"alice","success":true},{"id":"q2","runtime":8,"user":"bob","success":true}]}\n\n'
             "EXAMPLE OUTPUT:\n"
-            '{"metric_id":"query.performance","score":3,"rationale":"Avg query runtime ~6s.","gap":"Add indexes, optimize joins, introduce caching."}\n\n'
+            '{"metric_id":"query.performance","score":3,"rationale":"Avg query runtime ~6s.","gap":["Add indexes.", "Optimize joins.", "Introduce caching."]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
-            '{"metric_id":"query.performance","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"query.performance","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
-    
+
     @staticmethod
     def get_analytics_adoption_prompt(task_input_json: str) -> str:
         return (
@@ -447,13 +444,13 @@ class AnalyticsReadinessPrompts:
             "1. Evaluate the main adoption score based on active_users, referencing the rubric thresholds.\n"
             "2. Consider dashboard_views and queries_executed for context; mention if high usage suggests healthy engagement, or where numbers are low for improvement.\n"
             "3. In your rationale, highlight departments with high or low usage, call out top adopters, and clarify engagement trends.\n"
-            "4. In your gap, recommend training sessions, dashboard promotion, user enablement, or direct engagement with low-adoption departments.\n\n"
+            "4. In your gap, recommend actions as a list (e.g., ['Training sessions', 'Dashboard promotion', 'User enablement', 'Direct engagement with low-adoption departments']).\n\n"
             "EXAMPLE INPUT:\n"
             '{"active_users":35,"dashboard_views":500,"queries_executed":2000}\n\n'
             "EXAMPLE OUTPUT:\n"
             '{"metric_id":"analytics.adoption","score":3,"rationale":"Moderate adoption with 35 active users and 500 views. Finance and operations lag in engagement.",'
-            '"gap":"Increase BI training and support to lagging departments, promote dashboards, boost tool accessibility."}\n\n'
+            '"gap":["Increase BI training and support to lagging departments.","Promote dashboards.","Boost tool accessibility."]}\n\n'
             f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
-            '{"metric_id":"analytics.adoption","score":<1-5>,"rationale":"...","gap":"..."}'
+            '{"metric_id":"analytics.adoption","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
