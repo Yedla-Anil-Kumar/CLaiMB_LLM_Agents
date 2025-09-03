@@ -5,9 +5,9 @@ import time
 import random
 from typing import Any, Dict, List, Optional
 
-from ml_ops_agent.base_agent import BaseMicroAgent
+from .base_agent import BaseMicroAgent
 from loguru import logger
-from ml_ops_agent.logging_utils import timed
+from .logging_utils import timed
 
 """
 MLOps Metric Grader — ONE-SHOT (per metric)
