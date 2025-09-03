@@ -1,0 +1,497 @@
+2025-09-03 11:25:54.105 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.process.automation.coverage
+2025-09-03 11:25:54.153 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:25:57.035 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2882.10 ms)
+2025-09-03 11:25:57.035 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.process.automation.coverage (2930.60 ms)
+2025-09-03 11:25:57.036 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [process.automation.coverage] band=4 | rationale=The coverage ratio of 0.72 indicates good automation across multiple platforms, but it falls short of the excellent threshold. The strongest positive is the solid coverage, while the limiting factor is the need for broader execution across more platforms.
+2025-09-03 11:25:57.036 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [process.automation.coverage] gaps=['Coverage uneven by platform → report coverage per platform and runs/week → achieve ≥0.85 coverage on ≥3 platforms (unlocks band 5).']
+2025-09-03 11:25:57.036 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.workflow.sla_adherence
+2025-09-03 11:25:57.070 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:25:59.283 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2213.42 ms)
+2025-09-03 11:25:59.283 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.workflow.sla_adherence (2247.70 ms)
+2025-09-03 11:25:59.284 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [workflow.sla_adherence] band=4 | rationale=On-time rate of 0.91 indicates good adherence to SLAs, with strong performance across systems; however, it is just below the threshold for an excellent rating.
+2025-09-03 11:25:59.284 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [workflow.sla_adherence] gaps=['On-time rate near threshold → improve processes to increase on_time rate to ≥0.95 → unlocks band 5.']
+2025-09-03 11:25:59.284 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.sales.lead_to_oppty_cycle_time
+2025-09-03 11:25:59.315 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:01.759 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2444.36 ms)
+2025-09-03 11:26:01.759 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.sales.lead_to_oppty_cycle_time (2475.39 ms)
+2025-09-03 11:26:01.759 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [sales.lead_to_oppty_cycle_time] band=3 | rationale=The median of 28 hours indicates a fair performance, but it is above the threshold for band 3, and the lack of p90 data limits the assessment of tail risk. The strongest positive is the median being below 48 hours, while the absence of p90 data raises concerns about potential outliers.
+2025-09-03 11:26:01.760 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [sales.lead_to_oppty_cycle_time] gaps=['Tail risk unknown → add p90 latency for lead to opportunity conversion → keep p90 ≤48h (unlocks band 4).']
+2025-09-03 11:26:01.760 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.itsm.case_resolution_time
+2025-09-03 11:26:01.788 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:03.570 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (1782.03 ms)
+2025-09-03 11:26:03.570 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.itsm.case_resolution_time (1810.43 ms)
+2025-09-03 11:26:03.570 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [itsm.case_resolution_time] band=5 | rationale=The median resolution time of 15 minutes indicates excellent performance, and the absence of limiting factors supports this high rating.
+2025-09-03 11:26:03.571 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.itsm.incident_reopen_rate
+2025-09-03 11:26:03.626 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:06.131 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2504.42 ms)
+2025-09-03 11:26:06.131 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.itsm.incident_reopen_rate (2560.44 ms)
+2025-09-03 11:26:06.131 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [itsm.incident_reopen_rate] band=5 | rationale=The reopen rate of 5% indicates a strong performance in resolving incidents on the first attempt. However, the lack of detail on priority mix may limit understanding of specific areas for improvement.
+2025-09-03 11:26:06.131 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [itsm.incident_reopen_rate] gaps=['Priority mix effects unknown → report reopen rates by priority code → achieve ≤2% for all priority levels (unlocks band 5).']
+2025-09-03 11:26:06.131 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.hr.onboarding_cycle_time
+2025-09-03 11:26:06.188 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:08.800 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2612.55 ms)
+2025-09-03 11:26:08.800 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.hr.onboarding_cycle_time (2669.05 ms)
+2025-09-03 11:26:08.801 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [hr.onboarding_cycle_time] band=1 | rationale=The median hours of 7 indicates a critical delay in the onboarding process; however, the lack of additional context on approval steps limits the assessment. The strong positive is the low median hours, but the critical band is due to the absence of data on approval tail risks.
+2025-09-03 11:26:08.801 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [hr.onboarding_cycle_time] gaps=['Approval delays untracked → implement tracking for approval times and identify bottlenecks → reduce median approval time to ≤24h (unlocks band 5).']
+2025-09-03 11:26:08.801 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.sap.procure_to_pay_cycle
+2025-09-03 11:26:08.837 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:11.472 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2634.52 ms)
+2025-09-03 11:26:11.472 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.sap.procure_to_pay_cycle (2671.38 ms)
+2025-09-03 11:26:11.472 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [sap.procure_to_pay_cycle] band=1 | rationale=The total days of 18 exceeds the critical threshold of 20 days, indicating significant delays in the process; the lack of detailed breakdowns for sub-stages limits understanding of specific bottlenecks.
+2025-09-03 11:26:11.472 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [sap.procure_to_pay_cycle] gaps=['High total days → analyze each stage for delays → reduce total days to ≤20 (unlocks band 2).']
+2025-09-03 11:26:11.473 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.q2c.throughput
+2025-09-03 11:26:11.508 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:15.405 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3896.76 ms)
+2025-09-03 11:26:15.406 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.q2c.throughput (3932.93 ms)
+2025-09-03 11:26:15.406 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [q2c.throughput] band=1 | rationale=The total hours exceed the critical threshold, indicating severe delays in the process; the strong point is the initial quote to sales order timing, but the overall time to cash is unacceptable.
+2025-09-03 11:26:15.406 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [q2c.throughput] gaps=['Process bottlenecks identified → streamline approval workflows → reduce total hours to ≤12h (unlocks band 5).']
+2025-09-03 11:26:15.406 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.backlog.aging
+2025-09-03 11:26:15.454 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:18.737 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3282.86 ms)
+2025-09-03 11:26:18.737 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.backlog.aging (3331.26 ms)
+2025-09-03 11:26:18.737 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [backlog.aging] band=5 | rationale=The median age of open items is very low (p50 0.8d, p90 2.5d), indicating efficient processing; however, potential hotspots in specific queues are not identified.
+2025-09-03 11:26:18.737 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [backlog.aging] flags=['low_queue_age']
+2025-09-03 11:26:18.737 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [backlog.aging] gaps=['Hidden pockets possible → publish per-queue age p95 and oldest 10 items → keep all queues p90 ≤3d (maintains band 5).']
+2025-09-03 11:26:18.737 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.rpa.success_rate
+2025-09-03 11:26:18.777 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:22.415 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3637.24 ms)
+2025-09-03 11:26:22.415 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.rpa.success_rate (3677.40 ms)
+2025-09-03 11:26:22.415 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [rpa.success_rate] band=4 | rationale=The overall success rate is 93%, which is good, but it is on the lower end of the band. There is no information on retries or system-specific performance, which could provide more insight into reliability.
+2025-09-03 11:26:22.415 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [rpa.success_rate] gaps=['Lack of system-specific data → report success rates per system and include retry metrics → achieve ≥95% success across all systems (unlocks band 5).']
+2025-09-03 11:26:22.415 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.integration.data_sync_latency
+2025-09-03 11:26:22.449 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:27.591 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (5142.63 ms)
+2025-09-03 11:26:27.592 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.integration.data_sync_latency (5176.68 ms)
+2025-09-03 11:26:27.592 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [integration.data_sync_latency] band=5 | rationale=The median of 12 seconds and p95 of 12 seconds indicate excellent performance with no failures reported, showcasing a highly efficient delivery system.
+2025-09-03 11:26:27.592 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [integration.data_sync_latency] flags=['excellent_performance']
+2025-09-03 11:26:27.592 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.api.reliability
+2025-09-03 11:26:27.633 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:31.551 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3918.12 ms)
+2025-09-03 11:26:31.552 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.api.reliability (3959.79 ms)
+2025-09-03 11:26:31.552 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [api.reliability] band=5 | rationale=The error rate of 0.1% is well below the SLO threshold, indicating excellent reliability; however, the p95 latency is not provided, which limits the assessment of latency performance.
+2025-09-03 11:26:31.552 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [api.reliability] gaps=['p95 latency unknown → provide p95 latency data for all endpoints → ensure p95 meets SLO (solidifies band 5).']
+2025-09-03 11:26:31.552 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.integration.topology_health
+2025-09-03 11:26:31.611 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:34.457 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2846.49 ms)
+2025-09-03 11:26:34.458 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.integration.topology_health (2905.89 ms)
+2025-09-03 11:26:34.459 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [integration.topology_health] band=1 | rationale=The average uptime is significantly low at 0.7%, indicating systemic failures across the integration nodes; the absence of healthy nodes further exacerbates the situation.
+2025-09-03 11:26:34.459 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [integration.topology_health] gaps=['systemic failures → implement robust monitoring and recovery strategies → achieve ≥99.5% uptime across all nodes (unlocks band 3).']
+2025-09-03 11:26:34.459 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.mdm.duplicate_rate
+2025-09-03 11:26:34.503 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:36.344 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (1840.97 ms)
+2025-09-03 11:26:36.344 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.mdm.duplicate_rate (1885.10 ms)
+2025-09-03 11:26:36.344 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [mdm.duplicate_rate] band=4 | rationale=A 3% duplicate rate indicates good matching and standardization; however, the absence of trend data limits confidence in consistency.
+2025-09-03 11:26:36.344 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [mdm.duplicate_rate] flags=['good_dupes']
+2025-09-03 11:26:36.344 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [mdm.duplicate_rate] gaps=['Trend data missing → implement monthly tracking of duplicate rates over time → maintain ≤2% duplicates consistently (unlocks band 5).']
+2025-09-03 11:26:36.344 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.dq.exceptions_rate
+2025-09-03 11:26:36.390 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:38.762 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2372.30 ms)
+2025-09-03 11:26:38.763 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.dq.exceptions_rate (2418.67 ms)
+2025-09-03 11:26:38.763 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [dq.exceptions_rate] band=2 | rationale=The exception rate of 6% indicates a significant issue with data quality, despite the absence of detailed severity information. The high rate suggests that improvements are necessary to reduce the number of exceptions.
+2025-09-03 11:26:38.763 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [dq.exceptions_rate] gaps=['High exception rate → implement targeted data quality initiatives → reduce rate to ≤3% (unlocks band 3).']
+2025-09-03 11:26:38.764 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.ai.penetration
+2025-09-03 11:26:38.808 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:41.153 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2345.55 ms)
+2025-09-03 11:26:41.154 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.ai.penetration (2390.44 ms)
+2025-09-03 11:26:41.154 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [ai.penetration] band=3 | rationale=AI is present in 55% of workflows, but the execution share is not provided, limiting the assessment. The positive aspect is the decent coverage of workflows, while the lack of execution data prevents a higher band rating.
+2025-09-03 11:26:41.154 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [ai.penetration] gaps=['Execution share data missing → implement tracking for AI execution share → achieve ≥50% executions invoking AI (unlocks band 4).']
+2025-09-03 11:26:41.154 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.ai.outcome_uplift
+2025-09-03 11:26:41.198 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:43.452 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2253.94 ms)
+2025-09-03 11:26:43.453 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.ai.outcome_uplift (2298.10 ms)
+2025-09-03 11:26:43.453 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [ai.outcome_uplift] band=4 | rationale=An estimated uplift of 11% indicates a good improvement; however, the stability of this uplift over time is not confirmed.
+2025-09-03 11:26:43.453 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [ai.outcome_uplift] flags=['good_uplift']
+2025-09-03 11:26:43.453 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [ai.outcome_uplift] gaps=['Stability unproven → include last 8–12 weeks trend for median and p90 → demonstrate non-declining trend (solidifies band 5).']
+2025-09-03 11:26:43.453 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.ai.governance_coverage
+2025-09-03 11:26:43.499 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:46.027 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2528.86 ms)
+2025-09-03 11:26:46.028 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.ai.governance_coverage (2575.02 ms)
+2025-09-03 11:26:46.028 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [ai.governance_coverage] band=4 | rationale=Governance coverage is at 82%, which is strong, but there is no information on alerts or potential issues that could affect compliance. The lack of alert context limits the overall assessment of governance effectiveness.
+2025-09-03 11:26:46.028 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [ai.governance_coverage] gaps=['Alert context missing → implement a monitoring system for governance alerts → achieve ≤5 alerts/month (unlocks band 5).']
+2025-09-03 11:26:46.028 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.platform.customization_debt
+2025-09-03 11:26:46.090 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:48.521 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2430.56 ms)
+2025-09-03 11:26:48.521 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.platform.customization_debt (2492.49 ms)
+2025-09-03 11:26:48.521 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [platform.customization_debt] band=4 | rationale=The customization index indicates a moderate-low risk with a relatively low footprint; however, the lack of detailed information on specific customizations limits the assessment of stability.
+2025-09-03 11:26:48.521 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [platform.customization_debt] flags=['moderate_low_footprint']
+2025-09-03 11:26:48.521 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [platform.customization_debt] gaps=['Specific customization risks unknown → add detailed counts of unmanaged customizations and their impact → keep unmanaged customizations at 0 (unlocks band 5).']
+2025-09-03 11:26:48.521 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.change.failure_rate
+2025-09-03 11:26:48.567 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:51.091 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2524.36 ms)
+2025-09-03 11:26:51.091 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.change.failure_rate (2570.50 ms)
+2025-09-03 11:26:51.092 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [change.failure_rate] band=2 | rationale=A 14% change failure rate indicates significant reliability issues; while the deployment count is not specified, the high failure rate is a critical concern. The lack of detailed deployment data limits the ability to assess the overall impact and trends.
+2025-09-03 11:26:51.092 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [change.failure_rate] gaps=['High failure rate → implement more rigorous testing and validation processes pre-deploy → reduce failure rate to ≤12% (unlocks band 3).']
+2025-09-03 11:26:51.096 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.process.automation.coverage
+2025-09-03 11:26:51.136 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:53.592 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2456.41 ms)
+2025-09-03 11:26:53.593 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.process.automation.coverage (2496.83 ms)
+2025-09-03 11:26:53.593 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [process.automation.coverage] band=3 | rationale=The coverage ratio of 0.61 indicates a fair level of automation, but it is siloed and lacks consistency across platforms. The strongest positive is the presence of some automated objects, while the limiting factor is the uneven distribution of automation across the systems.
+2025-09-03 11:26:53.593 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [process.automation.coverage] gaps=['Coverage uneven by platform → report coverage per platform and runs/week → achieve ≥0.70 coverage on ≥2 platforms (unlocks band 4).']
+2025-09-03 11:26:53.593 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.workflow.sla_adherence
+2025-09-03 11:26:53.648 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:56.208 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2559.75 ms)
+2025-09-03 11:26:56.208 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.workflow.sla_adherence (2615.11 ms)
+2025-09-03 11:26:56.209 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [workflow.sla_adherence] band=2 | rationale=The on-time rate of 0.77 indicates a significant gap in meeting SLAs, with the performance falling into the poor category. While there is a measurable completion rate, it is insufficient to meet the minimum threshold for acceptable performance.
+2025-09-03 11:26:56.209 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [workflow.sla_adherence] gaps=['On-time rate low → implement process improvements and training → achieve on-time rate ≥0.80 (unlocks band 3).']
+2025-09-03 11:26:56.209 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.sales.lead_to_oppty_cycle_time
+2025-09-03 11:26:56.239 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:26:59.020 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2780.53 ms)
+2025-09-03 11:26:59.020 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.sales.lead_to_oppty_cycle_time (2810.94 ms)
+2025-09-03 11:26:59.020 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [sales.lead_to_oppty_cycle_time] band=4 | rationale=Median of 19h is good, and while the p90 is not excessively high, it indicates some variability in conversion times. The limiting factor is the median being above the 12-24h range, which prevents a higher band rating.
+2025-09-03 11:26:59.020 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [sales.lead_to_oppty_cycle_time] gaps=['Tail risk unknown → add p90 latency and failure % for conversion → keep p90 within 24h (unlocks band 5).']
+2025-09-03 11:26:59.021 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.itsm.case_resolution_time
+2025-09-03 11:26:59.045 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:01.279 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2233.84 ms)
+2025-09-03 11:27:01.279 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.itsm.case_resolution_time (2258.34 ms)
+2025-09-03 11:27:01.279 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [itsm.case_resolution_time] band=5 | rationale=The median resolution time of 25 minutes indicates excellent performance, and the absence of limiting factors suggests a strong operational capability. However, without additional context on incident priority, there is a slight uncertainty regarding the overall impact on critical incidents.
+2025-09-03 11:27:01.279 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [itsm.case_resolution_time] gaps=['Priority mix unclear → break out p90 by incident priority → ensure P1 p90 ≤90m (solidifies band 5).']
+2025-09-03 11:27:01.279 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.itsm.incident_reopen_rate
+2025-09-03 11:27:01.307 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:04.019 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2712.83 ms)
+2025-09-03 11:27:04.020 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.itsm.incident_reopen_rate (2740.58 ms)
+2025-09-03 11:27:04.020 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [itsm.incident_reopen_rate] band=3 | rationale=The reopen rate of 12% indicates a fair level of first-time resolution, but it is above the threshold for a higher band. The strongest positive is the acknowledgment of the issue, while the limiting factor is the high percentage of reopened incidents.
+2025-09-03 11:27:04.020 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [itsm.incident_reopen_rate] gaps=['High reopen rate → analyze root causes of reopened incidents → reduce reopen rate to ≤8% (unlocks band 4).']
+2025-09-03 11:27:04.020 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.hr.onboarding_cycle_time
+2025-09-03 11:27:04.081 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:06.479 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2397.57 ms)
+2025-09-03 11:27:06.479 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.hr.onboarding_cycle_time (2459.02 ms)
+2025-09-03 11:27:06.480 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [hr.onboarding_cycle_time] band=5 | rationale=The median onboarding time of 12 hours is excellent, indicating a highly efficient process; however, the approval tail is not detailed, which could introduce delays. 
+2025-09-03 11:27:06.480 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [hr.onboarding_cycle_time] flags=['fast_bp']
+2025-09-03 11:27:06.480 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [hr.onboarding_cycle_time] gaps=['Approval delays untracked → analyze approval times for each step → ensure all steps are ≤24h (solidifies band 5).']
+2025-09-03 11:27:06.480 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.sap.procure_to_pay_cycle
+2025-09-03 11:27:06.520 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:08.612 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2091.52 ms)
+2025-09-03 11:27:08.612 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.sap.procure_to_pay_cycle (2132.01 ms)
+2025-09-03 11:27:08.612 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [sap.procure_to_pay_cycle] band=1 | rationale=The total days of 21 exceeds the critical threshold; while there may be some efficiency in sub-stages, the overall process is severely delayed.
+2025-09-03 11:27:08.613 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [sap.procure_to_pay_cycle] gaps=['Total days excessive → streamline approval and GR processes → target ≤20d (unlocks band 2).']
+2025-09-03 11:27:08.613 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.q2c.throughput
+2025-09-03 11:27:08.672 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:11.816 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3143.49 ms)
+2025-09-03 11:27:11.816 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.q2c.throughput (3203.53 ms)
+2025-09-03 11:27:11.817 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [q2c.throughput] band=5 | rationale=The total of 10 hours from quote approval to billing is excellent; however, reliance on specific approver windows may affect consistency.
+2025-09-03 11:27:11.817 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [q2c.throughput] flags=['fast_time_to_cash']
+2025-09-03 11:27:11.817 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [q2c.throughput] gaps=['Variability unknown → analyze throughput by product family/region → maintain p90 ≤18h across segments (solidifies band 5).']
+2025-09-03 11:27:11.817 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.backlog.aging
+2025-09-03 11:27:11.842 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:15.009 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3166.57 ms)
+2025-09-03 11:27:15.009 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.backlog.aging (3192.13 ms)
+2025-09-03 11:27:15.009 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [backlog.aging] band=5 | rationale=The median age of open items is very low (p50 0.8d, p90 2.5d), indicating efficient processing; however, potential hotspots in specific queues are not identified.
+2025-09-03 11:27:15.009 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [backlog.aging] flags=['low_queue_age']
+2025-09-03 11:27:15.009 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [backlog.aging] gaps=['Hidden pockets possible → publish per-queue age p95 and oldest 10 items → keep all queues p90 ≤3d (maintains band 5).']
+2025-09-03 11:27:15.010 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.rpa.success_rate
+2025-09-03 11:27:15.070 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:18.445 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3374.72 ms)
+2025-09-03 11:27:18.445 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.rpa.success_rate (3435.32 ms)
+2025-09-03 11:27:18.445 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [rpa.success_rate] band=3 | rationale=The overall success rate is 81%, which is within the fair range, but does not meet the threshold for a higher band. The positive aspect is that there is a measurable success rate, but the failure rate is significant enough to limit the evaluation.
+2025-09-03 11:27:18.445 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [rpa.success_rate] gaps=['Success rate low → analyze failure causes and implement corrective actions → achieve ≥85% success rate (unlocks band 4).']
+2025-09-03 11:27:18.445 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.integration.data_sync_latency
+2025-09-03 11:27:18.471 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:21.087 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2616.28 ms)
+2025-09-03 11:27:21.088 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.integration.data_sync_latency (2642.66 ms)
+2025-09-03 11:27:21.088 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [integration.data_sync_latency] band=4 | rationale=The median of 35s and p95 of 35s indicate good performance, but the lack of failure percentage limits the assessment.
+2025-09-03 11:27:21.088 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [integration.data_sync_latency] flags=['good_performance']
+2025-09-03 11:27:21.088 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [integration.data_sync_latency] gaps=['Failure context missing → provide failure % and retry metrics → keep failures <0.5% (unlocks band 5).']
+2025-09-03 11:27:21.088 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.api.reliability
+2025-09-03 11:27:21.141 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:24.577 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3436.10 ms)
+2025-09-03 11:27:24.578 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.api.reliability (3489.70 ms)
+2025-09-03 11:27:24.578 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [api.reliability] band=5 | rationale=The error rate of 0.973% is slightly above the 0.5% threshold, but the p95 latency is not provided, making it difficult to assess fully; however, the error rate is still within a reasonable range for good performance.
+2025-09-03 11:27:24.578 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [api.reliability] gaps=['p95 latency unknown → provide p95 latency data → ensure it meets SLO (unlocks band 5).']
+2025-09-03 11:27:24.578 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.integration.topology_health
+2025-09-03 11:27:24.604 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:26.266 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (1661.99 ms)
+2025-09-03 11:27:26.267 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.integration.topology_health (1688.94 ms)
+2025-09-03 11:27:26.267 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [integration.topology_health] band=1 | rationale=The average uptime is significantly low at 0.58%, indicating systemic failures across the integration nodes. The absence of healthy nodes and the presence of critical errors further exacerbate the situation.
+2025-09-03 11:27:26.268 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [integration.topology_health] gaps=['systemic failures → implement monitoring and remediation strategies → achieve ≥99.5% uptime across all nodes (unlocks band 3).']
+2025-09-03 11:27:26.268 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.mdm.duplicate_rate
+2025-09-03 11:27:26.318 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:29.324 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3005.69 ms)
+2025-09-03 11:27:29.324 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.mdm.duplicate_rate (3056.25 ms)
+2025-09-03 11:27:29.324 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [mdm.duplicate_rate] band=3 | rationale=A 9% duplicate rate indicates a fair level of matching, but it is above the threshold for a higher band; the number of duplicates is a limiting factor.
+2025-09-03 11:27:29.324 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [mdm.duplicate_rate] gaps=['High duplicate rate → implement stricter matching criteria and data cleansing processes → achieve ≤5% duplicates (unlocks band 4).']
+2025-09-03 11:27:29.324 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.dq.exceptions_rate
+2025-09-03 11:27:29.380 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:32.460 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3079.60 ms)
+2025-09-03 11:27:32.460 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.dq.exceptions_rate (3135.75 ms)
+2025-09-03 11:27:32.460 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [dq.exceptions_rate] band=1 | rationale=>10% exception rate indicates critical data quality issues; the high rate is the strongest limiting factor.
+2025-09-03 11:27:32.460 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [dq.exceptions_rate] gaps=['High exception rate → implement targeted data quality checks and remediation processes → reduce rate to ≤10% (unlocks band 2).']
+2025-09-03 11:27:32.460 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.ai.penetration
+2025-09-03 11:27:32.492 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:37.070 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (4577.70 ms)
+2025-09-03 11:27:37.071 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.ai.penetration (4610.04 ms)
+2025-09-03 11:27:37.071 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [ai.penetration] band=3 | rationale=AI features are present in 33% of workflows, but the execution share is not provided, limiting the overall assessment. The positive aspect is the presence of AI in a third of workflows, but the lack of execution data prevents a higher band.
+2025-09-03 11:27:37.071 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [ai.penetration] gaps=['Execution share unknown → measure execution share of AI features → achieve ≥50% execution share (unlocks band 4).']
+2025-09-03 11:27:37.071 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.ai.outcome_uplift
+2025-09-03 11:27:37.116 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:40.957 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3841.08 ms)
+2025-09-03 11:27:40.958 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.ai.outcome_uplift (3886.83 ms)
+2025-09-03 11:27:40.958 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [ai.outcome_uplift] band=3 | rationale=The estimated uplift of 5% indicates a fair improvement; however, it does not meet the threshold for a higher band. The strongest positive is the measurable uplift, while the limiting factor is the insufficient percentage increase.
+2025-09-03 11:27:40.958 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [ai.outcome_uplift] gaps=['Uplift insufficient → increase KPI improvement strategies and monitor closely → achieve ≥10% uplift (unlocks band 4).']
+2025-09-03 11:27:40.958 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.ai.governance_coverage
+2025-09-03 11:27:41.015 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:45.679 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (4663.81 ms)
+2025-09-03 11:27:45.679 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.ai.governance_coverage (4720.55 ms)
+2025-09-03 11:27:45.679 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [ai.governance_coverage] band=3 | rationale=Coverage is at 65%, which is fair, but does not meet the threshold for a higher band; the lack of alerts suggests some stability in governance. However, the coverage is below the 75% mark, limiting the overall assessment.
+2025-09-03 11:27:45.679 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [ai.governance_coverage] gaps=['Coverage insufficient → increase share of models with required controls → achieve ≥75% coverage (unlocks band 4).']
+2025-09-03 11:27:45.679 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.platform.customization_debt
+2025-09-03 11:27:45.737 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:51.625 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (5888.10 ms)
+2025-09-03 11:27:51.626 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.platform.customization_debt (5946.08 ms)
+2025-09-03 11:27:51.626 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [platform.customization_debt] band=3 | rationale=The customization risk index indicates a moderate level of customization, suggesting some stability; however, the lack of detailed metrics on specific customizations limits the assessment of overall risk. The index value of 0.61 reflects a need for improvement in managing customizations effectively.
+2025-09-03 11:27:51.626 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [platform.customization_debt] gaps=['Customization management unclear → implement tracking for unmanaged customizations and their impact → reduce unmanaged customizations to 0 (unlocks band 4).']
+2025-09-03 11:27:51.626 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.change.failure_rate
+2025-09-03 11:27:51.651 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:55.565 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3913.71 ms)
+2025-09-03 11:27:55.566 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.change.failure_rate (3939.64 ms)
+2025-09-03 11:27:55.566 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [change.failure_rate] band=2 | rationale=A change failure rate of 25% indicates significant reliability issues; while the total deploys are not specified, the high failure rate is a critical concern. The lack of detailed deploy data limits the ability to assess the overall deployment strategy effectively.
+2025-09-03 11:27:55.566 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [change.failure_rate] gaps=['High failure rate → implement a robust pre-deployment testing strategy → achieve a failure rate ≤7% (unlocks band 4).']
+2025-09-03 11:27:55.568 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.process.automation.coverage
+2025-09-03 11:27:55.596 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:27:59.040 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3443.98 ms)
+2025-09-03 11:27:59.041 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.process.automation.coverage (3472.83 ms)
+2025-09-03 11:27:59.041 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [process.automation.coverage] band=2 | rationale=The coverage ratio of 0.44 indicates sporadic automation across the platforms, which is a significant limitation. While there is some automation present, it is not sufficient to demonstrate consistent coverage.
+2025-09-03 11:27:59.041 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [process.automation.coverage] gaps=['Coverage uneven across platforms → increase automation efforts and track coverage per platform → achieve ≥0.70 coverage across ≥2 platforms (unlocks band 4).']
+2025-09-03 11:27:59.041 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.workflow.sla_adherence
+2025-09-03 11:27:59.084 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:02.357 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3272.42 ms)
+2025-09-03 11:28:02.357 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.workflow.sla_adherence (3316.09 ms)
+2025-09-03 11:28:02.357 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [workflow.sla_adherence] band=2 | rationale=The on-time rate is below 0.70, indicating significant issues with meeting SLAs; while there is a measurable completion rate, it is insufficient to meet expectations.
+2025-09-03 11:28:02.357 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [workflow.sla_adherence] gaps=['On-time rate low → implement process improvements and monitoring → achieve on-time rate ≥0.80 (unlocks band 3).']
+2025-09-03 11:28:02.357 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.sales.lead_to_oppty_cycle_time
+2025-09-03 11:28:02.387 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:06.557 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (4169.75 ms)
+2025-09-03 11:28:06.557 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.sales.lead_to_oppty_cycle_time (4199.68 ms)
+2025-09-03 11:28:06.557 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [sales.lead_to_oppty_cycle_time] band=3 | rationale=The median of 35 hours indicates a fair performance, but the limiting factor is that it exceeds the upper threshold for band 3. The p90 hours are not provided, which could further clarify the tail risk.
+2025-09-03 11:28:06.558 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [sales.lead_to_oppty_cycle_time] gaps=['Lack of p90 data → include p90 hours for lead to opportunity conversion → achieve p90 ≤48h (unlocks band 4).']
+2025-09-03 11:28:06.558 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.itsm.case_resolution_time
+2025-09-03 11:28:06.601 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:09.962 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3360.60 ms)
+2025-09-03 11:28:09.963 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.itsm.case_resolution_time (3404.54 ms)
+2025-09-03 11:28:09.963 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [itsm.case_resolution_time] band=5 | rationale=Median resolution time of 40 minutes is excellent, and the p90 of 70 minutes further supports this performance. However, the impact of high-priority incidents is not detailed.
+2025-09-03 11:28:09.963 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [itsm.case_resolution_time] flags=['low_tail_risk']
+2025-09-03 11:28:09.963 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [itsm.case_resolution_time] gaps=['Priority mix unclear → break out p50/p90 by P1/P2/P3 → ensure P1 p90 ≤90m (solidifies band 5).']
+2025-09-03 11:28:09.963 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.itsm.incident_reopen_rate
+2025-09-03 11:28:10.019 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:13.218 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3199.42 ms)
+2025-09-03 11:28:13.219 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.itsm.incident_reopen_rate (3255.27 ms)
+2025-09-03 11:28:13.219 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [itsm.incident_reopen_rate] band=2 | rationale=Reopen rate of 15% indicates significant issues with first-time resolution; while the data shows some incidents are resolved, the high reopen rate is a critical concern.
+2025-09-03 11:28:13.219 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [itsm.incident_reopen_rate] gaps=['High reopen rate → analyze root causes of reopens and implement corrective actions → reduce reopen rate to ≤12% (unlocks band 3).']
+2025-09-03 11:28:13.219 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.hr.onboarding_cycle_time
+2025-09-03 11:28:13.269 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:16.502 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3232.26 ms)
+2025-09-03 11:28:16.502 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.hr.onboarding_cycle_time (3283.33 ms)
+2025-09-03 11:28:16.503 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [hr.onboarding_cycle_time] band=5 | rationale=Median 20h is excellent, indicating efficient onboarding; however, the impact of specific approval chains is not evaluated.
+2025-09-03 11:28:16.503 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [hr.onboarding_cycle_time] flags=['fast_bp']
+2025-09-03 11:28:16.503 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [hr.onboarding_cycle_time] gaps=['Bottlenecks hidden → list top 3 longest approval steps with median/p90 → keep worst-step p90 ≤48h (solidifies band 5).']
+2025-09-03 11:28:16.504 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.sap.procure_to_pay_cycle
+2025-09-03 11:28:16.566 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:19.792 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3226.21 ms)
+2025-09-03 11:28:19.793 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.sap.procure_to_pay_cycle (3288.78 ms)
+2025-09-03 11:28:19.793 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [sap.procure_to_pay_cycle] band=1 | rationale=The total days of 29 is critical; the long duration indicates significant inefficiencies in the process. The strongest positive is the identification of the issue, but the overall timing is far beyond acceptable limits.
+2025-09-03 11:28:19.793 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [sap.procure_to_pay_cycle] gaps=['Excessive total days → analyze each stage for delays → reduce total days to ≤20d (unlocks band 2).']
+2025-09-03 11:28:19.793 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.q2c.throughput
+2025-09-03 11:28:19.816 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:23.288 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3471.73 ms)
+2025-09-03 11:28:23.288 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.q2c.throughput (3494.76 ms)
+2025-09-03 11:28:23.288 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [q2c.throughput] band=5 | rationale=10 hours total is excellent, indicating a strong time-to-cash performance; however, reliance on specific approver windows could limit consistency in the process.
+2025-09-03 11:28:23.288 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [q2c.throughput] flags=['fast_time_to_cash']
+2025-09-03 11:28:23.288 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [q2c.throughput] gaps=['Variability unknown → analyze approval times by department → ensure ≤12h across all departments (unlocks band 5).']
+2025-09-03 11:28:23.289 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.backlog.aging
+2025-09-03 11:28:23.347 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:25.606 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2258.84 ms)
+2025-09-03 11:28:25.607 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.backlog.aging (2317.70 ms)
+2025-09-03 11:28:25.607 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [backlog.aging] band=5 | rationale=The median age of open items is excellent (p50 0.8d, p90 2.5d), indicating a quick turnaround. However, the potential for hidden issues in specific queues is a limiting factor.
+2025-09-03 11:28:25.607 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [backlog.aging] flags=['low_queue_age']
+2025-09-03 11:28:25.607 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [backlog.aging] gaps=['Hidden pockets possible → publish per-queue age p95 and oldest 10 items → keep all queues p90 ≤3d (maintains band 5).']
+2025-09-03 11:28:25.607 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.rpa.success_rate
+2025-09-03 11:28:25.662 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:29.461 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3797.96 ms)
+2025-09-03 11:28:29.462 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.rpa.success_rate (3854.55 ms)
+2025-09-03 11:28:29.462 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [rpa.success_rate] band=1 | rationale=The overall success ratio is 63%, which is below the critical threshold of 70%. This indicates significant reliability issues in RPA runs, with no evidence of successful performance improvement strategies.
+2025-09-03 11:28:29.462 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [rpa.success_rate] gaps=['Success rate low → implement monitoring and optimization strategies → achieve ≥70% success rate (unlocks band 2).']
+2025-09-03 11:28:29.462 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.integration.data_sync_latency
+2025-09-03 11:28:29.506 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:34.310 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (4804.42 ms)
+2025-09-03 11:28:34.311 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.integration.data_sync_latency (4848.06 ms)
+2025-09-03 11:28:34.311 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [integration.data_sync_latency] band=4 | rationale=The median of 55s is within the acceptable range for band 4, and the p95 of 55s is also strong. However, without failure percentage data, the overall reliability of the delivery cannot be fully assessed.
+2025-09-03 11:28:34.311 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [integration.data_sync_latency] gaps=['Failure context missing → provide failure % and retry metrics → keep failures <0.5% (unlocks band 5).']
+2025-09-03 11:28:34.311 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.api.reliability
+2025-09-03 11:28:34.370 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:38.506 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (4135.87 ms)
+2025-09-03 11:28:38.507 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.api.reliability (4195.09 ms)
+2025-09-03 11:28:38.507 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [api.reliability] band=5 | rationale=The error rate of 0.945% is slightly above the 0.5% threshold, but the p95 latency is within SLO, indicating strong performance overall; however, the error rate is a limiting factor.
+2025-09-03 11:28:38.507 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [api.reliability] gaps=['Error rate slightly above SLO → implement error tracking and resolution processes → reduce error rate to ≤0.5% (unlocks band 5).']
+2025-09-03 11:28:38.507 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.integration.topology_health
+2025-09-03 11:28:38.539 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:41.599 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3060.55 ms)
+2025-09-03 11:28:41.599 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.integration.topology_health (3092.68 ms)
+2025-09-03 11:28:41.600 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [integration.topology_health] band=1 | rationale=The average uptime is significantly low at 0.41%, indicating systemic failures across the integration nodes. The absence of healthy nodes and the presence of critical errors further exacerbate the situation.
+2025-09-03 11:28:41.600 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [integration.topology_health] gaps=['systemic failures → implement monitoring and remediation strategies → achieve ≥99.5% uptime across all nodes (unlocks band 3).']
+2025-09-03 11:28:41.600 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.mdm.duplicate_rate
+2025-09-03 11:28:41.652 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:45.035 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3382.93 ms)
+2025-09-03 11:28:45.035 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.mdm.duplicate_rate (3435.32 ms)
+2025-09-03 11:28:45.035 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [mdm.duplicate_rate] band=2 | rationale=A duplicate rate of 16% indicates significant issues with entity matching and standardization; while the total number of entities evaluated is not provided, the high duplication suggests systemic problems. The strongest positive is the identification of duplicates, but the high rate limits overall effectiveness.
+2025-09-03 11:28:45.035 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [mdm.duplicate_rate] gaps=['High duplicate rate → implement stricter matching criteria and data cleansing processes → achieve ≤10% duplicates (unlocks band 3).']
+2025-09-03 11:28:45.036 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.dq.exceptions_rate
+2025-09-03 11:28:45.071 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:48.619 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3548.48 ms)
+2025-09-03 11:28:48.620 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.dq.exceptions_rate (3584.54 ms)
+2025-09-03 11:28:48.621 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [dq.exceptions_rate] band=2 | rationale=The exception rate of 19% indicates a critical level of issues, despite the absence of detailed severity data. The high rate suggests significant underlying problems that need addressing.
+2025-09-03 11:28:48.621 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [dq.exceptions_rate] gaps=['High exception rate → implement targeted rule evaluations and remediation plans → reduce rate to ≤10% (unlocks band 3).']
+2025-09-03 11:28:48.621 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.ai.penetration
+2025-09-03 11:28:48.663 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:52.010 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3347.23 ms)
+2025-09-03 11:28:52.011 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.ai.penetration (3389.41 ms)
+2025-09-03 11:28:52.011 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [ai.penetration] band=1 | rationale=AI is present in less than 10% of workflows, indicating minimal adoption; the execution share is also low at 0.18. This critical limitation suggests a lack of integration of AI features in the overall system.
+2025-09-03 11:28:52.011 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [ai.penetration] gaps=['Low AI workflow coverage → increase workflows with AI features to at least 10% → target ≥10% workflows with AI (unlocks band 2).']
+2025-09-03 11:28:52.011 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.ai.outcome_uplift
+2025-09-03 11:28:52.053 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:54.759 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2705.06 ms)
+2025-09-03 11:28:54.759 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.ai.outcome_uplift (2748.01 ms)
+2025-09-03 11:28:54.759 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [ai.outcome_uplift] band=2 | rationale=The estimated uplift of 2% indicates minimal improvement; the lack of significant change limits the overall effectiveness of the AI rollout.
+2025-09-03 11:28:54.759 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [ai.outcome_uplift] gaps=['Minimal uplift → identify specific areas for improvement and implement targeted strategies → achieve ≥10% uplift (unlocks band 4).']
+2025-09-03 11:28:54.760 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.ai.governance_coverage
+2025-09-03 11:28:54.802 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:28:58.073 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3271.18 ms)
+2025-09-03 11:28:58.073 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.ai.governance_coverage (3313.64 ms)
+2025-09-03 11:28:58.074 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [ai.governance_coverage] band=2 | rationale=Only 39% of models have the required governance controls, indicating significant gaps in compliance; the lack of sufficient coverage is the primary limiting factor.
+2025-09-03 11:28:58.074 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [ai.governance_coverage] gaps=['Low coverage → implement governance controls for all models → achieve ≥75% coverage (unlocks band 4).']
+2025-09-03 11:28:58.074 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.platform.customization_debt
+2025-09-03 11:28:58.104 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:00.599 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2494.10 ms)
+2025-09-03 11:29:00.599 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.platform.customization_debt (2525.16 ms)
+2025-09-03 11:29:00.599 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [platform.customization_debt] band=3 | rationale=The customization risk index indicates a moderate level of customization, suggesting some stability; however, the lack of detailed metrics on specific customizations limits the assessment of overall risk.
+2025-09-03 11:29:00.599 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [platform.customization_debt] gaps=['Customization details lacking → provide counts of unmanaged customizations and deprecated API usage → keep unmanaged/deprecated at 0 (unlocks band 4).']
+2025-09-03 11:29:00.600 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.change.failure_rate
+2025-09-03 11:29:00.647 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:02.913 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2265.55 ms)
+2025-09-03 11:29:02.913 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.change.failure_rate (2313.58 ms)
+2025-09-03 11:29:02.914 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [change.failure_rate] band=2 | rationale=A change failure rate of 33% indicates significant reliability issues; while the high failure rate is a strong negative, there is no additional context provided to suggest improvement strategies.
+2025-09-03 11:29:02.914 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [change.failure_rate] gaps=['High failure rate → implement a robust change management process with clear rollback strategies → reduce failure rate to ≤20% (unlocks band 3).']
+2025-09-03 11:29:02.917 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.process.automation.coverage
+2025-09-03 11:29:02.965 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:06.362 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3396.63 ms)
+2025-09-03 11:29:06.362 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.process.automation.coverage (3445.46 ms)
+2025-09-03 11:29:06.363 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [process.automation.coverage] band=4 | rationale=The coverage ratio of 0.72 indicates good automation across multiple platforms, with ServiceNow showing the highest coverage. However, the coverage in Salesforce and SAP is slightly lower, limiting the overall score.
+2025-09-03 11:29:06.363 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [process.automation.coverage] flags=['multi_platform_coverage']
+2025-09-03 11:29:06.363 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [process.automation.coverage] gaps=['Coverage uneven by platform → report coverage per platform and runs/week → achieve ≥0.85 coverage on ≥3 platforms (unlocks band 5).']
+2025-09-03 11:29:06.363 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.workflow.sla_adherence
+2025-09-03 11:29:06.428 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:08.869 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2441.41 ms)
+2025-09-03 11:29:08.870 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.workflow.sla_adherence (2506.99 ms)
+2025-09-03 11:29:08.870 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [workflow.sla_adherence] band=4 | rationale=The overall on-time rate of 0.91 is strong, particularly with high priority cases at 0.94; however, normal priority cases at 0.89 slightly limit the overall performance. 
+2025-09-03 11:29:08.871 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [workflow.sla_adherence] gaps=['Coverage uneven by priority → report on-time rates for each priority level → achieve ≥0.90 on normal priority cases (unlocks band 5).']
+2025-09-03 11:29:08.871 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.sales.lead_to_oppty_cycle_time
+2025-09-03 11:29:08.908 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:11.723 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2814.72 ms)
+2025-09-03 11:29:11.723 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.sales.lead_to_oppty_cycle_time (2851.84 ms)
+2025-09-03 11:29:11.723 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [sales.lead_to_oppty_cycle_time] band=3 | rationale=The median of 28 hours is fair, but the p90 at 52 hours indicates a significant tail risk. This discrepancy limits the overall performance despite a reasonable median time.
+2025-09-03 11:29:11.723 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [sales.lead_to_oppty_cycle_time] gaps=['Tail risk unknown → add p95 latency and failure % → keep p95 within 48h (unlocks band 4).']
+2025-09-03 11:29:11.723 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.itsm.case_resolution_time
+2025-09-03 11:29:11.784 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:13.837 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2053.55 ms)
+2025-09-03 11:29:13.838 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.itsm.case_resolution_time (2114.90 ms)
+2025-09-03 11:29:13.838 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [itsm.case_resolution_time] band=5 | rationale=The median resolution time of 15 minutes and p90 of 35 minutes indicate excellent performance in incident resolution. There are no significant limiting factors present.
+2025-09-03 11:29:13.838 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.itsm.incident_reopen_rate
+2025-09-03 11:29:13.873 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:16.672 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2799.15 ms)
+2025-09-03 11:29:16.673 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.itsm.incident_reopen_rate (2834.76 ms)
+2025-09-03 11:29:16.673 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [itsm.incident_reopen_rate] band=4 | rationale=Reopen rate of 5% indicates a good first-time fix rate, but it is above the threshold for band 5. The limiting factor is the need to further reduce the reopen rate to achieve excellence.
+2025-09-03 11:29:16.673 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [itsm.incident_reopen_rate] gaps=['Reopen rate high → analyze root causes of reopened incidents → reduce reopen rate to ≤2% (unlocks band 5).']
+2025-09-03 11:29:16.673 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.hr.onboarding_cycle_time
+2025-09-03 11:29:16.724 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:19.894 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3169.20 ms)
+2025-09-03 11:29:19.895 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.hr.onboarding_cycle_time (3221.62 ms)
+2025-09-03 11:29:19.895 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [hr.onboarding_cycle_time] band=4 | rationale=Median 7 days (168h) is above the threshold for band 4, but the p90 of 12 days (288h) indicates potential delays; the strong positive is the median being within the band 4 range, while the p90 suggests room for improvement in approval processes.
+2025-09-03 11:29:19.895 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [hr.onboarding_cycle_time] gaps=['High p90 hours → analyze top 3 longest approval steps with median/p90 → reduce worst-step p90 to ≤48h (unlocks band 5).']
+2025-09-03 11:29:19.895 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.sap.procure_to_pay_cycle
+2025-09-03 11:29:19.950 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:23.652 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3702.25 ms)
+2025-09-03 11:29:23.652 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.sap.procure_to_pay_cycle (3756.92 ms)
+2025-09-03 11:29:23.652 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [sap.procure_to_pay_cycle] band=2 | rationale=Total days of 18 indicates a poor performance; while the breakdown shows some efficiency in individual stages, the overall duration exceeds the acceptable range significantly. The strongest positive is the relatively short requisition and PO stages, but the lengthy invoice processing time is a limiting factor.
+2025-09-03 11:29:23.652 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [sap.procure_to_pay_cycle] gaps=['Invoice processing delays → streamline invoice approval process → target ≤5d (unlocks band 4).']
+2025-09-03 11:29:23.653 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.q2c.throughput
+2025-09-03 11:29:23.681 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:27.066 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3384.84 ms)
+2025-09-03 11:29:27.067 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.q2c.throughput (3414.29 ms)
+2025-09-03 11:29:27.067 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [q2c.throughput] band=4 | rationale=The total hours to cash is 16, which is good; however, the reliance on specific order processing rates could limit scalability during peak times.
+2025-09-03 11:29:27.070 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [q2c.throughput] flags=['good_time_to_cash']
+2025-09-03 11:29:27.073 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [q2c.throughput] gaps=['Processing rate variability → analyze throughput during peak hours → achieve consistent orders per hour ≥2 (unlocks band 5).']
+2025-09-03 11:29:27.074 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.backlog.aging
+2025-09-03 11:29:27.100 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:30.481 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3381.22 ms)
+2025-09-03 11:29:30.481 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.backlog.aging (3407.68 ms)
+2025-09-03 11:29:30.482 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [backlog.aging] band=5 | rationale=The median age of open items is excellent at 0.8 days, and the 90th percentile is also within the good range at 2.5 days; however, potential hidden issues may exist in specific queues.
+2025-09-03 11:29:30.482 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [backlog.aging] flags=['low_queue_age']
+2025-09-03 11:29:30.482 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [backlog.aging] gaps=['Hidden pockets possible → publish per-queue age p95 and oldest 10 items → keep all queues p90 ≤3d (maintains band 5).']
+2025-09-03 11:29:30.482 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.rpa.success_rate
+2025-09-03 11:29:30.513 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:33.599 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3085.59 ms)
+2025-09-03 11:29:33.599 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.rpa.success_rate (3117.25 ms)
+2025-09-03 11:29:33.599 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [rpa.success_rate] band=4 | rationale=Overall success rate is 93%, with SFDC performing well at 95%, but SAP is lower at 91%, which limits the overall reliability perception.
+2025-09-03 11:29:33.599 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [rpa.success_rate] flags=['good_reliability']
+2025-09-03 11:29:33.599 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [rpa.success_rate] gaps=['SAP performance lower → analyze and improve SAP RPA runs → achieve ≥95% success rate on SAP (unlocks band 5).']
+2025-09-03 11:29:33.600 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.integration.data_sync_latency
+2025-09-03 11:29:33.628 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:36.554 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2926.46 ms)
+2025-09-03 11:29:36.555 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.integration.data_sync_latency (2954.99 ms)
+2025-09-03 11:29:36.555 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [integration.data_sync_latency] band=5 | rationale=Median 12s and p95 18s indicate excellent performance with no delivery failures, showcasing a highly efficient system.
+2025-09-03 11:29:36.555 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [integration.data_sync_latency] flags=['near_real_time']
+2025-09-03 11:29:36.555 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [integration.data_sync_latency] gaps=['Failure context missing → provide failure %, retry storms, and DLQ rate → keep failures ≤0.2% and DLQ ≈0 (solidifies band 5).']
+2025-09-03 11:29:36.555 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.api.reliability
+2025-09-03 11:29:36.579 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:38.880 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2301.06 ms)
+2025-09-03 11:29:38.881 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.api.reliability (2325.22 ms)
+2025-09-03 11:29:38.881 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [api.reliability] band=5 | rationale=The p95 latency of 280 ms is within the SLO, and the error rate of 0.001% is excellent; however, the SLO threshold for latency is not provided for comparison.
+2025-09-03 11:29:38.881 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.integration.topology_health
+2025-09-03 11:29:38.927 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:41.132 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2204.80 ms)
+2025-09-03 11:29:41.133 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.integration.topology_health (2252.31 ms)
+2025-09-03 11:29:41.133 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [integration.topology_health] band=2 | rationale=Only 70% of nodes are healthy, indicating significant instability; the presence of 5 critical errors further exacerbates the situation.
+2025-09-03 11:29:41.133 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [integration.topology_health] gaps=['low healthy node percentage → increase node health monitoring and remediation efforts → achieve ≥90% healthy nodes (unlocks band 3).']
+2025-09-03 11:29:41.134 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.mdm.duplicate_rate
+2025-09-03 11:29:41.169 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:43.966 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2797.11 ms)
+2025-09-03 11:29:43.966 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.mdm.duplicate_rate (2832.75 ms)
+2025-09-03 11:29:43.966 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [mdm.duplicate_rate] band=4 | rationale=A 3% duplicate rate indicates good matching and standardization; however, the lack of trend data limits confidence in sustained performance.
+2025-09-03 11:29:43.967 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [mdm.duplicate_rate] flags=['low_dupes']
+2025-09-03 11:29:43.967 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [mdm.duplicate_rate] gaps=['Trend data missing → implement monthly tracking of duplicate rates over time → maintain ≤3% to solidify band 5.']
+2025-09-03 11:29:43.967 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.dq.exceptions_rate
+2025-09-03 11:29:44.014 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:46.450 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2436.52 ms)
+2025-09-03 11:29:46.451 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.dq.exceptions_rate (2483.61 ms)
+2025-09-03 11:29:46.451 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [dq.exceptions_rate] band=2 | rationale=The exception rate of 6% indicates a significant issue with data quality, despite a lower critical rate of 2%. The high overall rate suggests that improvements are necessary to reduce the number of exceptions.
+2025-09-03 11:29:46.451 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [dq.exceptions_rate] gaps=['High exception rate → implement targeted data quality initiatives → reduce overall exception rate to ≤3% (unlocks band 4).']
+2025-09-03 11:29:46.451 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.ai.penetration
+2025-09-03 11:29:46.498 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:48.840 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2341.79 ms)
+2025-09-03 11:29:48.841 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.ai.penetration (2389.80 ms)
+2025-09-03 11:29:48.841 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [ai.penetration] band=3 | rationale=AI is present in 55% of workflows, but only 38% of executions utilize AI features; the execution share is a limiting factor. 
+2025-09-03 11:29:48.841 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [ai.penetration] gaps=['Execution share low → increase AI execution share → target ≥50% (unlocks band 4).']
+2025-09-03 11:29:48.841 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.ai.outcome_uplift
+2025-09-03 11:29:48.898 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:51.903 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (3004.23 ms)
+2025-09-03 11:29:51.903 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.ai.outcome_uplift (3061.83 ms)
+2025-09-03 11:29:51.903 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [ai.outcome_uplift] band=4 | rationale=An estimated uplift of 11% indicates a good improvement; however, the flat trend over the last 8 weeks raises concerns about sustainability. The strong positive is the uplift percentage, while the limiting factor is the lack of a positive trend.
+2025-09-03 11:29:51.904 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [ai.outcome_uplift] flags=['good_uplift']
+2025-09-03 11:29:51.904 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [ai.outcome_uplift] gaps=['Stability unproven → include last 8–12 weeks trend for median and p90 → demonstrate non-declining trend (solidifies band 5).']
+2025-09-03 11:29:51.904 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.ai.governance_coverage
+2025-09-03 11:29:51.964 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:54.780 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2816.33 ms)
+2025-09-03 11:29:54.781 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.ai.governance_coverage (2876.59 ms)
+2025-09-03 11:29:54.781 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [ai.governance_coverage] band=4 | rationale=Coverage is at 82%, which is strong, but the absence of alerts in the last 30 days does not provide insight into ongoing governance effectiveness. The lack of alerts is a positive signal, but it does not compensate for the need for continuous monitoring and validation of controls.
+2025-09-03 11:29:54.781 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [ai.governance_coverage] gaps=['Continuous monitoring lacking → implement regular governance audits and alerts → achieve ≥90% coverage with active monitoring (unlocks band 5).']
+2025-09-03 11:29:54.781 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.platform.customization_debt
+2025-09-03 11:29:54.818 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:56.851 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2033.81 ms)
+2025-09-03 11:29:56.852 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.platform.customization_debt (2070.86 ms)
+2025-09-03 11:29:56.852 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [platform.customization_debt] band=3 | rationale=Moderate customization footprint with some unmanaged customizations and deprecated API calls; while the index is low, the presence of these factors indicates potential risk. The strongest positive is the low index, but the unmanaged customizations and deprecated calls limit stability.
+2025-09-03 11:29:56.852 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [platform.customization_debt] gaps=['Unmanaged customizations present → reduce unmanaged customizations to 0 → achieve a stable customization environment (unlocks band 4).']
+2025-09-03 11:29:56.852 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: metric.change.failure_rate
+2025-09-03 11:29:56.902 | INFO     | enterprise_systems_agent.logging_utils:timed:38 - ▶️ start: LLM.call
+2025-09-03 11:29:59.197 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: LLM.call (2295.13 ms)
+2025-09-03 11:29:59.197 | INFO     | enterprise_systems_agent.logging_utils:timed:42 - ✅ done: metric.change.failure_rate (2344.95 ms)
+2025-09-03 11:29:59.198 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:666 - [change.failure_rate] band=2 | rationale=A change failure rate of 14% indicates significant reliability issues; while the number of deploys is substantial, the high failure rate is a critical concern. The strong positive is the volume of deploys, but the limiting factor is the high proportion of failures and rollbacks.
+2025-09-03 11:29:59.198 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:668 - [change.failure_rate] flags=['high_cfr']
+2025-09-03 11:29:59.198 | INFO     | enterprise_systems_agent.llm_engine:grade_metric:670 - [change.failure_rate] gaps=['High failure rate → implement stricter pre-deployment testing and validation processes → reduce CFR to ≤7% (unlocks band 4).']

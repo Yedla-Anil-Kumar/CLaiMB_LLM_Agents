@@ -86,50 +86,50 @@ class EnterpriseOrchestrator:
         }
 
         # ---- Rollups (weights tuned; sum ~1 per family) ----
-        process_maturity = round(
-            0.12 * _s(metrics.get("process.automation.coverage", {}))
-            + 0.10 * _s(metrics.get("workflow.sla_adherence", {}))
-            + 0.08 * _s(metrics.get("sales.lead_to_oppty_cycle_time", {}))
-            + 0.08 * _s(metrics.get("itsm.case_resolution_time", {}))
-            + 0.08 * _s(metrics.get("itsm.incident_reopen_rate", {}))
-            + 0.10 * _s(metrics.get("hr.onboarding_cycle_time", {}))
-            + 0.12 * _s(metrics.get("sap.procure_to_pay_cycle", {}))
-            + 0.12 * _s(metrics.get("q2c.throughput", {}))
-            + 0.10 * _s(metrics.get("backlog.aging", {}))
-            + 0.10 * _s(metrics.get("rpa.success_rate", {})),
-            2,
-        )
+        # process_maturity = round(
+        #     0.12 * _s(metrics.get("process.automation.coverage", {}))
+        #     + 0.10 * _s(metrics.get("workflow.sla_adherence", {}))
+        #     + 0.08 * _s(metrics.get("sales.lead_to_oppty_cycle_time", {}))
+        #     + 0.08 * _s(metrics.get("itsm.case_resolution_time", {}))
+        #     + 0.08 * _s(metrics.get("itsm.incident_reopen_rate", {}))
+        #     + 0.10 * _s(metrics.get("hr.onboarding_cycle_time", {}))
+        #     + 0.12 * _s(metrics.get("sap.procure_to_pay_cycle", {}))
+        #     + 0.12 * _s(metrics.get("q2c.throughput", {}))
+        #     + 0.10 * _s(metrics.get("backlog.aging", {}))
+        #     + 0.10 * _s(metrics.get("rpa.success_rate", {})),
+        #     2,
+        # )
 
-        integration_health = round(
-            0.22 * _s(metrics.get("integration.data_sync_latency", {}))
-            + 0.22 * _s(metrics.get("api.reliability", {}))
-            + 0.22 * _s(metrics.get("integration.topology_health", {}))
-            + 0.17 * _s(metrics.get("mdm.duplicate_rate", {}))
-            + 0.17 * _s(metrics.get("dq.exceptions_rate", {})),
-            2,
-        )
+        # integration_health = round(
+        #     0.22 * _s(metrics.get("integration.data_sync_latency", {}))
+        #     + 0.22 * _s(metrics.get("api.reliability", {}))
+        #     + 0.22 * _s(metrics.get("integration.topology_health", {}))
+        #     + 0.17 * _s(metrics.get("mdm.duplicate_rate", {}))
+        #     + 0.17 * _s(metrics.get("dq.exceptions_rate", {})),
+        #     2,
+        # )
 
-        ai_outcomes = round(
-            0.38 * _s(metrics.get("ai.penetration", {}))
-            + 0.34 * _s(metrics.get("ai.outcome_uplift", {}))
-            + 0.28 * _s(metrics.get("ai.governance_coverage", {})),
-            2,
-        )
+        # ai_outcomes = round(
+        #     0.38 * _s(metrics.get("ai.penetration", {}))
+        #     + 0.34 * _s(metrics.get("ai.outcome_uplift", {}))
+        #     + 0.28 * _s(metrics.get("ai.governance_coverage", {})),
+        #     2,
+        # )
 
-        platform_risk = round(
-            0.50 * _s(metrics.get("platform.customization_debt", {}))
-            + 0.50 * _s(metrics.get("change.failure_rate", {})),
-            2,
-        )
+        # platform_risk = round(
+        #     0.50 * _s(metrics.get("platform.customization_debt", {}))
+        #     + 0.50 * _s(metrics.get("change.failure_rate", {})),
+        #     2,
+        # )
 
         return {
             "agent": "enterprise_systems",
-            "scores": {
-                "process_maturity": process_maturity,
-                "integration_health": integration_health,
-                "ai_outcomes": ai_outcomes,
-                "platform_risk": platform_risk,
-            },
+            # "scores": {
+            #     "process_maturity": process_maturity,
+            #     "integration_health": integration_health,
+            #     "ai_outcomes": ai_outcomes,
+            #     "platform_risk": platform_risk,
+            # },
             "metric_breakdown": metrics,
             "mode": "single_inputs_json",
         }

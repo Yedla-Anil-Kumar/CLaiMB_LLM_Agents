@@ -1,16 +1,10 @@
 {
   "agent": "enterprise_systems",
-  "scores": {
-    "process_maturity": 3.86,
-    "integration_health": 3.66,
-    "ai_outcomes": 3.62,
-    "platform_risk": 2.5
-  },
   "metric_breakdown": {
     "process.automation.coverage": {
       "metric_id": "process.automation.coverage",
       "band": 4,
-      "rationale": "The coverage ratio of 0.72 indicates good automation across multiple platforms, with ServiceNow slightly outperforming others. However, the coverage is not consistent across all platforms, limiting the overall score.",
+      "rationale": "The coverage ratio of 0.72 indicates good automation across multiple platforms, with ServiceNow showing the highest coverage. However, the coverage in Salesforce and SAP is slightly lower, limiting the overall score.",
       "flags": [
         "multi_platform_coverage"
       ],
@@ -23,10 +17,10 @@
     "workflow.sla_adherence": {
       "metric_id": "workflow.sla_adherence",
       "band": 4,
-      "rationale": "The overall on-time rate of 0.91 is strong, with high priority cases performing even better at 0.94; however, normal priority cases at 0.89 slightly limit the overall performance.",
+      "rationale": "The overall on-time rate of 0.91 is strong, particularly with high priority cases at 0.94; however, normal priority cases at 0.89 slightly limit the overall performance. ",
       "flags": [],
       "gaps": [
-        "Normal priority cases lagging → improve normal priority case handling → achieve ≥0.90 on-time rate for normal cases (unlocks band 5)."
+        "Coverage uneven by priority → report on-time rates for each priority level → achieve ≥0.90 on normal priority cases (unlocks band 5)."
       ],
       "MetricID": "workflow.sla_adherence",
       "Score": 4
@@ -34,10 +28,10 @@
     "sales.lead_to_oppty_cycle_time": {
       "metric_id": "sales.lead_to_oppty_cycle_time",
       "band": 3,
-      "rationale": "The median of 28 hours is fair, but the p90 at 52 hours indicates a significant tail risk. This discrepancy suggests that while some leads convert reasonably quickly, others take much longer, limiting overall performance.",
+      "rationale": "The median of 28 hours is fair, but the p90 at 52 hours indicates a significant tail risk. This discrepancy limits the overall performance despite a reasonable median time.",
       "flags": [],
       "gaps": [
-        "Tail risk unknown → add p95/p99 latency and failure % for lead conversion → keep p90 within 48h (unlocks band 4)."
+        "Tail risk unknown → add p95 latency and failure % → keep p95 within 48h (unlocks band 4)."
       ],
       "MetricID": "sales.lead_to_oppty_cycle_time",
       "Score": 3
@@ -45,7 +39,7 @@
     "itsm.case_resolution_time": {
       "metric_id": "itsm.case_resolution_time",
       "band": 5,
-      "rationale": "The median resolution time of 15 minutes and a p90 of 35 minutes indicate excellent performance in resolving incidents quickly. There are no significant limiting factors present in the provided data.",
+      "rationale": "The median resolution time of 15 minutes and p90 of 35 minutes indicate excellent performance in incident resolution. There are no significant limiting factors present.",
       "flags": [],
       "gaps": [],
       "MetricID": "itsm.case_resolution_time",
@@ -54,10 +48,10 @@
     "itsm.incident_reopen_rate": {
       "metric_id": "itsm.incident_reopen_rate",
       "band": 4,
-      "rationale": "Reopen rate of 5% indicates a good first-time fix rate, but it is above the threshold for band 5. The limiting factor is the need to reduce the reopen rate further to achieve excellence.",
+      "rationale": "Reopen rate of 5% indicates a good first-time fix rate, but it is above the threshold for band 5. The limiting factor is the need to further reduce the reopen rate to achieve excellence.",
       "flags": [],
       "gaps": [
-        "Reopen rate too high → analyze root causes of reopens and implement targeted training → achieve ≤2% reopen rate (unlocks band 5)."
+        "Reopen rate high → analyze root causes of reopened incidents → reduce reopen rate to ≤2% (unlocks band 5)."
       ],
       "MetricID": "itsm.incident_reopen_rate",
       "Score": 4
@@ -65,12 +59,10 @@
     "hr.onboarding_cycle_time": {
       "metric_id": "hr.onboarding_cycle_time",
       "band": 4,
-      "rationale": "Median 20h is strong, but the p90 of 36h indicates some variability in the process; approval delays could be a concern.",
-      "flags": [
-        "fast_bp"
-      ],
+      "rationale": "Median 7 days (168h) is above the threshold for band 4, but the p90 of 12 days (288h) indicates potential delays; the strong positive is the median being within the band 4 range, while the p90 suggests room for improvement in approval processes.",
+      "flags": [],
       "gaps": [
-        "Approval delays untracked → analyze approval step durations → reduce p90 approval time to ≤48h (unlocks band 5)."
+        "High p90 hours → analyze top 3 longest approval steps with median/p90 → reduce worst-step p90 to ≤48h (unlocks band 5)."
       ],
       "MetricID": "hr.onboarding_cycle_time",
       "Score": 4
@@ -78,10 +70,10 @@
     "sap.procure_to_pay_cycle": {
       "metric_id": "sap.procure_to_pay_cycle",
       "band": 2,
-      "rationale": "Total days of 18 indicates a poor performance; while the breakdown shows some efficiency in individual stages, the overall duration exceeds the acceptable range significantly. The limiting factor is the total duration from PO creation to invoice posting.",
+      "rationale": "Total days of 18 indicates a poor performance; while the breakdown shows some efficiency in individual stages, the overall duration exceeds the acceptable range significantly. The strongest positive is the relatively short requisition and PO stages, but the lengthy invoice processing time is a limiting factor.",
       "flags": [],
       "gaps": [
-        "Total duration excessive → streamline processes in each stage → target ≤12d (unlocks band 3)."
+        "Invoice processing delays → streamline invoice approval process → target ≤5d (unlocks band 4)."
       ],
       "MetricID": "sap.procure_to_pay_cycle",
       "Score": 2
@@ -89,12 +81,12 @@
     "q2c.throughput": {
       "metric_id": "q2c.throughput",
       "band": 4,
-      "rationale": "The total hours to cash is 16, which is within the good range; however, the reliance on specific order processing rates could limit scalability. ",
+      "rationale": "The total hours to cash is 16, which is good; however, the reliance on specific order processing rates could limit scalability during peak times.",
       "flags": [
         "good_time_to_cash"
       ],
       "gaps": [
-        "Processing rate variability → analyze orders per hour by product type → achieve ≥2 orders/hour consistently (unlocks band 5)."
+        "Processing rate variability → analyze throughput during peak hours → achieve consistent orders per hour ≥2 (unlocks band 5)."
       ],
       "MetricID": "q2c.throughput",
       "Score": 4
@@ -115,7 +107,7 @@
     "rpa.success_rate": {
       "metric_id": "rpa.success_rate",
       "band": 4,
-      "rationale": "Overall success rate is 93%, with SFDC performing well at 95%, but SAP is lower at 91%, which limits the overall reliability perception. The strong performance of SFDC is a positive aspect.",
+      "rationale": "Overall success rate is 93%, with SFDC performing well at 95%, but SAP is lower at 91%, which limits the overall reliability perception.",
       "flags": [
         "good_reliability"
       ],
@@ -128,34 +120,32 @@
     "integration.data_sync_latency": {
       "metric_id": "integration.data_sync_latency",
       "band": 5,
-      "rationale": "Median 12s and p95 18s indicate excellent performance; the failure rate is 0.0%, which is optimal.",
+      "rationale": "Median 12s and p95 18s indicate excellent performance with no delivery failures, showcasing a highly efficient system.",
       "flags": [
         "near_real_time"
       ],
-      "gaps": [],
+      "gaps": [
+        "Failure context missing → provide failure %, retry storms, and DLQ rate → keep failures ≤0.2% and DLQ ≈0 (solidifies band 5)."
+      ],
       "MetricID": "integration.data_sync_latency",
       "Score": 5
     },
     "api.reliability": {
       "metric_id": "api.reliability",
       "band": 5,
-      "rationale": "The p95 latency of 280 ms is within the SLO, and the error rate of 0.001% is excellent; however, endpoint-specific performance is not detailed.",
-      "flags": [
-        "headroom_present"
-      ],
-      "gaps": [
-        "Endpoint performance details missing → report p95/error rates for top endpoints → ensure all meet SLO (solidifies band 5)."
-      ],
+      "rationale": "The p95 latency of 280 ms is within the SLO, and the error rate of 0.001% is excellent; however, the SLO threshold for latency is not provided for comparison.",
+      "flags": [],
+      "gaps": [],
       "MetricID": "api.reliability",
       "Score": 5
     },
     "integration.topology_health": {
       "metric_id": "integration.topology_health",
       "band": 2,
-      "rationale": "Only 70% of nodes are healthy, indicating significant instability; the presence of 5 critical alerts further exacerbates the situation.",
+      "rationale": "Only 70% of nodes are healthy, indicating significant instability; the presence of 5 critical errors further exacerbates the situation.",
       "flags": [],
       "gaps": [
-        "low healthy node percentage → improve node stability and reduce critical errors → achieve ≥90% healthy nodes and ≤2 critical errors (unlocks band 3)."
+        "low healthy node percentage → increase node health monitoring and remediation efforts → achieve ≥90% healthy nodes (unlocks band 3)."
       ],
       "MetricID": "integration.topology_health",
       "Score": 2
@@ -163,12 +153,12 @@
     "mdm.duplicate_rate": {
       "metric_id": "mdm.duplicate_rate",
       "band": 4,
-      "rationale": "A 3% duplicate rate indicates good matching and standardization; however, the lack of information on the trend limits confidence in sustained performance.",
+      "rationale": "A 3% duplicate rate indicates good matching and standardization; however, the lack of trend data limits confidence in sustained performance.",
       "flags": [
         "low_dupes"
       ],
       "gaps": [
-        "Trend data missing → implement monthly tracking of duplicate rates over time → maintain ≤2% duplicates consistently (unlocks band 5)."
+        "Trend data missing → implement monthly tracking of duplicate rates over time → maintain ≤3% to solidify band 5."
       ],
       "MetricID": "mdm.duplicate_rate",
       "Score": 4
@@ -179,7 +169,7 @@
       "rationale": "The exception rate of 6% indicates a significant issue with data quality, despite a lower critical rate of 2%. The high overall rate suggests that improvements are necessary to reduce the number of exceptions.",
       "flags": [],
       "gaps": [
-        "High exception rate → implement targeted data quality initiatives → reduce overall exception rate to ≤3% (unlocks band 3)."
+        "High exception rate → implement targeted data quality initiatives → reduce overall exception rate to ≤3% (unlocks band 4)."
       ],
       "MetricID": "dq.exceptions_rate",
       "Score": 2
@@ -187,10 +177,10 @@
     "ai.penetration": {
       "metric_id": "ai.penetration",
       "band": 3,
-      "rationale": "AI features are present in 55% of workflows, but only 38% of executions utilize them; the execution share is a limiting factor. This indicates a fair level of integration but suggests that not all workflows are effectively leveraging AI in practice.",
+      "rationale": "AI is present in 55% of workflows, but only 38% of executions utilize AI features; the execution share is a limiting factor. ",
       "flags": [],
       "gaps": [
-        "Execution share low → increase training and support for AI features → target ≥50% execution share (unlocks band 4)."
+        "Execution share low → increase AI execution share → target ≥50% (unlocks band 4)."
       ],
       "MetricID": "ai.penetration",
       "Score": 3
@@ -198,8 +188,10 @@
     "ai.outcome_uplift": {
       "metric_id": "ai.outcome_uplift",
       "band": 4,
-      "rationale": "An estimated 11% uplift indicates a good improvement; however, the flat trend over the last 8 weeks suggests a lack of sustained growth. This limits the overall confidence in the improvement's stability.",
-      "flags": [],
+      "rationale": "An estimated uplift of 11% indicates a good improvement; however, the flat trend over the last 8 weeks raises concerns about sustainability. The strong positive is the uplift percentage, while the limiting factor is the lack of a positive trend.",
+      "flags": [
+        "good_uplift"
+      ],
       "gaps": [
         "Stability unproven → include last 8–12 weeks trend for median and p90 → demonstrate non-declining trend (solidifies band 5)."
       ],
@@ -209,10 +201,10 @@
     "ai.governance_coverage": {
       "metric_id": "ai.governance_coverage",
       "band": 4,
-      "rationale": "Coverage is strong at 82%, indicating good governance controls; however, the absence of alerts raises concerns about ongoing monitoring effectiveness. The lack of alerts suggests potential gaps in active governance oversight.",
+      "rationale": "Coverage is at 82%, which is strong, but the absence of alerts in the last 30 days does not provide insight into ongoing governance effectiveness. The lack of alerts is a positive signal, but it does not compensate for the need for continuous monitoring and validation of controls.",
       "flags": [],
       "gaps": [
-        "Monitoring effectiveness unclear → implement regular alert reviews and incident tracking → achieve consistent alerting on governance issues (unlocks band 5)."
+        "Continuous monitoring lacking → implement regular governance audits and alerts → achieve ≥90% coverage with active monitoring (unlocks band 5)."
       ],
       "MetricID": "ai.governance_coverage",
       "Score": 4
@@ -220,10 +212,10 @@
     "platform.customization_debt": {
       "metric_id": "platform.customization_debt",
       "band": 3,
-      "rationale": "The customization index is relatively low, indicating a moderate level of customization risk; however, the presence of unmanaged customizations and deprecated API calls suggests potential instability. The strongest positive is the low index, while the limiting factor is the unmanaged customizations and deprecated API calls.",
+      "rationale": "Moderate customization footprint with some unmanaged customizations and deprecated API calls; while the index is low, the presence of these factors indicates potential risk. The strongest positive is the low index, but the unmanaged customizations and deprecated calls limit stability.",
       "flags": [],
       "gaps": [
-        "Unmanaged customizations and deprecated API calls present → implement a review process to address these issues → achieve 0 unmanaged customizations and deprecated API calls (unlocks band 4)."
+        "Unmanaged customizations present → reduce unmanaged customizations to 0 → achieve a stable customization environment (unlocks band 4)."
       ],
       "MetricID": "platform.customization_debt",
       "Score": 3
@@ -231,12 +223,12 @@
     "change.failure_rate": {
       "metric_id": "change.failure_rate",
       "band": 2,
-      "rationale": "A change failure rate of 14% indicates significant reliability issues; while the number of deploys is reasonable, the high failure rate is a critical concern. The strong positive is the total number of deploys, but the failure rate is too high to achieve a better band.",
+      "rationale": "A change failure rate of 14% indicates significant reliability issues; while the number of deploys is substantial, the high failure rate is a critical concern. The strong positive is the volume of deploys, but the limiting factor is the high proportion of failures and rollbacks.",
       "flags": [
         "high_cfr"
       ],
       "gaps": [
-        "High failure rate → implement more rigorous testing and validation processes → reduce CFR to ≤7% (unlocks band 4)."
+        "High failure rate → implement stricter pre-deployment testing and validation processes → reduce CFR to ≤7% (unlocks band 4)."
       ],
       "MetricID": "change.failure_rate",
       "Score": 2
