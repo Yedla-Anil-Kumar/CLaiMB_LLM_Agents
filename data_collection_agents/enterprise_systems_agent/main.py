@@ -18,6 +18,7 @@ from enterprise_systems_agent.canonical import (  # noqa: E402
 from enterprise_systems_agent.orchestrator import (  # noqa: E402
     EnterpriseOrchestrator,
 )
+from enterprise_systems_agent.logging_utils import setup_logger # noqa: E402
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Run Enterprise Systems agent on JSON input(s).")
@@ -38,6 +39,7 @@ def iter_json(path: Path):
 
 def main() -> None:
     load_dotenv()
+    setup_logger("logs/enterprise_systems.log", level="INFO", serialize=False)
     args = parse_args()
 
     inputs_path = Path(args.inputs).resolve()

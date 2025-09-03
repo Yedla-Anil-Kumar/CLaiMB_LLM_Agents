@@ -4,8 +4,9 @@ import json
 import random
 import time
 from typing import Any, Dict, List, Optional
-
-from enterprise_systems_agent.base_agent import BaseMicroAgent
+from loguru import logger
+from .logging_utils import timed
+from .base_agent import BaseMicroAgent
 
 
 """
@@ -627,7 +628,8 @@ class EnterpriseLLM(BaseMicroAgent):
 
     def _ask(self, *, metric_id: str, user_prompt: str, max_tokens: int = 700) -> Dict[str, Any]:
         time.sleep(random.uniform(0.02, 0.06))
-        raw = self._call_llm(system_prompt="", prompt=user_prompt, max_tokens=max_tokens)
+        with timed("LLM.call"):
+          raw = self._call_llm(system_prompt="", prompt=user_prompt, max_tokens=max_tokens)
         try:
             out = self._parse_json_response(raw) or {}
         except Exception:
