@@ -1,10 +1,10 @@
 from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
-from dev_env_scanner_agent.base_agent import BaseMicroAgent
-from dev_env_scanner_agent.one_shot.registry import get_one_shot
-from dev_env_scanner_agent.one_shot.prompting import build_metric_prompt
-from dev_env_scanner_agent.logging_utils import timed
+from data_collection_agents.dev_env_scanner_agent.base_agent import BaseMicroAgent
+from data_collection_agents.dev_env_scanner_agent.one_shot.registry import get_one_shot
+from data_collection_agents.dev_env_scanner_agent.one_shot.prompting import build_metric_prompt
+from data_collection_agents.dev_env_scanner_agent.logging_utils import timed
 
 
 def _join_snippets(snippets: List[str]) -> str:

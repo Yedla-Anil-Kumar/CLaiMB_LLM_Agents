@@ -7,34 +7,34 @@ from utils.file_utils import list_source_files, list_all_files
 
 from dotenv import load_dotenv
 
-from dev_env_scanner_agent.code_quality.cyclomatic_complexity import CyclomaticComplexityAgent
-from dev_env_scanner_agent.code_quality.maintainability_index import MaintainabilityAgent
-from dev_env_scanner_agent.code_quality.docstring_coverage import DocstringCoverageAgent
-from dev_env_scanner_agent.code_quality.nested_loops import NestedLoopsAgent
+from data_collection_agents.dev_env_scanner_agent.code_quality.cyclomatic_complexity import CyclomaticComplexityAgent
+from data_collection_agents.dev_env_scanner_agent.code_quality.maintainability_index import MaintainabilityAgent
+from data_collection_agents.dev_env_scanner_agent.code_quality.docstring_coverage import DocstringCoverageAgent
+from data_collection_agents.dev_env_scanner_agent.code_quality.nested_loops import NestedLoopsAgent
 
-from dev_env_scanner_agent.file_system.ci_cd import CICDAgent
-from dev_env_scanner_agent.file_system.deployment import DeploymentAgent
-from dev_env_scanner_agent.file_system.environment_config import EnvironmentConfigAgent
-from dev_env_scanner_agent.file_system.experiment_detection import ExperimentDetectionAgent
-from dev_env_scanner_agent.file_system.project_structure import ProjectStructureAgent
-from dev_env_scanner_agent.file_system.test_detection import TestDetectionAgent
+from data_collection_agents.dev_env_scanner_agent.file_system.ci_cd import CICDAgent
+from data_collection_agents.dev_env_scanner_agent.file_system.deployment import DeploymentAgent
+from data_collection_agents.dev_env_scanner_agent.file_system.environment_config import EnvironmentConfigAgent
+from data_collection_agents.dev_env_scanner_agent.file_system.experiment_detection import ExperimentDetectionAgent
+from data_collection_agents.dev_env_scanner_agent.file_system.project_structure import ProjectStructureAgent
+from data_collection_agents.dev_env_scanner_agent.file_system.test_detection import TestDetectionAgent
 
-from dev_env_scanner_agent.infrastructure.parallel_patterns import ParallelPatternsAgent
-from dev_env_scanner_agent.infrastructure.data_pipeline import DataPipelineAgent
-from dev_env_scanner_agent.infrastructure.feature_engineering import FeatureEngineeringAgent
-from dev_env_scanner_agent.infrastructure.model_export import ModelExportAgent
-from dev_env_scanner_agent.infrastructure.inference_endpoint import InferenceEndpointAgent
-from dev_env_scanner_agent.infrastructure.security_hygiene import SecurityAgent
+from data_collection_agents.dev_env_scanner_agent.infrastructure.parallel_patterns import ParallelPatternsAgent
+from data_collection_agents.dev_env_scanner_agent.infrastructure.data_pipeline import DataPipelineAgent
+from data_collection_agents.dev_env_scanner_agent.infrastructure.feature_engineering import FeatureEngineeringAgent
+from data_collection_agents.dev_env_scanner_agent.infrastructure.model_export import ModelExportAgent
+from data_collection_agents.dev_env_scanner_agent.infrastructure.inference_endpoint import InferenceEndpointAgent
+from data_collection_agents.dev_env_scanner_agent.infrastructure.security_hygiene import SecurityAgent
 
-from dev_env_scanner_agent.ml_framework.data_validation import DataValidationAgent
-from dev_env_scanner_agent.ml_framework.experiment_tracking import ExperimentTrackingAgent
-from dev_env_scanner_agent.ml_framework.hyperparameter_optimization import HyperparameterOptimizationAgent
-from dev_env_scanner_agent.ml_framework.ml_framework_agent import MLFrameworkAgent
-from dev_env_scanner_agent.ml_framework.model_evaluation import ModelEvaluationAgent
-from dev_env_scanner_agent.ml_framework.model_training import ModelTrainingAgent
+from data_collection_agents.dev_env_scanner_agent.ml_framework.data_validation import DataValidationAgent
+from data_collection_agents.dev_env_scanner_agent.ml_framework.experiment_tracking import ExperimentTrackingAgent
+from data_collection_agents.dev_env_scanner_agent.ml_framework.hyperparameter_optimization import HyperparameterOptimizationAgent
+from data_collection_agents.dev_env_scanner_agent.ml_framework.ml_framework_agent import MLFrameworkAgent
+from data_collection_agents.dev_env_scanner_agent.ml_framework.model_evaluation import ModelEvaluationAgent
+from data_collection_agents.dev_env_scanner_agent.ml_framework.model_training import ModelTrainingAgent
 
 #from utils.aimri_mapping import compute_aimri_summary
-from dev_env_scanner_agent.base_agent import BaseMicroAgent
+from data_collection_agents.dev_env_scanner_agent.base_agent import BaseMicroAgent
 load_dotenv()
 
 def clamp01(x: float) -> float:
@@ -152,14 +152,14 @@ class MicroAgentOrchestrator:
 
     # ---------- public API ----------
 
-    def _collect_raw_outputs(self, snippets: List[str], agents: List[BaseMicroAgent]) -> List[Dict[str, Any]]:
-        """Run all given agents on each snippet, return flat list of raw JSON outputs."""
-        results = []
-        for snippet in snippets:
-            for agent in agents:
-                res = agent.evaluate([snippet])
-                results.append(res)
-        return results
+    # def _collect_raw_outputs(self, snippets: List[str], agents: List[BaseMicroAgent]) -> List[Dict[str, Any]]:
+    #     """Run all given agents on each snippet, return flat list of raw JSON outputs."""
+    #     results = []
+    #     for snippet in snippets:
+    #         for agent in agents:
+    #             res = agent.evaluate([snippet])
+    #             results.append(res)
+    #     return results
 
     # def analyze_repo(self, repo_path: str) -> Dict[str, Any]:
     #     root = Path(repo_path)

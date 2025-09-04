@@ -1,8 +1,8 @@
 from __future__ import annotations
 from typing import Any, Dict, List, Optional
-from dev_env_scanner_agent.base_agent import BaseMicroAgent
-from dev_env_scanner_agent.one_shot.registry import get_one_shot
-from dev_env_scanner_agent.one_shot.utils import build_one_shot_prompt
+from data_collection_agents.dev_env_scanner_agent.base_agent import BaseMicroAgent
+from data_collection_agents.dev_env_scanner_agent.one_shot.registry import get_one_shot
+from data_collection_agents.dev_env_scanner_agent.one_shot.utils import build_one_shot_prompt
 
 class ExperimentDetectionAgent(BaseMicroAgent):
     """
