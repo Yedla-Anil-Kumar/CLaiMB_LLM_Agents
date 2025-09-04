@@ -48,14 +48,9 @@ def _load_metric_files_via_map(batch_dir: str) -> Dict[str, Any]:
     return ctx
 
 
-def _make_run_id(prefix: str = "run") -> str:
-    """
-    Generate a filesystem-friendly run id: run-YYYYmmddTHHMMSSZ-8char
-    Example: run-20250905T010203Z-7a3f9b1c
-    """
-    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    short = uuid.uuid4().hex[:8]
-    return f"{prefix}-{ts}-{short}"
+def _make_run_id(prefix: str = "cloud-infra") -> str:
+    ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
+    return f"{prefix}-{ts}"
 
 class CloudInfraOrchestrator:
     def __init__(
