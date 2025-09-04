@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the Code Repo Agent on a single repo (URL or local path) and write one JSON to --out."""
+"""Run the Code Repo Agent on a single repo (URL or local path) and write one JSON."""
 
 from __future__ import annotations
 
@@ -8,6 +8,7 @@ import json
 import os
 import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Tuple
 from urllib.parse import urlparse
@@ -90,9 +91,32 @@ def _clone_one(url: str, base_dir: Path, update_existing: bool = True, depth: in
         raise RuntimeError(f"Failed to clone {url}: {e.stderr.strip()}") from e
 
 
+def _now_id() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
+
+
+def _default_out_path(repo_arg: str, repo_dir: Path) -> Path:
+    """
+    If --out wasn't provided, write to:
+      runs_code_repo_mvp/<owner>_<repo>_<timestamp>.json
+    For local paths, owner becomes 'local'.
+    """
+    ts = _now_id()
+    if _is_url(repo_arg):
+        parsed = urlparse(repo_arg)
+        owner, repo = _split_owner_repo(parsed.path or "")
+    else:
+        owner, repo = ("local", repo_dir.name or "repo")
+    safe_owner = owner.replace("/", "_")
+    safe_repo = repo.replace("/", "_")
+    out_dir = Path("runs_code_repo_mvp")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    return out_dir / f"{safe_owner}_{safe_repo}_{ts}.json"
+
+
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
-        description="Run Code Repo Agent on ONE repo (URL or local path) and write JSON to --out."
+        description="Run Code Repo Agent on ONE repo (URL or local path) and write JSON."
     )
     p.add_argument(
         "--repo",
@@ -101,8 +125,8 @@ def parse_args() -> argparse.Namespace:
     )
     p.add_argument(
         "--out",
-        required=True,
-        help="Exact JSON file path to write (the UI will read this file).",
+        default="",
+        help="Exact JSON file path to write. If omitted, a default under runs_code_repo_mvp/ is used.",
     )
     p.add_argument(
         "--clone-base",
@@ -151,17 +175,17 @@ def main() -> None:
         )
     else:
         repo_dir = Path(args.repo).resolve()
-        if not (repo_dir / ".git").exists():
-            print(f"⚠️  Warning: {repo_dir} does not look like a git repo (no .git). Proceeding anyway.")
         if not repo_dir.exists():
             raise FileNotFoundError(f"Repo path not found: {repo_dir}")
+        if not (repo_dir / ".git").exists():
+            print(f"⚠️  Warning: {repo_dir} does not look like a git repo (no .git). Proceeding anyway.")
 
     # 2) Run the orchestrator on JUST this repo
     orchestrator = MicroAgentOrchestrator(model=args.model, temperature=args.temperature)
     result: Dict = orchestrator.analyze_repo(str(repo_dir))
 
-    # 3) Write EXACTLY to --out (no per-repo dir, no aggregate file)
-    out_file = Path(args.out).resolve()
+    # 3) Determine output path (exactly --out if provided, else default)
+    out_file = Path(args.out).resolve() if args.out else _default_out_path(args.repo, repo_dir)
     out_file.parent.mkdir(parents=True, exist_ok=True)
     with out_file.open("w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
