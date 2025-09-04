@@ -9,3 +9,4 @@ test.py
 cloud_infra_agent/__pycache__/agent_wrappers.cpython-313.pyc
 cloud_infra_agent/__pycache__/metrics.cpython-313.pyc
 cloud_infra_agent/__pycache__
+*pyc

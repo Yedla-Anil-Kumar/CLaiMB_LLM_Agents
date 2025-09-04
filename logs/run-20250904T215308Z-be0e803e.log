@@ -1,0 +1,80 @@
+2025-09-05 03:23:08.770 | INFO | [orchestrator] Starting run_id=run-20250904T215308Z-be0e803e
+2025-09-05 03:23:08.770 | INFO | ▶️ start: Load inputs
+2025-09-05 03:23:08.772 | INFO | [engine_adapter] context keys: availability.incidents, compute.utilization, cost.allocation_quality, cost.commit_coverage, cost.idle_underutilized, db.utilization, iac.coverage_drift, k8s.utilization, lb.performance, scaling.effectiveness, security.encryption, security.iam_risk, security.public_exposure, security.vuln_patch, storage.efficiency, tagging.coverage
+2025-09-05 03:23:08.772 | INFO | ✅ done:  Load inputs (2.24 ms)
+2025-09-05 03:23:08.773 | INFO | ▶️ start: Run workflow
+2025-09-05 03:23:08.773 | INFO | ▶️ start: setup
+2025-09-05 03:23:08.773 | INFO | ✅ done:  setup (0.13 ms)
+2025-09-05 03:23:08.773 | INFO | ▶️ start: ingest
+2025-09-05 03:23:08.773 | INFO | ✅ done:  ingest (0.06 ms)
+2025-09-05 03:23:08.773 | INFO | 📦 context: 16 inputs → ['availability.incidents', 'compute.utilization', 'cost.allocation_quality', 'cost.commit_coverage', 'cost.idle_underutilized', 'db.utilization', 'iac.coverage_drift', 'k8s.utilization', 'lb.performance', 'scaling.effectiveness', 'security.encryption', 'security.iam_risk', 'security.public_exposure', 'security.vuln_patch', 'storage.efficiency', 'tagging.coverage']
+2025-09-05 03:23:08.773 | INFO | 🟦 RUN START
+2025-09-05 03:23:08.773 | INFO | • run_id=(auto) • max_workers=8
+2025-09-05 03:23:08.773 | INFO | 🔹 L0 parallel: 13 metrics → ['tagging.coverage', 'compute.utilization', 'k8s.utilization', 'db.utilization', 'storage.efficiency', 'lb.performance', 'availability.incidents', 'cost.commit_coverage', 'iac.coverage_drift', 'security.encryption', 'security.iam_risk', 'security.public_exposure', 'security.vuln_patch']
+2025-09-05 03:23:08.773 | INFO | ▶️ start: L0.parallel
+2025-09-05 03:23:08.773 | INFO | ▶️ start: metric.availability.incidents
+2025-09-05 03:23:08.774 | INFO | ▶️ start: metric.compute.utilization
+2025-09-05 03:23:08.774 | INFO | ▶️ start: metric.cost.commit_coverage
+2025-09-05 03:23:08.775 | INFO | ▶️ start: metric.db.utilization
+2025-09-05 03:23:08.775 | INFO | ▶️ start: metric.iac.coverage_drift
+2025-09-05 03:23:08.775 | INFO | ▶️ start: metric.k8s.utilization
+2025-09-05 03:23:08.775 | INFO | ▶️ start: metric.lb.performance
+2025-09-05 03:23:08.776 | INFO | ▶️ start: metric.security.encryption
+2025-09-05 03:23:11.033 | INFO | ✅ done:  metric.security.encryption (2257.04 ms)
+2025-09-05 03:23:11.033 | INFO | [security.encryption] score=5.0 | category=Category.security | All resources are encrypted at rest and utilize a modern TLS policy, indicating excellent compliance with security standards.
+2025-09-05 03:23:11.033 | INFO | ▶️ start: metric.security.iam_risk
+2025-09-05 03:23:11.936 | INFO | ✅ done:  metric.compute.utilization (3162.62 ms)
+2025-09-05 03:23:11.936 | INFO | [compute.utilization] score=1.0 | category=Category.efficiency | The majority of instances are operating below the low-utilization threshold, indicating significant inefficiency. Two instances have high low-util hours, suggesting that the... | gaps=2
+2025-09-05 03:23:11.936 | INFO | ▶️ start: metric.security.public_exposure
+2025-09-05 03:23:12.001 | INFO | ✅ done:  metric.cost.commit_coverage (3227.19 ms)
+2025-09-05 03:23:12.002 | INFO | [cost.commit_coverage] score=2.0 | category=Category.cost | The commitment coverage is below the target, with significant unused capacity across both cloud providers. This indicates material risks in optimizing the commitment strategy. | gaps=5
+2025-09-05 03:23:12.002 | INFO | ▶️ start: metric.security.vuln_patch
+2025-09-05 03:23:12.387 | INFO | ✅ done:  metric.k8s.utilization (3612.26 ms)
+2025-09-05 03:23:12.388 | INFO | [k8s.utilization] score=3.0 | category=Category.efficiency | The binpack efficiency is at 0.74, which is acceptable but not optimal, and the pending pods count is at 3, indicating some imbalance. The CPU request versus usage ratio is low... | gaps=5
+2025-09-05 03:23:12.388 | INFO | ▶️ start: metric.storage.efficiency
+2025-09-05 03:23:12.438 | INFO | ✅ done:  metric.iac.coverage_drift (3663.34 ms)
+2025-09-05 03:23:12.439 | INFO | [iac.coverage_drift] score=2.0 | category=Category.security | Only 66.67% of resources are managed by IaC, and there are multiple high and critical severity policy findings that indicate material risks. | gaps=5
+2025-09-05 03:23:12.439 | INFO | ▶️ start: metric.tagging.coverage
+2025-09-05 03:23:12.781 | INFO | ✅ done:  metric.availability.incidents (4007.16 ms)
+2025-09-05 03:23:12.781 | INFO | [availability.incidents] score=2.0 | category=Category.reliability | There were two incidents, including one critical and one major, with a mean time to resolution (MTTR) of 1 hour and 5 minutes. Additionally, there was a significant SLO breach... | gaps=5
+2025-09-05 03:23:12.964 | INFO | ✅ done:  metric.db.utilization (4189.69 ms)
+2025-09-05 03:23:12.964 | INFO | [db.utilization] score=2.0 | category=Category.efficiency | The database 'azure-sql-1' shows critical underutilization with a CPU p95 of 0.12, indicating a significant failure in resource allocation. In contrast, 'rds-a' is within... | gaps=2
+2025-09-05 03:23:12.996 | INFO | ✅ done:  metric.lb.performance (4220.82 ms)
+2025-09-05 03:23:12.996 | INFO | [lb.performance] score=4.0 | category=Category.reliability | The p95 and p99 latencies are near the SLO thresholds, with minor spikes observed. The 5xx error rates are low and within acceptable limits, indicating good overall performance. | gaps=2
+2025-09-05 03:23:14.805 | INFO | ✅ done:  metric.security.iam_risk (3771.36 ms)
+2025-09-05 03:23:14.805 | INFO | [security.iam_risk] score=2.0 | category=Category.security | There are significant issues with IAM security: one user lacks MFA, and there is an access key that is over 90 days old. Additionally, a wildcard admin policy is present, which... | gaps=3
+2025-09-05 03:23:15.216 | INFO | ✅ done:  metric.security.public_exposure (3279.45 ms)
+2025-09-05 03:23:15.217 | INFO | [security.public_exposure] score=1.0 | category=Category.security | There is a critical exposure due to public SSH access from 0.0.0.0/0, a public bucket, and a public IP associated with a sensitive asset. This widespread exposure of sensitive... | gaps=3
+2025-09-05 03:23:15.653 | INFO | ✅ done:  metric.storage.efficiency (3264.74 ms)
+2025-09-05 03:23:15.653 | INFO | [storage.efficiency] score=2.0 | category=Category.efficiency | There is one unattached block volume and one orphaned snapshot, which contribute to avoidable costs. Additionally, the objects in storage are all in the STANDARD class, which... | gaps=3
+2025-09-05 03:23:15.973 | INFO | ✅ done:  metric.security.vuln_patch (3971.17 ms)
+2025-09-05 03:23:15.973 | INFO | [security.vuln_patch] score=2.0 | category=Category.security | There is one critical vulnerability that remains open, and the average patch age exceeds the target. Coverage is close to the minimum acceptable level, indicating material risks. | gaps=3
+2025-09-05 03:23:16.912 | INFO | ✅ done:  metric.tagging.coverage (4473.42 ms)
+2025-09-05 03:23:16.912 | INFO | [tagging.coverage] score=2.0 | category=Category.efficiency | Only one of the two resources is fully tagged, and the other is missing critical tags. This indicates a material risk in resource management and accountability. | gaps=5
+2025-09-05 03:23:16.913 | INFO | ✅ done:  L0.parallel (8140.13 ms)
+2025-09-05 03:23:16.913 | INFO | 🔶 L1 candidates: 3 → ['cost.allocation_quality', 'cost.idle_underutilized', 'scaling.effectiveness']
+2025-09-05 03:23:16.913 | INFO | 🔸 L1 wave#0: 3 → ['cost.allocation_quality', 'cost.idle_underutilized', 'scaling.effectiveness']
+2025-09-05 03:23:16.913 | INFO | ▶️ start: L1.wave#0.parallel
+2025-09-05 03:23:16.914 | INFO | ▶️ start: metric.cost.allocation_quality
+2025-09-05 03:23:16.914 | INFO | ▶️ start: metric.cost.idle_underutilized
+2025-09-05 03:23:16.914 | INFO | ▶️ start: metric.scaling.effectiveness
+2025-09-05 03:23:19.924 | INFO | ✅ done:  metric.cost.allocation_quality (3010.69 ms)
+2025-09-05 03:23:19.924 | INFO | [cost.allocation_quality] score=2.0 | category=Category.cost | Only one of the two resources is fully tagged, leading to a significant portion of costs being unaccounted for. The missing critical tags on the GCE resource indicate material... | gaps=5
+2025-09-05 03:23:20.239 | INFO | ✅ done:  metric.cost.idle_underutilized (3325.38 ms)
+2025-09-05 03:23:20.240 | INFO | [cost.idle_underutilized] score=1.0 | category=Category.cost | A significant portion of the fleet is idle, with 66.67% of the total spend attributed to underutilized resources. The observed low utilization metrics indicate a critical... | gaps=2
+2025-09-05 03:23:22.895 | INFO | ✅ done:  metric.scaling.effectiveness (5981.21 ms)
+2025-09-05 03:23:22.896 | INFO | [scaling.effectiveness] score=3.0 | category=Category.efficiency | The system showed a reaction median of 120 seconds, which is within the acceptable range but indicates room for improvement. The target violation percentage was 33.33%, which is... | gaps=5
+2025-09-05 03:23:22.897 | INFO | ✅ done:  L1.wave#0.parallel (5983.36 ms)
+2025-09-05 03:23:22.897 | INFO | ▶️ start: aggregate
+2025-09-05 03:23:22.897 | INFO | ✅ done:  aggregate (0.22 ms)
+2025-09-05 03:23:22.897 | INFO | ▶️ start: persist
+2025-09-05 03:23:22.900 | INFO | ✅ done:  persist (2.29 ms)
+2025-09-05 03:23:22.900 | INFO | 🟩 RUN SUMMARY
+2025-09-05 03:23:22.900 | INFO | • overall=2.24 | simple_avg=2.25
+2025-09-05 03:23:22.900 | INFO | • categories: cost=1.70, efficiency=2.20, reliability=2.80, security=2.55
+2025-09-05 03:23:22.900 | INFO | • top risks: compute.utilization=1.0; cost.idle_underutilized=1.0; security.public_exposure=1.0; availability.incidents=2.0; cost.allocation_quality=2.0
+2025-09-05 03:23:22.900 | INFO | • saved: /Users/samirandolui/Desktop/CLaiMB_LLM_Agents/runs/run-20250904T215308Z-be0e803e.json
+2025-09-05 03:23:22.900 | INFO | 🟪 RUN END
+2025-09-05 03:23:22.901 | INFO | ✅ done:  Run workflow (14128.06 ms)
+2025-09-05 03:23:22.901 | INFO | [orchestrator] ✅ Output saved: /Users/samirandolui/Desktop/CLaiMB_LLM_Agents/runs/run-20250904T215308Z-be0e803e.json
+2025-09-05 03:23:22.902 | INFO | [orchestrator] Finished run_id=run-20250904T215308Z-be0e803e

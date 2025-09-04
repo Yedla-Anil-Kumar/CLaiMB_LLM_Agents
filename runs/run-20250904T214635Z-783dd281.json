@@ -1,0 +1,455 @@
+{
+  "metrics": {
+    "security.encryption": {
+      "metric_id": "security.encryption",
+      "category": "security",
+      "platform": "aws",
+      "score": 5.0,
+      "confidence": 1.0,
+      "rationale": "All resources are encrypted at rest and utilize a modern TLS policy, indicating excellent compliance with security standards.",
+      "evidence": {
+        "at_rest_pct": 1.0,
+        "legacy_tls_endpoints": 0
+      },
+      "gaps": []
+    },
+    "cost.commit_coverage": {
+      "metric_id": "cost.commit_coverage",
+      "category": "cost",
+      "platform": "aws",
+      "score": 2.0,
+      "confidence": 0.7,
+      "rationale": "The commitment coverage is below the target threshold, with significant unused capacity across the commitments. This indicates material risks in optimizing the spend commitments.",
+      "evidence": {
+        "coverage_pct": 0.75,
+        "unused_commitment_pct": 25.0
+      },
+      "gaps": [
+        "1. Review and adjust commitment levels to align better with actual usage.",
+        "2. Analyze usage patterns to identify potential overcommitments.",
+        "3. Consider shorter-term commitments to reduce unused capacity.",
+        "4. Explore options for optimizing resource allocation across clouds.",
+        "5. Implement monitoring tools to track usage against commitments more effectively."
+      ]
+    },
+    "iac.coverage_drift": {
+      "metric_id": "iac.coverage_drift",
+      "category": "security",
+      "platform": "aws",
+      "score": 2.0,
+      "confidence": 0.7,
+      "rationale": "Only 66.67% of resources are managed by IaC, and there are multiple high and critical severity policy findings that indicate material risks.",
+      "evidence": {
+        "coverage_pct": 0.6667,
+        "high_critical": 2
+      },
+      "gaps": [
+        "1. Onboard unmanaged resources to IaC management",
+        "2. Address the critical policy finding regarding the network security group",
+        "3. Remediate the high-severity drift finding for the VM",
+        "4. Review and update IaC configurations to ensure compliance",
+        "5. Implement regular audits to monitor IaC coverage and drift"
+      ]
+    },
+    "compute.utilization": {
+      "metric_id": "compute.utilization",
+      "category": "efficiency",
+      "platform": "aws",
+      "score": 1.0,
+      "confidence": 0.7,
+      "rationale": "The majority of instances are operating at low utilization levels, with significant hours logged below the low-util threshold. This indicates a critical inefficiency in resource usage.",
+      "evidence": {
+        "idle_pct": 0.6667,
+        "worst_idle_hours": 210,
+        "fleet_cpu_p95": 0.2967,
+        "fleet_mem_p95": 0.26
+      },
+      "gaps": [
+        "1. Evaluate and terminate or resize instances with prolonged low utilization, particularly 'i-0a1b2c' and 'gce-inst-1'.",
+        "2. Implement monitoring to identify and address low-utilization patterns in real-time.",
+        "3. Consider consolidating workloads to optimize resource allocation.",
+        "4. Review and adjust scaling policies to better match demand.",
+        "5. Analyze application performance to ensure it aligns with resource usage."
+      ]
+    },
+    "lb.performance": {
+      "metric_id": "lb.performance",
+      "category": "reliability",
+      "platform": "aws",
+      "score": 4.0,
+      "confidence": 0.8,
+      "rationale": "The p95 and p99 latencies are near the SLO thresholds, with minor spikes observed. The 5xx error rates are low and within acceptable limits, indicating good overall performance with some minor risks.",
+      "evidence": {
+        "alb-1": {
+          "p95_ms": 130,
+          "p99_ms": 260,
+          "r5xx": 0.003,
+          "unhealthy_minutes": 10
+        },
+        "appgw-1": {
+          "p95_ms": 150,
+          "p99_ms": 280,
+          "r5xx": 0.004,
+          "unhealthy_minutes": 4
+        }
+      },
+      "gaps": [
+        "1. Monitor latency trends to identify potential spikes.",
+        "2. Review unhealthy minutes for both load balancers to ensure stability.",
+        "3. Consider load testing to validate performance under peak conditions."
+      ]
+    },
+    "k8s.utilization": {
+      "metric_id": "k8s.utilization",
+      "category": "efficiency",
+      "platform": "aws",
+      "score": 3.0,
+      "confidence": 0.7,
+      "rationale": "The binpack efficiency is at 0.74, which is acceptable but not optimal, and the pending pods count is at 3, indicating some imbalance. The CPU request versus usage ratio is low at 0.58, suggesting that resources are not being utilized effectively.",
+      "evidence": {
+        "binpack_efficiency": 0.74,
+        "pending_pods_p95": 3,
+        "nodes_cpu_p95": 0.71,
+        "pods_cpu_req_vs_used": 0.58
+      },
+      "gaps": [
+        "1. Investigate reasons for low CPU request versus usage ratio and adjust requests accordingly.",
+        "2. Monitor pending pods closely and aim to reduce them below 3.",
+        "3. Consider optimizing resource allocation to improve binpack efficiency.",
+        "4. Review node utilization to ensure it remains within optimal ranges.",
+        "5. Schedule regular assessments to track improvements in resource utilization."
+      ]
+    },
+    "db.utilization": {
+      "metric_id": "db.utilization",
+      "category": "efficiency",
+      "platform": "aws",
+      "score": 2.0,
+      "confidence": 0.7,
+      "rationale": "The database 'azure-sql-1' shows critical underutilization with a CPU p95 of 0.12, indicating a significant failure in resource allocation. In contrast, 'rds-a' is within acceptable limits but does not compensate for the overall fleet performance.",
+      "evidence": {
+        "cpu_p95": {
+          "rds-a": 0.52,
+          "azure-sql-1": 0.12
+        },
+        "connections_p95": {
+          "rds-a": 0.61,
+          "azure-sql-1": 0.18
+        }
+      },
+      "gaps": [
+        "1. Evaluate the resource allocation for 'azure-sql-1' to determine if it can be downsized or consolidated.",
+        "2. Investigate the connection limits for both databases to ensure they are optimized.",
+        "3. Monitor the IOPS performance to identify any potential bottlenecks.",
+        "4. Consider load testing to better understand the performance under peak conditions.",
+        "5. Review the overall architecture to ensure it meets current and future demands."
+      ]
+    },
+    "availability.incidents": {
+      "metric_id": "availability.incidents",
+      "category": "reliability",
+      "platform": "aws",
+      "score": 2.0,
+      "confidence": 0.7,
+      "rationale": "There were two incidents, including one critical and one major, with a mean time to resolution (MTTR) of 1 hour and 5 minutes. Additionally, there was a significant SLO breach of 2.4 hours, indicating material risks to service availability.",
+      "evidence": {
+        "sev12_30d": 2,
+        "mttr_h": 1.0833,
+        "slo_breach_hours": 2.4,
+        "slo_target": 0.995
+      },
+      "gaps": [
+        "1. Investigate the root causes of the critical and major incidents.",
+        "2. Implement measures to reduce MTTR and prevent future incidents.",
+        "3. Review SLO definitions and targets to ensure they align with service expectations.",
+        "4. Increase monitoring and alerting to catch issues before they escalate.",
+        "5. Conduct a post-incident review to identify improvement areas."
+      ]
+    },
+    "security.iam_risk": {
+      "metric_id": "security.iam_risk",
+      "category": "security",
+      "platform": "aws",
+      "score": 2.0,
+      "confidence": 0.75,
+      "rationale": "There are significant issues with IAM security: one user lacks MFA, and there is an access key that is over 90 days old. Additionally, a wildcard admin policy is in place, which poses a material risk.",
+      "evidence": {
+        "users_without_mfa": 1,
+        "old_keys": 1,
+        "overly_permissive_principals": 1
+      },
+      "gaps": [
+        "1. Enforce MFA for all users immediately",
+        "2. Rotate the access key that is over 90 days old",
+        "3. Review and restrict the wildcard admin policy"
+      ]
+    },
+    "security.public_exposure": {
+      "metric_id": "security.public_exposure",
+      "category": "security",
+      "platform": "aws",
+      "score": 1.0,
+      "confidence": 0.75,
+      "rationale": "The presence of a public SSH rule allowing access from 0.0.0.0/0, a public bucket, and an asset with a public IP indicates significant exposure of sensitive production assets, necessitating urgent action.",
+      "evidence": {
+        "open_fw_rules": 1,
+        "public_buckets": 1,
+        "public_ips": 1
+      },
+      "gaps": [
+        "1. Restrict SSH access to specific IP ranges",
+        "2. Change the public bucket to private or implement stricter access controls",
+        "3. Evaluate the necessity of the public IP and remove it if not required"
+      ]
+    },
+    "storage.efficiency": {
+      "metric_id": "storage.efficiency",
+      "category": "efficiency",
+      "platform": "aws",
+      "score": 3.0,
+      "confidence": 0.75,
+      "rationale": "There is one unattached block volume and one orphaned snapshot, indicating noticeable but not severe waste. The presence of two objects in the standard storage class, with one being relatively recent, suggests some potential for optimization.",
+      "evidence": {
+        "unattached": 1,
+        "orphaned_snaps": 1,
+        "hot_stale_objects": 1
+      },
+      "gaps": [
+        "1. Delete orphaned snapshots",
+        "2. Reattach or remove unattached volumes",
+        "3. Review storage classes for older objects and consider moving to a lower-cost tier"
+      ]
+    },
+    "security.vuln_patch": {
+      "metric_id": "security.vuln_patch",
+      "category": "security",
+      "platform": "aws",
+      "score": 2.0,
+      "confidence": 0.7,
+      "rationale": "There is one critical vulnerability that remains unresolved, and the average patch age exceeds the target. Coverage is close to the minimum acceptable level, indicating material risks.",
+      "evidence": {
+        "critical_open": 1,
+        "agent_coverage_pct": 0.91,
+        "avg_patch_age_days": 19,
+        "scanned_assets": 110,
+        "total_assets": 120
+      },
+      "gaps": [
+        "1. Remediate the open critical vulnerability immediately.",
+        "2. Review and improve patch management processes to reduce average patch age.",
+        "3. Increase patch agent coverage to meet or exceed 95%.",
+        "4. Conduct a risk assessment on assets with unresolved critical vulnerabilities.",
+        "5. Implement regular vulnerability scanning to ensure timely identification of new issues."
+      ]
+    },
+    "tagging.coverage": {
+      "metric_id": "tagging.coverage",
+      "category": "efficiency",
+      "platform": "aws",
+      "score": 2.0,
+      "confidence": 0.7,
+      "rationale": "Only one of the two resources is fully tagged, and the other is missing critical tags. This indicates a material risk in resource management and accountability.",
+      "evidence": {
+        "coverage_pct": 0.5,
+        "missing_examples": [
+          {
+            "id": "gce-1",
+            "missing": [
+              "cost-center",
+              "service"
+            ]
+          }
+        ]
+      },
+      "gaps": [
+        "1. Ensure all resources have env, owner, cost-center, and service tags before deployment.",
+        "2. Implement a tagging policy to enforce compliance.",
+        "3. Conduct a tagging audit to identify and rectify missing tags.",
+        "4. Provide training for teams on the importance of tagging.",
+        "5. Set up automated checks for tagging compliance in CI/CD pipelines."
+      ]
+    },
+    "cost.allocation_quality": {
+      "metric_id": "cost.allocation_quality",
+      "category": "cost",
+      "platform": "aws",
+      "score": 2.0,
+      "confidence": 0.7,
+      "rationale": "Only one of the two resources is fully tagged, leading to a significant portion of costs being unaccounted for. The missing critical tags on the GCE resource indicate material risks in cost attribution.",
+      "evidence": {
+        "attributable_pct": 0.5,
+        "coverage_pct": 0.5,
+        "missing_examples": 1
+      },
+      "gaps": [
+        "1. Ensure all resources have env, owner, cost-center, and service tags before deployment.",
+        "2. Implement a tagging policy to enforce compliance.",
+        "3. Conduct a tagging audit to identify and rectify missing tags.",
+        "4. Provide training for teams on the importance of tagging.",
+        "5. Set up automated checks for tagging compliance in CI/CD pipelines."
+      ]
+    },
+    "scaling.effectiveness": {
+      "metric_id": "scaling.effectiveness",
+      "category": "efficiency",
+      "platform": "aws",
+      "score": 3.0,
+      "confidence": 0.5,
+      "rationale": "The system showed a delayed reaction to the overload, with a violation rate exceeding the target. While there was a scaling action taken, the overall performance indicates clear risks that need to be addressed.",
+      "evidence": {
+        "median_reaction_s": 120,
+        "target_violation_pct": 50.0,
+        "thrash_rate": 0.0,
+        "delta_error_pct": 0.0,
+        "events": 1,
+        "total_samples": 2
+      },
+      "gaps": [
+        "1. Analyze the delay in reaction time and implement faster scaling actions.",
+        "2. Review scaling policies to ensure they align with actual demand.",
+        "3. Increase monitoring frequency to catch violations earlier.",
+        "4. Investigate the cause of high violation rates and address underlying issues.",
+        "5. Consider adjusting target CPU thresholds based on observed patterns."
+      ]
+    },
+    "cost.idle_underutilized": {
+      "metric_id": "cost.idle_underutilized",
+      "category": "cost",
+      "platform": "aws",
+      "score": 1.0,
+      "confidence": 0.7,
+      "rationale": "A significant portion of the resources is idle, with 66.67% of the fleet considered low-utilization. This indicates a critical inefficiency in resource usage, necessitating urgent action.",
+      "evidence": {
+        "idle_cost": 333.35,
+        "idle_pct": 0.6667,
+        "total_cost": 5000.0,
+        "fleet_cpu_p95": 0.2967,
+        "fleet_mem_p95": 0.26
+      },
+      "gaps": [
+        "1. Evaluate and terminate or resize instances with prolonged low utilization, particularly 'i-0a1b2c'.",
+        "2. Implement monitoring to identify and address low-utilization patterns in real-time.",
+        "3. Consider consolidating workloads to optimize resource allocation.",
+        "4. Review and adjust scaling policies to better match demand.",
+        "5. Analyze application performance to ensure it aligns with resource usage."
+      ]
+    }
+  },
+  "summary": {
+    "overall_score": 2.294,
+    "category_scores": {
+      "cost": 1.7,
+      "efficiency": 2.38,
+      "reliability": 2.8,
+      "security": 2.5500000000000007
+    },
+    "breakdown": [
+      {
+        "name": "cost",
+        "weight": 0.3,
+        "effective_weight_sum": 1.0,
+        "metrics": [
+          {
+            "metric": "cost.commit_coverage",
+            "weight": 0.35,
+            "score": 2.0
+          },
+          {
+            "metric": "cost.allocation_quality",
+            "weight": 0.35,
+            "score": 2.0
+          },
+          {
+            "metric": "cost.idle_underutilized",
+            "weight": 0.3,
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "name": "efficiency",
+        "weight": 0.3,
+        "effective_weight_sum": 1.0,
+        "metrics": [
+          {
+            "metric": "compute.utilization",
+            "weight": 0.22,
+            "score": 1.0
+          },
+          {
+            "metric": "k8s.utilization",
+            "weight": 0.22,
+            "score": 3.0
+          },
+          {
+            "metric": "db.utilization",
+            "weight": 0.18,
+            "score": 2.0
+          },
+          {
+            "metric": "storage.efficiency",
+            "weight": 0.18,
+            "score": 3.0
+          },
+          {
+            "metric": "scaling.effectiveness",
+            "weight": 0.2,
+            "score": 3.0
+          }
+        ]
+      },
+      {
+        "name": "reliability",
+        "weight": 0.2,
+        "effective_weight_sum": 1.0,
+        "metrics": [
+          {
+            "metric": "availability.incidents",
+            "weight": 0.6,
+            "score": 2.0
+          },
+          {
+            "metric": "lb.performance",
+            "weight": 0.4,
+            "score": 4.0
+          }
+        ]
+      },
+      {
+        "name": "security",
+        "weight": 0.2,
+        "effective_weight_sum": 0.9999999999999999,
+        "metrics": [
+          {
+            "metric": "security.encryption",
+            "weight": 0.25,
+            "score": 5.0
+          },
+          {
+            "metric": "security.iam_risk",
+            "weight": 0.25,
+            "score": 2.0
+          },
+          {
+            "metric": "security.public_exposure",
+            "weight": 0.2,
+            "score": 1.0
+          },
+          {
+            "metric": "security.vuln_patch",
+            "weight": 0.2,
+            "score": 2.0
+          },
+          {
+            "metric": "iac.coverage_drift",
+            "weight": 0.1,
+            "score": 2.0
+          }
+        ]
+      }
+    ],
+    "simple_average_debug": 2.3125,
+    "count_metrics": 16,
+    "scored_metrics": 16
+  }
+}
