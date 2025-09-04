@@ -5,6 +5,9 @@ from pydantic import BaseModel
 from typing import Optional, Dict, Any, List, Tuple
 from pathlib import Path
 import os, json
+import re
+from datetime import datetime
+
 
 from agent_layer.orchestrator import CloudInfraOrchestrator  # <- our class orchestrator
 
@@ -37,7 +40,6 @@ class RunsList(BaseModel):
 # -----------------------------
 # Auth
 # -----------------------------
-
 def _auth(x_api_key: Optional[str]):
     if API_KEY and x_api_key != API_KEY:
         raise HTTPException(status_code=401, detail="Invalid API key")
@@ -74,6 +76,27 @@ def _collect_run(run_id: str, runs_dir: str, logs_dir: str) -> RunItem:
         output=output,
         log=log,
     )
+# Matches strictly:
+#   cloud-infra-2025-09-04T19-56-33Z
+RUN_ID_TS_RE = re.compile(
+    r"^cloud-infra-(?P<ts>\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}Z)$"
+)
+
+def _parse_run_ts_from_stem(stem: str) -> Optional[datetime]:
+    """
+    Extracts UTC datetime from run_id stem like:
+    cloud-infra-2025-09-04T19-56-33Z
+    """
+    m = RUN_ID_TS_RE.match(stem)
+    if not m:
+        return None
+    ts = m.group("ts")  # e.g. 2025-09-04T19-56-33Z
+    try:
+        return datetime.strptime(ts, "%Y-%m-%dT%H-%M-%SZ")
+    except Exception:
+        return None
+
+
 
 def _find_all_runs(runs_dir: str) -> List[Path]:
     return sorted(Path(runs_dir).glob("*.json"))
@@ -82,9 +105,19 @@ def _find_latest_run(runs_dir: str) -> Optional[Path]:
     items = _find_all_runs(runs_dir)
     if not items:
         return None
-    # Sort by mtime (fallback to name order)
-    items.sort(key=lambda p: (p.stat().st_mtime, p.name))
+
+    def sort_key(p: Path):
+        stem = p.stem
+        name_ts = _parse_run_ts_from_stem(stem)
+        # Prefer embedded timestamp; fallback to mtime; then name for deterministic tie-break
+        return (
+            name_ts or datetime.fromtimestamp(p.stat().st_mtime),
+            stem,
+        )
+
+    items.sort(key=sort_key)
     return items[-1]
+
 
 # -----------------------------
 # Endpoints
