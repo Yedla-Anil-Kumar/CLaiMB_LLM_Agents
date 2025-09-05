@@ -28,7 +28,7 @@ _DEFAULT_FILENAMES = {
     "access_logs": "governance_input_4.json",
     "lineage": "lineage_input_5.json",
     "metadata": "metadata_input_6.json",
-    "tagging": "sensetive_tagging_input_7.json",           # original filename has a typo: 'sensetive'
+    "tagging": "sensetive_tagging_input_7.json",     
     "duplication": "duplication_input_8.json",
     "backup": "backup_input_9.json",
     "security": "security_input_10.json",
@@ -52,7 +52,6 @@ def _load_json_file(path: Path) -> Optional[Any]:
 
 
 def _default_snapshot() -> Dict[str, Any]:
-    """Return a compact default snapshot (same shape as used by the scanner)."""
     return {
         "baseline_schema": {"tables": [{"name": "users", "cols": ["id", "name", "email"]}]},
         "table_schemas": {"tables": [{"name": "users", "cols": ["id", "name", "email"]}]},
