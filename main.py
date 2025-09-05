@@ -1,3 +1,3 @@
-from data_platform_analyzer import run_once
+from mvp_data_platform_scanner import run_once
 
 run_once()

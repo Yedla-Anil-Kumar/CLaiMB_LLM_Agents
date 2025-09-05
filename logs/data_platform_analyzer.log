@@ -57,3 +57,62 @@
     "overall_score_1to5": 2.33
   }
 }
+2025-09-05 13:23:59.323 | INFO     | mvp_data_platform_scanner:_log:71 - ===== Starting Data Platform Analyzer run =====
+2025-09-05 13:23:59.326 | INFO     | mvp_data_platform_scanner:_log:71 - Running level0 metrics in parallel: ['check_schema_consistency', 'evaluate_data_freshness', 'evaluate_governance_compliance', 'evaluate_data_lineage', 'evaluate_metadata_coverage', 'evaluate_sensitive_tagging', 'evaluate_duplication', 'evaluate_backup_recovery', 'evaluate_security_config', 'evaluate_resource_utilization', 'assess_query_performance']
+2025-09-05 13:23:59.327 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: check_schema_consistency
+2025-09-05 13:23:59.327 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: evaluate_data_freshness
+2025-09-05 13:23:59.328 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: evaluate_governance_compliance
+2025-09-05 13:23:59.329 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: evaluate_metadata_coverage
+2025-09-05 13:23:59.328 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: evaluate_data_lineage
+2025-09-05 13:23:59.329 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: evaluate_sensitive_tagging
+2025-09-05 13:23:59.331 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: evaluate_duplication
+2025-09-05 13:23:59.331 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: evaluate_backup_recovery
+2025-09-05 13:24:02.642 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: evaluate_metadata_coverage
+2025-09-05 13:24:02.642 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: evaluate_security_config
+2025-09-05 13:24:02.642 | INFO     | mvp_data_platform_scanner:_log:71 - Completed evaluate_metadata_coverage -> score 2
+2025-09-05 13:24:02.995 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: evaluate_governance_compliance
+2025-09-05 13:24:02.995 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: evaluate_resource_utilization
+2025-09-05 13:24:02.995 | INFO     | mvp_data_platform_scanner:_log:71 - Completed evaluate_governance_compliance -> score 3
+2025-09-05 13:24:03.240 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: evaluate_duplication
+2025-09-05 13:24:03.240 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: assess_query_performance
+2025-09-05 13:24:03.240 | INFO     | mvp_data_platform_scanner:_log:71 - Completed evaluate_duplication -> score 2
+2025-09-05 13:24:03.306 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: evaluate_sensitive_tagging
+2025-09-05 13:24:03.306 | INFO     | mvp_data_platform_scanner:_log:71 - Completed evaluate_sensitive_tagging -> score 1
+2025-09-05 13:24:03.585 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: evaluate_data_lineage
+2025-09-05 13:24:03.585 | INFO     | mvp_data_platform_scanner:_log:71 - Completed evaluate_data_lineage -> score 4
+2025-09-05 13:24:03.765 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: evaluate_data_freshness
+2025-09-05 13:24:03.766 | INFO     | mvp_data_platform_scanner:_log:71 - Completed evaluate_data_freshness -> score 2
+2025-09-05 13:24:04.904 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: check_schema_consistency
+2025-09-05 13:24:04.905 | INFO     | mvp_data_platform_scanner:_log:71 - Completed check_schema_consistency -> score 2
+2025-09-05 13:24:05.562 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: evaluate_backup_recovery
+2025-09-05 13:24:05.562 | INFO     | mvp_data_platform_scanner:_log:71 - Completed evaluate_backup_recovery -> score 4
+2025-09-05 13:24:06.052 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: evaluate_security_config
+2025-09-05 13:24:06.052 | INFO     | mvp_data_platform_scanner:_log:71 - Completed evaluate_security_config -> score 2
+2025-09-05 13:24:07.660 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: assess_query_performance
+2025-09-05 13:24:07.660 | INFO     | mvp_data_platform_scanner:_log:71 - Completed assess_query_performance -> score 3
+2025-09-05 13:24:08.226 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: evaluate_resource_utilization
+2025-09-05 13:24:08.226 | INFO     | mvp_data_platform_scanner:_log:71 - Completed evaluate_resource_utilization -> score 3
+2025-09-05 13:24:08.227 | INFO     | mvp_data_platform_scanner:_log:71 - Running level1 metrics in parallel (each receives only its dependencies' outputs): ['evaluate_data_quality', 'compute_pipeline_success_rate', 'compute_pipeline_latency_throughput', 'compute_analytics_adoption']
+2025-09-05 13:24:08.227 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: evaluate_data_quality
+2025-09-05 13:24:08.229 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: compute_pipeline_success_rate
+2025-09-05 13:24:08.230 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: compute_pipeline_latency_throughput
+2025-09-05 13:24:08.231 | DEBUG    | mvp_data_platform_scanner:_log:77 - Starting metric evaluation: compute_analytics_adoption
+2025-09-05 13:24:11.438 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: evaluate_data_quality
+2025-09-05 13:24:11.438 | INFO     | mvp_data_platform_scanner:_log:71 - Completed evaluate_data_quality -> score 2
+2025-09-05 13:24:12.125 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: compute_pipeline_latency_throughput
+2025-09-05 13:24:12.126 | INFO     | mvp_data_platform_scanner:_log:71 - Completed compute_pipeline_latency_throughput -> score 1
+2025-09-05 13:24:12.956 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: compute_pipeline_success_rate
+2025-09-05 13:24:12.956 | INFO     | mvp_data_platform_scanner:_log:71 - Completed compute_pipeline_success_rate -> score 2
+2025-09-05 13:24:14.118 | DEBUG    | mvp_data_platform_scanner:_log:77 - Completed metric evaluation: compute_analytics_adoption
+2025-09-05 13:24:14.118 | INFO     | mvp_data_platform_scanner:_log:71 - Completed compute_analytics_adoption -> score 4
+2025-09-05 13:24:14.119 | INFO     | mvp_data_platform_scanner:_log:71 - Run persisted to runs_mvp_scanner\run_1757058854.json
+2025-09-05 13:24:14.120 | INFO     | mvp_data_platform_scanner:_log:71 - ===== Completed Data Platform Analyzer run in 14.8 seconds =====
+2025-09-05 13:24:14.120 | INFO     | mvp_data_platform_scanner:_log:71 - Summary: {
+  "summary": {
+    "per_category_1to5": {
+      "Development Maturity": 2.44,
+      "Innovation Pipeline": 2.5
+    },
+    "overall_score_1to5": 2.46
+  }
+}

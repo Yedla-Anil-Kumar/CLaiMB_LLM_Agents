@@ -1,0 +1,255 @@
+{
+  "registry": {
+    "check_schema_consistency": {
+      "depends_on": [],
+      "category": "Development Maturity"
+    },
+    "evaluate_data_freshness": {
+      "depends_on": [],
+      "category": "Development Maturity"
+    },
+    "evaluate_governance_compliance": {
+      "depends_on": [],
+      "category": "Development Maturity"
+    },
+    "evaluate_data_lineage": {
+      "depends_on": [],
+      "category": "Development Maturity"
+    },
+    "evaluate_metadata_coverage": {
+      "depends_on": [],
+      "category": "Innovation Pipeline"
+    },
+    "evaluate_sensitive_tagging": {
+      "depends_on": [],
+      "category": "Development Maturity"
+    },
+    "evaluate_duplication": {
+      "depends_on": [],
+      "category": "Development Maturity"
+    },
+    "evaluate_backup_recovery": {
+      "depends_on": [],
+      "category": "Development Maturity"
+    },
+    "evaluate_security_config": {
+      "depends_on": [],
+      "category": "Development Maturity"
+    },
+    "evaluate_resource_utilization": {
+      "depends_on": [],
+      "category": "Innovation Pipeline"
+    },
+    "assess_query_performance": {
+      "depends_on": [],
+      "category": "Innovation Pipeline"
+    },
+    "evaluate_data_quality": {
+      "depends_on": [
+        "check_schema_consistency",
+        "evaluate_data_freshness"
+      ],
+      "category": "Development Maturity"
+    },
+    "compute_pipeline_success_rate": {
+      "depends_on": [
+        "evaluate_data_lineage"
+      ],
+      "category": "Innovation Pipeline"
+    },
+    "compute_pipeline_latency_throughput": {
+      "depends_on": [
+        "evaluate_data_lineage"
+      ],
+      "category": "Innovation Pipeline"
+    },
+    "compute_analytics_adoption": {
+      "depends_on": [
+        "evaluate_metadata_coverage",
+        "check_schema_consistency",
+        "evaluate_data_freshness"
+      ],
+      "category": "Innovation Pipeline"
+    }
+  },
+  "context_keys": [
+    "baseline_schema",
+    "table_schemas",
+    "table_metadata",
+    "data_quality_report",
+    "access_logs",
+    "lineage",
+    "metadata",
+    "tagging",
+    "duplication",
+    "backup",
+    "security",
+    "pipeline_runs",
+    "pipeline_metrics",
+    "resource_usage",
+    "query_logs",
+    "user_activity"
+  ],
+  "results": {
+    "evaluate_metadata_coverage": {
+      "metric_id": "metadata.coverage",
+      "score": 2,
+      "rationale": "50% of tables are fully documented. The `orders` and `transactions` tables are complete, but the `customers` table is missing a required `description` field, and the `inventory` table is missing a required `owner` field.",
+      "gap": [
+        "Establish a mandatory metadata documentation process for all new data assets to ensure completeness.",
+        "Assign data stewards to each table to oversee and ensure that all required metadata fields are filled out accurately.",
+        "Implement a periodic review process to audit metadata completeness and address any gaps identified."
+      ]
+    },
+    "evaluate_governance_compliance": {
+      "metric_id": "governance.compliance",
+      "score": 3,
+      "rationale": "Of 1000 total requests, 80 were violations, representing an 8% rate. This indicates moderate compliance issues, with risks associated with unauthorized access and privilege escalation.",
+      "gap": [
+        "Implement stricter controls on unauthorized access by enhancing authentication mechanisms, such as multi-factor authentication (MFA).",
+        "Review and revoke expired credentials promptly to prevent unauthorized access from inactive accounts.",
+        "Establish a clear policy for privilege escalation, ensuring that any elevation of access rights is logged and approved by a designated authority."
+      ]
+    },
+    "evaluate_duplication": {
+      "metric_id": "duplication",
+      "score": 2,
+      "rationale": "Finance has a moderate duplication rate of 10% (4/40). Marketing has a high duplication rate of 26.7% (8/30), which is the highest. Operations has a high duplication rate of 20% (10/50). The overall score is driven by the severe duplication in the marketing domain, which significantly impacts data integrity.",
+      "gap": [
+        "Implement a data deduplication process focusing on the marketing domain, starting with customer data.",
+        "Enforce a single source of truth for core datasets and deprecate redundant copies.",
+        "Develop a data consolidation roadmap for the operations domain to reduce its 20% duplication rate over the next two quarters."
+      ]
+    },
+    "evaluate_sensitive_tagging": {
+      "metric_id": "sensitive.tagging",
+      "score": 1,
+      "rationale": "Across all datasets, 3 out of 7 sensitive fields are tagged, resulting in a 42.86% coverage rate. The `users` dataset is missing a tag for `ssn`, and the `orders` dataset is missing tags for `customer_id` and `credit_card`. The untagged `ssn` and `credit_card` fields represent a significant privacy and compliance risk.",
+      "gap": [
+        "Implement a comprehensive data tagging policy that mandates tagging of all sensitive fields before data entry.",
+        "Deploy a machine-learning-based data classification tool to automatically identify and tag sensitive data types across all datasets.",
+        "Conduct regular training sessions for data stewards on the importance of data tagging and compliance requirements."
+      ]
+    },
+    "evaluate_data_lineage": {
+      "metric_id": "data.lineage",
+      "score": 4,
+      "rationale": "80% lineage coverage (40 tables undocumented). Coverage is good but there are significant gaps, particularly in the marketing domain where only 62.5% of tables have documented lineage.",
+      "gap": [
+        "Focus on documenting the lineage for the 40 tables currently lacking coverage, with an emphasis on the 15 marketing tables that are missing lineage to improve data governance in that domain.",
+        "Implement automated lineage extraction tools to enhance the documentation process and ensure that new data assets are automatically tracked.",
+        "Establish a policy to enforce column-level lineage tracking, especially for the 100 tables that currently lack this level of detail, to provide a more comprehensive view of data transformations.",
+        "Conduct regular audits of data lineage documentation to identify and address gaps, ensuring that all critical business domains maintain high standards of lineage coverage."
+      ]
+    },
+    "evaluate_data_freshness": {
+      "metric_id": "data.freshness",
+      "score": 2,
+      "rationale": "Table `users` updated within SLA (45m ago), `transactions` updated within SLA (15m ago), but `orders` is 5h behind its hourly SLA and `inventory` is 26h behind its daily SLA; indicates multiple tables consistently behind SLA.",
+      "gap": [
+        "Investigate the `orders` ingestion process to identify delays, focusing on data source reliability and processing efficiency.",
+        "Review the `inventory` update schedule and consider increasing resource allocation or optimizing the pipeline to ensure timely updates.",
+        "Implement a monitoring system that alerts the data team when any table is more than 30 minutes behind its expected update time."
+      ]
+    },
+    "check_schema_consistency": {
+      "metric_id": "schema.consistency",
+      "score": 2,
+      "rationale": "Frequent inconsistencies found: Missing fields `created_at` in users, `shipping_address` in orders, and `discontinued_flag` in products; additional field `helpful_count` in reviews; ~20% of required fields are absent or different.",
+      "gap": [
+        "Add the missing field `created_at` of type `DATETIME` with a non-null constraint to the `users` table.",
+        "Add the missing field `shipping_address` of type `VARCHAR` to the `orders` table.",
+        "Add the missing field `discontinued_flag` of type `BOOLEAN` to the `products` table.",
+        "Review the addition of the `helpful_count` field in the `reviews` table to ensure it aligns with the baseline schema requirements.",
+        "Implement automated schema drift detection to alert data engineers about schema changes as they occur, preventing future inconsistencies."
+      ]
+    },
+    "evaluate_backup_recovery": {
+      "metric_id": "backup.recovery",
+      "score": 4,
+      "rationale": "The `primary_db_backup` (critical) meets its SLAs with a 98% success rate, RPO of 0.8h, and RTO of 0.9h. The `analytics_warehouse_backup` (medium criticality) has a 93% success rate, an RPO of 3h, and an RTO of 2.5h, which are within acceptable bounds. The `log_data_backup` (low criticality) has a success rate of 85%, an RPO of 10h, and an RTO of 7h, which is acceptable for its criticality but indicates room for improvement. Overall, the score reflects strong performance in critical systems, wit",
+      "gap": [
+        "Enhance the backup success rate for the `log_data_backup` by reviewing and optimizing the backup process and storage solutions.",
+        "Implement more frequent incremental backups for the `analytics_warehouse_backup` to reduce RPO and RTO values.",
+        "Establish a monitoring system to alert on backup failures or delays for all systems, ensuring timely responses to issues."
+      ]
+    },
+    "evaluate_security_config": {
+      "metric_id": "security.config",
+      "score": 2,
+      "rationale": "There are three misconfigurations out of six total checks. The system is non-compliant on: 1) The `guest` IAM role has `read_only_limited` permissions, violating the `no_access` policy. 2) The `guest` IAM role is not compliant with the expected permissions. 3) All other settings, including encryption at rest and in transit, public access, firewall, and multi-factor authentication, are compliant.",
+      "gap": [
+        "Revise the permissions for the `guest` IAM role to explicitly deny all access, aligning with the `no_access` policy."
+      ]
+    },
+    "assess_query_performance": {
+      "metric_id": "query.performance",
+      "score": 3,
+      "rationale": "The average runtime for successful queries is 7.0s. The queries `q101` (1.8s), `q104` (2.9s), `q107` (4.4s), `q109` (2.0s) are performing well, but `q103` (7.2s) and `q106` (15.1s) are slower, with `q105` (33.5s) being particularly concerning. Additionally, `q102` and `q110` failed for users `bob` and `eve`, respectively, which may indicate issues with those queries or data access.",
+      "gap": [
+        "Review and optimize the `q106` query to reduce its 15.1-second runtime, potentially by adding indexes or rewriting the query for efficiency.",
+        "Investigate the failure of `q102` for user `bob` and `q110` for user `eve` by checking error logs and permissions issues.",
+        "Provide training for users on writing efficient queries and using proper filtering to improve overall platform performance."
+      ]
+    },
+    "evaluate_resource_utilization": {
+      "metric_id": "resource.utilization",
+      "score": 3,
+      "rationale": "The `analytics-prod` cluster has a strong average utilization of 75.3% (CPU: 80%, Memory: 76%, Storage: 68%) with a monthly cost of $9k, indicating efficient use of resources. The `etl-dev` cluster has a lower average utilization of 42.3% (CPU: 42%, Memory: 35%, Storage: 50%) with a cost of $2.6k, suggesting some overprovisioning. The `training-gpu` cluster shows a concerning average utilization of 38.3% (CPU: 25%, Memory: 40%, Storage: 70%) with a cost of $3k, indicating serious inefficiency. O",
+      "gap": [
+        "Right-size the `etl-dev` cluster by scaling down its compute resources to better match its current average utilization.",
+        "Right-size the `training-gpu` cluster to reduce costs and improve efficiency, potentially by scaling down or reallocating resources based on actual usage.",
+        "Implement auto-scaling policies for `etl-dev` and `training-gpu` to dynamically adjust resources based on workload demand, preventing overspending during low usage periods.",
+        "Schedule regular FinOps reviews and cost analysis sessions to identify and eliminate wasteful spending on underutilized resources across all clusters."
+      ]
+    },
+    "evaluate_data_quality": {
+      "score": 2,
+      "rationale": "The data quality shows significant issues with schema consistency and data freshness, with multiple tables missing required fields and being behind their update schedules.",
+      "gap": [
+        "Add the missing field `created_at` of type `DATETIME` with a non-null constraint to the `users` table.",
+        "Add the missing field `shipping_address` of type `VARCHAR` to the `orders` table.",
+        "Add the missing field `discontinued_flag` of type `BOOLEAN` to the `products` table.",
+        "Investigate the `orders` ingestion process to identify delays, focusing on data source reliability and processing efficiency.",
+        "Implement a monitoring system that alerts the data team when any table is more than 30 minutes behind its expected update time."
+      ]
+    },
+    "compute_pipeline_latency_throughput": {
+      "metric_id": "pipeline.latency_throughput",
+      "score": 1,
+      "rationale": "Pipeline breakdown: daily_sales_etl has 12m runtime, 1.5M rows, and 1m queue wait (good performance). inventory_load has 55m runtime, 580k rows, and 10m queue wait (moderate performance). customer_dim_refresh has 130m runtime, 320k rows, and 30m queue wait (poor performance). The customer_dim_refresh pipeline significantly underperforms with a runtime exceeding 120m and a high queue wait time. Dependency breakdown: Data lineage scored 4 due to 80% coverage but significant gaps in documentation, ",
+      "gap": [
+        "Optimize customer_dim_refresh by analyzing and refactoring the ETL process to reduce its 130m runtime.",
+        "Investigate the cause of the 30m queue wait for customer_dim_refresh and implement scheduling improvements to minimize delays.",
+        "Consider breaking down customer_dim_refresh into smaller, more manageable jobs to improve performance and reduce runtime."
+      ]
+    },
+    "compute_pipeline_success_rate": {
+      "metric_id": "pipeline.success_rate",
+      "score": 2,
+      "rationale": "Pipeline runs: 10 total, 6 successes and 4 failures. Success rate = 60.0%, which corresponds to score 1. The failed pipelines were `inventory_load` (2 failures, runtime 0), `customer_dim_refresh` (1 failure, runtime 0), and `analytics_snapshot` (1 failure, runtime 0). Runtime distribution shows `daily_sales_etl` averaging ~311.67s, while `inventory_load`, `customer_dim_refresh`, and `analytics_snapshot` had failures with no runtime recorded. Dependency results: Data lineage scored 4 due to 80% c",
+      "gap": [
+        "Implement robust retry mechanisms with exponential backoff for the `inventory_load`, `customer_dim_refresh`, and `analytics_snapshot` pipelines.",
+        "Investigate root causes of failures in `inventory_load`, `customer_dim_refresh`, and `analytics_snapshot` by reviewing logs and dependencies.",
+        "Enhance pipeline monitoring to detect runtime anomalies and failures proactively, especially for pipelines with a history of failures."
+      ]
+    },
+    "compute_analytics_adoption": {
+      "metric_id": "analytics.adoption",
+      "score": 4,
+      "rationale": "Adoption score is 4 (65 active users, 1800 views, 4300 queries). Sales leads adoption with 20 users and 700 views, followed closely by marketing with 18 users and 450 views. Finance has 15 users and 380 views, while operations lags with 12 users and 270 views. Dependencies: metadata coverage scored 2 (50% documented), schema consistency scored 2 (frequent inconsistencies), and data freshness scored 2 (multiple tables behind SLA). Final score = 2 because the lowest dependency score on metadata co",
+      "gap": [
+        "Conduct targeted training sessions for operations to boost user engagement and adoption.",
+        "Share success stories from sales and marketing to encourage other departments to utilize the platform more effectively.",
+        "Implement regular communication and updates about new features and best practices to enhance overall platform usage."
+      ]
+    }
+  },
+  "aggregates": {
+    "per_category_1to5": {
+      "Development Maturity": 2.44,
+      "Innovation Pipeline": 2.5
+    },
+    "overall_score_1to5": 2.46
+  }
+}
