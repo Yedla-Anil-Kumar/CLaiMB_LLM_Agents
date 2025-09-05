@@ -96,22 +96,21 @@ def _now_id() -> str:
 
 
 def _default_out_path(repo_arg: str, repo_dir: Path) -> Path:
-    """
-    If --out wasn't provided, write to:
-      runs_code_repo_mvp/<owner>_<repo>_<timestamp>.json
-    For local paths, owner becomes 'local'.
-    """
-    ts = _now_id()
     if _is_url(repo_arg):
-        parsed = urlparse(repo_arg)
-        owner, repo = _split_owner_repo(parsed.path or "")
+        _, repo = _split_owner_repo(urlparse(repo_arg).path or "")
     else:
-        owner, repo = ("local", repo_dir.name or "repo")
-    safe_owner = owner.replace("/", "_")
+        repo = repo_dir.name or "repo"
     safe_repo = repo.replace("/", "_")
     out_dir = Path("runs_code_repo_mvp")
     out_dir.mkdir(parents=True, exist_ok=True)
-    return out_dir / f"{safe_owner}_{safe_repo}_{ts}.json"
+    i = 1
+    while True:
+        f = out_dir / f"{safe_repo}_{i}.json"
+        if not f.exists():
+            return f
+        i += 1
+
+
 
 
 def parse_args() -> argparse.Namespace:
