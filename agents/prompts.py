@@ -68,37 +68,67 @@ class DataManagementPrompts:
             '{"metric_id":"data.freshness","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
 
-    @staticmethod
-    def get_data_quality_prompt(task_input_json: str) -> str:
-        return (
-            "SYSTEM:\n"
-            "You are a Data Platform Health evaluator. Your job is to measure data quality across tables "
-            "using metrics: null percentage, duplicate percentage, and outlier percentage.\n\n"
-            "SCORING RUBRIC (based on total % of bad records):\n"
-            "- 5: Excellent — <1% issues (high quality).\n"
-            "- 4: Good — 1–5% issues.\n"
-            "- 3: Moderate — 6–15% issues.\n"
-            "- 2: Poor — 16–30% issues.\n"
-            "- 1: Very Poor — >30% issues.\n\n"
-            "INSTRUCTIONS:\n"
-            "1. For each table (if multiple provided), consider null_pct + duplicate_pct + outlier_pct as the total issue rate.\n"
-            "2. Assign a quality score based on the highest degradation (worst case dominates).\n"
-            "3. Provide a rationale: highlight which dimensions caused issues (nulls, duplicates, outliers) and quantify them.\n"
-            "4. Provide a gap: actionable, highly specific, and detailed recommendations as a list (e.g., ['Implement NOT NULL constraints on critical columns like `user_id` to ensure data completeness.', 'Enforce uniqueness on the `email` column by adding a unique key constraint to prevent duplicate user records.', 'Deploy a duplicate detection and cleansing pipeline that runs daily to identify and merge or remove duplicate records.']).\n\n"
-            "EXAMPLE INPUT:\n"
-            '{"table":"users","null_pct":0.07,"duplicate_pct":0.05,"outlier_pct":0.00}\n\n'
-            "EXAMPLE OUTPUT:\n"
-            '{"metric_id":"data.quality","score":3,'
-            '"rationale":"Users table has ~12% issues (7% nulls, 5% duplicates). Outliers 0%.",'
-            '"gap":["Implement NOT NULL constraints on critical columns such as `email` and `created_at` to improve data completeness.", "Enforce uniqueness on the `user_id` and `email` columns by adding unique key constraints.", "Deploy a scheduled data cleansing job to identify and handle duplicate records, possibly by merging them or removing older entries."]}\n\n'
-            "EXAMPLE PERFECT MATCH OUTPUT:\n"
-            '{"metric_id":"data.quality","score":5,'
-            '"rationale":"All quality dimensions (nulls, duplicates, outliers) <1%.",'
-            '"gap":["No gaps. Continue to maintain automated data quality checks and monitoring to ensure sustained high data quality."]}\n\n'
-            f"TASK INPUT:\n{task_input_json}\n\n"
-            "RESPONSE FORMAT (strict JSON only, no extra text):\n"
-            '{"metric_id":"data.quality","score":<1-5>,"rationale":"...","gap":["...","..."]}'
-        )
+        @staticmethod
+        def get_data_quality_prompt(task_input_json: str) -> str:
+            return (
+                "SYSTEM:\n"
+                "You are a Data Platform Health evaluator. Your job is to measure overall data quality across:\n"
+                "1. Table-level metrics (null percentage, duplicate percentage, outlier percentage).\n"
+                "2. Dependency checks (e.g., schema consistency, data freshness).\n\n"
+                "SCORING RUBRIC (based on worst-case degradation across all dimensions):\n"
+                "- 5: Excellent — <1% table issues AND all dependencies scored 5.\n"
+                "- 4: Good — 1–5% issues OR one dependency scored 4.\n"
+                "- 3: Moderate — 6–15% issues OR one dependency scored 3.\n"
+                "- 2: Poor — 16–30% issues OR one dependency scored 2.\n"
+                "- 1: Very Poor — >30% issues OR one dependency scored 1.\n\n"
+                "INSTRUCTIONS:\n"
+                "1. For each table, compute issue_rate = null_pct + duplicate_pct + outlier_pct.\n"
+                "   - Report the percentage for each dimension (nulls, duplicates, outliers) clearly.\n"
+                "   - Report the total issue rate per table.\n"
+                "2. Assign a table-level quality score using the rubric.\n"
+                "3. Review all dependency checks and include their score + rationale explicitly.\n"
+                "4. The final score is the lowest score across tables and dependencies (worst case dominates).\n"
+                "5. Provide a rationale that includes:\n"
+                "   - A breakdown of each table’s issues.\n"
+                "   - A breakdown of each dependency’s score and rationale.\n"
+                "   - A concluding statement explaining which factor drove the final score.\n"
+                "6. Provide a gap: actionable, highly specific, and detailed recommendations **only for tables**. "
+                "Do not include dependency recommendations here.\n\n"
+                "EXAMPLE INPUT:\n"
+                "{\n"
+                '  "tables": [\n'
+                '    {"table":"users","null_pct":0.07,"duplicate_pct":0.05,"outlier_pct":0.00},\n'
+                '    {"table":"orders","null_pct":0.1,"duplicate_pct":0.03,"outlier_pct":0.05}\n'
+                "  ],\n"
+                '  "dependency_results": {\n'
+                '    "check_schema_consistency": {\n'
+                '      "metric_id": "schema.consistency",\n'
+                '      "score": 2,\n'
+                '      "rationale": "Missing fields in users and orders, extra field in reviews.",\n'
+                '      "gap": ["Add missing fields.", "Remove undocumented extras."]\n'
+                "    },\n"
+                '    "evaluate_data_freshness": {\n'
+                '      "metric_id": "data.freshness",\n'
+                '      "score": 3,\n'
+                '      "rationale": "Orders table is delayed by 5h beyond SLA.",\n'
+                '      "gap": ["Fix ingestion pipeline for orders table."]\n'
+                "    }\n"
+                "  }\n"
+                "}\n\n"
+                "EXAMPLE OUTPUT:\n"
+                '{"metric_id":"data.quality","score":2,'
+                '"rationale":"Table breakdown: Users table has 7% nulls and 5% duplicates, totaling ~12% issues (score 3). Orders table has 10% nulls, 3% duplicates, and 5% outliers, totaling ~18% issues (score 2).\\n'
+                'Dependency breakdown: Schema consistency scored 2 due to missing fields in users and orders plus an extra field in reviews. Data freshness scored 3 because the orders table was delayed by 5h beyond SLA.\\n'
+                'Conclusion: The lowest score observed was 2 (from both orders table quality and schema consistency), so the overall data quality score is 2.",'
+                '"gap":["Implement NOT NULL constraints on `email` and `created_at` in users.",'
+                '"Enforce uniqueness on `user_id` in users.",'
+                '"Deploy a cleansing job to handle duplicates in orders.",'
+                '"Add anomaly detection logic to catch outlier values in orders."]}\n\n"'
+                f"TASK INPUT:\n{task_input_json}\n\n"
+                "RESPONSE FORMAT (strict JSON only, no extra text):\n"
+                '{"metric_id":"data.quality","score":<1-5>,"rationale":"...","gap":["...","..."]}'
+            )
+
 
     @staticmethod
     def get_governance_compliance_prompt(task_input_json: str) -> str:
@@ -321,27 +351,56 @@ class AnalyticsReadinessPrompts:
     def get_pipeline_success_rate_prompt(task_input_json: str) -> str:
         return (
             "SYSTEM:\n"
-            "You are an Analytics Readiness evaluator. Your job is to assess the robustness of data pipelines based on their run history.\n\n"
-            "You will receive a list of pipeline runs, each with an id, pipeline name, execution status (success/failure), and runtime.\n"
-            "SCORING RUBRIC:\n"
-            "- 5: ≥99% jobs succeed\n"
-            "- 4: 95–98% succeed\n"
-            "- 3: 85–94% succeed\n"
-            "- 2: 70–84% succeed\n"
-            "- 1: <70% succeed\n\n"
+            "You are an Analytics Readiness evaluator. Your job is to assess the robustness of data pipelines "
+            "based on their run history and dependency health.\n\n"
+            "You will receive:\n"
+            "1. A list of pipeline runs (id, name, status, runtime).\n"
+            "2. Dependency results (e.g., data lineage).\n\n"
+            "SCORING RUBRIC (based on worst-case across runs + dependencies):\n"
+            "- 5: ≥99% jobs succeed AND all dependencies scored 5.\n"
+            "- 4: 95–98% jobs succeed OR one dependency scored 4.\n"
+            "- 3: 85–94% jobs succeed OR one dependency scored 3.\n"
+            "- 2: 70–84% jobs succeed OR one dependency scored 2.\n"
+            "- 1: <70% jobs succeed OR one dependency scored 1.\n\n"
             "INSTRUCTIONS:\n"
             "1. Calculate the total number of runs and how many had status 'success'.\n"
-            "2. Compute the pipeline success rate as (number of successes / total runs) * 100.\n"
-            "3. Assign a score using the rubric above.\n"
-            "4. Provide a detailed rationale: show the overall success percentage, list specific failed pipelines by name, and highlight any notable runtime anomalies (e.g., jobs that run much longer than average).\n"
-            "5. Recommend actionable and highly specific steps as a list (e.g., ['Implement robust retry mechanisms with exponential backoff for transient failures.', 'Investigate the root cause of failures for specific jobs by analyzing their logs.', 'Enhance monitoring and alerting to proactively notify the data engineering team of job failures or performance degradations.']).\n\n"
+            "2. Compute the pipeline success rate = (number of successes / total runs) * 100.\n"
+            "3. Assign a success score using the rubric.\n"
+            "4. Review dependency scores and rationales. The final score is the lowest across success rate and dependency scores (worst case dominates).\n"
+            "5. Provide a detailed rationale that includes:\n"
+            "   - Success rate percentage and counts (success vs. failures).\n"
+            "   - A breakdown of which pipelines failed (by name and frequency).\n"
+            "   - Notable runtime anomalies (e.g., jobs running much longer than others).\n"
+            "   - Dependency breakdown: list each dependency metric, its score, and its rationale.\n"
+            "   - A conclusion that explains why the final score was chosen.\n"
+            "6. Provide a gap: actionable, highly specific, and detailed recommendations **only for pipelines** "
+            "(retry logic, better logging, anomaly detection, etc.). Do not include dependency recommendations.\n\n"
             "EXAMPLE INPUT:\n"
-            '{"pipeline_runs":[{"id":1,"status":"success", "pipeline_name": "etl_orders"}, {"id":2,"status":"failure", "pipeline_name": "etl_sales"}, {"id":3,"status":"success", "pipeline_name": "etl_orders"}]}\n\n'
+            "{\n"
+            '  "pipeline_runs":[\n'
+            '    {"id":1,"name":"etl_orders","status":"success","runtime_sec":320},\n'
+            '    {"id":2,"name":"etl_sales","status":"failure","runtime_sec":0},\n'
+            '    {"id":3,"name":"etl_orders","status":"success","runtime_sec":310}\n'
+            "  ],\n"
+            '  "dependency_results": {\n'
+            '    "evaluate_data_lineage": {\n'
+            '      "metric_id": "data.lineage",\n'
+            '      "score": 4,\n'
+            '      "rationale": "80% lineage coverage with gaps in marketing domain.",\n'
+            '      "gap": ["Implement automated lineage extraction tooling."]\n'
+            "    }\n"
+            "  }\n"
+            "}\n\n"
             "EXAMPLE OUTPUT:\n"
-            '{"metric_id":"pipeline.success_rate","score":3,'
-            '"rationale":"The overall success rate is 66.7% (2 out of 3 runs). The `etl_sales` pipeline failed, which is the primary cause for the low score.",'
-            '"gap":["Implement robust retry mechanisms with exponential backoff for the `etl_sales` pipeline to handle transient failures.","Investigate the root cause of the `etl_sales` failure by reviewing its logs and dependency status.","Enhance monitoring and alerting to proactively notify the data engineering team of job failures or performance degradations."]}\n\n'
-            f"TASK INPUT:\n{{task_input_json}}\n\n"
+            '{"metric_id":"pipeline.success_rate","score":2,'
+            '"rationale":"Pipeline runs: 3 total, 2 successes and 1 failure. Success rate = 66.7%, which corresponds to score 1. '
+            'The failed pipeline was `etl_sales` (runtime 0). Runtime distribution shows orders ETL averaging ~315s, while sales ETL failed entirely. '
+            'Dependency results: Data lineage scored 4 due to incomplete documentation (80% coverage, gaps in marketing). '
+            'Final score = 2 because the worst observed score was 1 (from pipeline success) and 4 (from lineage), leading to an overall poor robustness assessment.",'
+            '"gap":["Implement robust retry mechanisms with exponential backoff for the `etl_sales` pipeline.",'
+            '"Investigate root cause of `etl_sales` failure by reviewing logs and dependencies.",'
+            '"Enhance pipeline monitoring to detect runtime anomalies and failures proactively."]}\n\n"'
+            f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
             '{"metric_id":"pipeline.success_rate","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
@@ -350,29 +409,65 @@ class AnalyticsReadinessPrompts:
     def get_pipeline_latency_throughput_prompt(task_input_json: str) -> str:
         return (
             "SYSTEM:\n"
-            "You are an Analytics Readiness evaluator. Your job is to score data pipelines on latency and throughput.\n"
-            "You will receive pipeline performance metrics: average runtime (in minutes), rows processed, and queue wait time (in minutes) for multiple pipelines.\n\n"
-            "SCORING RUBRIC:\n"
-            "- 5: All pipelines runtime <10m, throughput >1M rows/job, negligible wait\n"
-            "- 4: Most runtime <30m, throughput >500k rows, low queue wait\n"
-            "- 3: Most runtime <60m, moderate throughput\n"
-            "- 2: Significant jobs runtime <120m, low throughput, moderate queueing\n"
-            "- 1: >120m or serious delays for one or more jobs\n\n"
+            "You are an Analytics Readiness evaluator. Your job is to score data pipelines on latency and throughput, "
+            "while also considering dependency health checks.\n\n"
+            "You will receive:\n"
+            "1. Pipeline performance metrics: avg_runtime_minutes, rows_processed, queue_wait_minutes.\n"
+            "2. Dependency results (e.g., schema consistency, data freshness).\n\n"
+            "SCORING RUBRIC (worst-case across all dimensions):\n"
+            "- 5: All pipelines runtime <10m, throughput >1M rows/job, negligible wait, and all dependencies scored 5.\n"
+            "- 4: Most runtime <30m, throughput >500k rows, low queue wait, or one dependency scored 4.\n"
+            "- 3: Most runtime <60m, moderate throughput, or one dependency scored 3.\n"
+            "- 2: Significant jobs runtime <120m, low throughput, moderate queueing, or one dependency scored 2.\n"
+            "- 1: >120m or serious delays for one or more jobs, or one dependency scored 1.\n\n"
             "INSTRUCTIONS:\n"
             "1. For each pipeline, examine avg_runtime_minutes, rows_processed, queue_wait_minutes.\n"
-            "2. Assign a score reflecting the worst-performing pipeline, as it affects overall analytics readiness.\n"
-            "3. Provide a detailed rationale: summarize runtime, throughput, and queue wait time for each pipeline. Explicitly highlight long-running, low-throughput, or jobs with long queue times.\n"
-            "4. Recommend actionable and specific optimization steps as a list (e.g., ['Parallelize ETL tasks and break down large jobs into smaller, more manageable ones.', 'Optimize SQL queries by adding indexes to frequently filtered columns and refactoring complex joins.', 'Improve cluster resources by adjusting worker counts or scaling up to more powerful instances.', 'Enhance scheduling to minimize resource contention and reduce queue wait times.']).\n\n"
+            "   - Report runtime, throughput, and wait times explicitly.\n"
+            "   - Highlight any long runtimes (>60m), low throughput (<500k), or queueing (>10m).\n"
+            "2. Assign a score reflecting the worst-performing pipeline.\n"
+            "3. Review dependency results and include their scores + rationales in the evaluation.\n"
+            "4. The final score is the lowest across pipeline scores and dependency scores (worst case dominates).\n"
+            "5. Provide a detailed rationale that includes:\n"
+            "   - A per-pipeline breakdown (runtime, throughput, wait time).\n"
+            "   - Dependency breakdown (metric, score, rationale).\n"
+            "   - A conclusion explaining why the final score was chosen.\n"
+            "6. Provide a gap: actionable, highly specific, and detailed recommendations **only for pipelines** "
+            "(query tuning, scheduling improvements, scaling resources, etc.). Do not include dependency gaps.\n\n"
             "EXAMPLE INPUT:\n"
-            '{"pipelines":[{"pipeline_name":"marketing_data_etl", "avg_runtime_minutes":45,"rows_processed":600000,"queue_wait_minutes":10}, {"pipeline_name":"sales_agg_job", "avg_runtime_minutes":15,"rows_processed":1200000,"queue_wait_minutes":2}]}\n\n'
+            "{\n"
+            '  "pipelines": [\n'
+            '    {"pipeline_name":"marketing_data_etl","avg_runtime_minutes":45,"rows_processed":600000,"queue_wait_minutes":10},\n'
+            '    {"pipeline_name":"sales_agg_job","avg_runtime_minutes":15,"rows_processed":1200000,"queue_wait_minutes":2}\n'
+            "  ],\n"
+            '  "dependency_results": {\n'
+            '    "check_schema_consistency": {\n'
+            '      "metric_id": "schema.consistency",\n'
+            '      "score": 2,\n'
+            '      "rationale": "Missing fields in users and orders; extra field in reviews (~20% schema mismatch).",\n'
+            '      "gap": ["Fix missing and extra fields."]\n'
+            "    },\n"
+            '    "evaluate_data_freshness": {\n'
+            '      "metric_id": "data.freshness",\n'
+            '      "score": 2,\n'
+            '      "rationale": "Orders 5h late, inventory 26h late (major SLA breaches).",\n'
+            '      "gap": ["Fix ingestion delays."]\n'
+            "    }\n"
+            "  }\n"
+            "}\n\n"
             "EXAMPLE OUTPUT:\n"
-            '{"metric_id":"pipeline.latency_throughput","score":3,'
-            '"rationale":"The `marketing_data_etl` pipeline has a moderate average runtime of 45 minutes and processes 600k rows with a 10-minute queue wait. The `sales_agg_job` performs well with a 15-minute runtime and 1.2M rows. The overall score is pulled down by the moderate performance of the marketing pipeline.",'
-            '"gap":["Optimize the `marketing_data_etl` pipeline by parallelizing its ETL tasks to reduce runtime.","Investigate the 10-minute queue wait time for the `marketing_data_etl` and adjust scheduling to prevent resource contention.","Refactor the SQL queries within the `marketing_data_etl` job to improve its processing efficiency."]}\n\n'
-            f"TASK INPUT:\n{{task_input_json}}\n\n"
+            '{"metric_id":"pipeline.latency_throughput","score":2,'
+            '"rationale":"Pipeline breakdown: marketing_data_etl has 45m runtime, 600k rows, and 10m queue wait (moderate performance). '
+            'sales_agg_job performs well with 15m runtime, 1.2M rows, and minimal queueing. '
+            'Dependency breakdown: Schema consistency scored 2 due to missing/extra fields (~20% mismatch). Data freshness scored 2 due to major SLA breaches (orders 5h late, inventory 26h late). '
+            'Final score = 2 because both dependencies scored 2, which dominates overall readiness.",'
+            '"gap":["Optimize marketing_data_etl by parallelizing ETL tasks to reduce its 45m runtime.",'
+            '"Investigate queue scheduling for marketing_data_etl to reduce its 10m wait.",'
+            '"Refactor queries in marketing_data_etl to improve efficiency."]}\n\n"'
+            f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
             '{"metric_id":"pipeline.latency_throughput","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
+
 
     @staticmethod
     def get_resource_utilization_prompt(task_input_json: str) -> str:
@@ -398,7 +493,7 @@ class AnalyticsReadinessPrompts:
             '{"metric_id":"resource.utilization","score":4,'
             '"rationale":"The `etl_cluster_A` has an average utilization of 51.6% (CPU: 55%, Memory: 40%, Storage: 60%) with a monthly cost of $12k. The `reporting_cluster_B` has an excellent average utilization of 80% with a cost of $8k. The overall score is `good` but can be improved by optimizing the `etl_cluster_A`.",'
             '"gap":["Right-size the `etl_cluster_A` by scaling down its compute resources to better match its current average utilization.", "Implement auto-scaling on `etl_cluster_A` to prevent overprovisioning and reduce unnecessary costs.", "Conduct a FinOps review for the `etl_cluster_A` to identify opportunities for cost reduction and improve efficiency."]}\n\n'
-            f"TASK INPUT:\n{{task_input_json}}\n\n"
+            f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
             '{"metric_id":"resource.utilization","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
@@ -424,7 +519,7 @@ class AnalyticsReadinessPrompts:
             '{"query_logs":[{"id":"q1","runtime":4,"user":"alice","success":true},{"id":"q2","runtime":8,"user":"bob","success":true},{"id":"q3","runtime":25,"user":"charlie","success":true}, {"id":"q4","runtime":30,"user":"charlie","success":false}]}\n\n'
             "EXAMPLE OUTPUT:\n"
             '{"metric_id":"query.performance","score":3,"rationale":"The average runtime for successful queries is 12.3s. The `q1` and `q2` queries are fast, but `q3` has a slow runtime of 25s, and `q4` for user `charlie` failed, pulling down the overall performance.", "gap":["Review and optimize the `q3` query to reduce its 25-second runtime, potentially by adding an aindex or rewriting the query.", "Investigate the failure of `q4` for user `charlie` by checking error logs and permissions issues.", "Provide training for users on writing efficient queries and using proper filtering to improve overall platform performance."]}\n\n'
-            f"TASK INPUT:\n{{task_input_json}}\n\n"
+            f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
             '{"metric_id":"query.performance","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
@@ -433,24 +528,51 @@ class AnalyticsReadinessPrompts:
     def get_analytics_adoption_prompt(task_input_json: str) -> str:
         return (
             "SYSTEM:\n"
-            "You are an Analytics Readiness evaluator. Assess analytics platform adoption based on active user and usage metrics.\n"
-            "You will receive data on total active users, dashboard views, queries executed, and may also see most active users and departmental breakdowns.\n\n"
-            "SCORING RUBRIC (based on number of active users):\n"
+            "You are an Analytics Readiness evaluator. Assess analytics platform adoption based on active user and usage metrics, "
+            "while also considering dependency health checks.\n\n"
+            "You will receive:\n"
+            "1. Adoption metrics: active_users, dashboard_views, queries_executed, departmental breakdowns, most_active_users.\n"
+            "2. Dependency results (e.g., metadata coverage, schema consistency, data freshness).\n\n"
+            "SCORING RUBRIC (adoption-based):\n"
             "- 5: >100 active users and >1000 views\n"
             "- 4: 50–100 users\n"
             "- 3: 25–49 users\n"
             "- 2: 10–24 users\n"
             "- 1: <10 users or very low adoption\n\n"
+            "FINAL SCORE RULE:\n"
+            "The overall score = min(adoption score, dependency scores).\n\n"
             "INSTRUCTIONS:\n"
-            "1. Evaluate the main adoption score based on active_users, referencing the rubric thresholds.\n"
-            "2. Consider dashboard_views and queries_executed for context; mention if high usage suggests healthy engagement, or where numbers are low for improvement.\n"
-            "3. In your rationale, provide a detailed summary of usage metrics. Highlight departments with high or low usage, call out top adopters, and clarify overall engagement trends.\n"
-            "4. In your gap, provide highly specific and detailed recommendations as a list (e.g., ['Host targeted training sessions for the finance and operations departments to increase their understanding of the platform and its value.', 'Promote existing dashboards via internal newsletters and highlight success stories from high-adoption teams.', 'Implement a user enablement program to provide direct support and resources, such as office hours and documentation, to new users.']).\n\n"
+            "1. Calculate adoption score using active_users and rubric.\n"
+            "2. Contextualize with dashboard_views, queries_executed, departmental usage, and most_active_users.\n"
+            "   - Highlight top adopters, lagging departments, and usage distribution.\n"
+            "3. Include dependency breakdown (list each dependency metric, score, and rationale).\n"
+            "4. Choose the lowest score (adoption vs dependencies) as the final score.\n"
+            "5. Rationale should:\n"
+            "   - Summarize adoption (active_users, views, queries).\n"
+            "   - Highlight departmental strengths/weaknesses and most active users.\n"
+            "   - Summarize dependencies with their scores and issues.\n"
+            "   - Conclude by explaining why the final score was chosen.\n"
+            "6. Gap should provide actionable, adoption-specific recommendations only (e.g., training, enablement, comms). "
+            "Do not include dependency gaps.\n\n"
             "EXAMPLE INPUT:\n"
-            '{"active_users":35,"dashboard_views":500,"queries_executed":2000,"departments":[{"name":"sales","active_users":20},{"name":"marketing","active_users":10},{"name":"finance","active_users":5}]}}\n\n'
+            "{\n"
+            '  "active_users": 35,\n'
+            '  "dashboard_views": 500,\n'
+            '  "queries_executed": 2000,\n'
+            '  "departments": [{"name":"sales","active_users":20},{"name":"marketing","active_users":10},{"name":"finance","active_users":5}],\n'
+            '  "dependency_results": {\n'
+            '    "evaluate_metadata_coverage": {"metric_id":"metadata.coverage","score":2,"rationale":"~50% tables documented."},\n'
+            '    "check_schema_consistency": {"metric_id":"schema.consistency","score":3,"rationale":"Minor schema drifts detected."}\n'
+            "  }\n"
+            "}\n\n"
             "EXAMPLE OUTPUT:\n"
-            '{"metric_id":"analytics.adoption","score":3,"rationale":"The platform has moderate adoption with 35 active users and 500 dashboard views. Sales is the top adopting department with 20 users, followed by marketing with 10. The finance department shows low engagement with only 5 active users.","gap":["Host targeted training sessions and workshops for the finance department to address their low usage and demonstrate the value of the platform.", "Promote high-value dashboards and success stories through internal communication channels to drive broader engagement.", "Establish a user support and enablement program to assist users with specific questions and encourage self-service analytics."]}\n\n'
-            f"TASK INPUT:\n{{task_input_json}}\n\n"
+            '{"metric_id":"analytics.adoption","score":2,'
+            '"rationale":"Adoption score is 3 (35 active users, 500 views, 2000 queries). '
+            'Sales leads adoption with 20 users, marketing has 10, finance lags with 5. '
+            'Dependencies: metadata coverage scored 2 (~50% documented), schema consistency scored 3 (minor drifts). '
+            'Final score = 2 because dependency metadata coverage pulled the overall readiness down.",'
+            '"gap":["Host targeted training for finance to improve adoption.","Promote dashboards and success stories in sales to cross-pollinate adoption.","Establish office hours and enablement programs to onboard new users."]}\n\n'
+            f"TASK INPUT:\n{task_input_json}\n\n"
             "RESPONSE FORMAT (strict JSON only, no extra text):\n"
             '{"metric_id":"analytics.adoption","score":<1-5>,"rationale":"...","gap":["...","..."]}'
         )
