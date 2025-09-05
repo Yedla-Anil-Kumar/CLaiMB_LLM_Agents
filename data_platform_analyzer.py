@@ -1,14 +1,24 @@
 import os
 import json
 import time
+import datetime
 from pathlib import Path
 from typing import Dict, Any
 from dotenv import load_dotenv
 from openai import OpenAI
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from agents.snapshot_collectors import collect_snapshot
+from loguru import logger
 
+from agents.snapshot_collectors import collect_snapshot
 from agents.prompts import DataManagementPrompts, AnalyticsReadinessPrompts
+
+# Configure loguru to log both to console and file
+LOG_DIR = Path("logs")
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+logger.remove()  # remove default handler
+logger.add(lambda msg: print(msg, end=""))  # console
+logger.add(LOG_DIR / "data_platform_analyzer.log", rotation="1 MB", retention=10)
+
 REGISTRY = {
     "check_schema_consistency": {"depends_on": [], "category": "Development Maturity"},
     "evaluate_data_freshness": {"depends_on": [], "category": "Development Maturity"},
@@ -55,6 +65,18 @@ PROMPT_MAPPING = {
     "compute_analytics_adoption": (AnalyticsReadinessPrompts, "get_analytics_adoption_prompt"),
 }
 
+
+def _log(level: str, message: str):
+    if level.lower() == "info":
+        logger.info(f"{message}")
+    elif level.lower() == "warn":
+        logger.warning(f"{message}")
+    elif level.lower() == "error":
+        logger.error(f"{message}")
+    else:
+        logger.debug(f"{message}")
+
+
 class MVPDataPlatformScanner:
     def __init__(self, api_key: str = None, out_dir: str = "runs_mvp_scanner"):
         load_dotenv()
@@ -77,16 +99,13 @@ class MVPDataPlatformScanner:
             try:
                 prompt_text = builder_method(task_input_json)
             except Exception as e:
-                print(f"[WARNING] prompt builder {builder_class.__name__}.{method_name} failed: {e}")
+                _log("warn", f"Prompt builder {builder_class.__name__}.{method_name} failed: {e}")
                 prompt_text = FALLBACK_JSON_PROMPT_TEMPLATE.format(input=task_input_json)
             return prompt_text
         else:
             return FALLBACK_JSON_PROMPT_TEMPLATE.format(input=task_input_json)
 
     def _llm_evaluate(self, prompt: str, metric_name: str) -> Dict[str, Any]:
-        # DEBUG: print the exact input sent to the LLM for this metric
-        #print(f"[LLM INPUT] metric={metric_name} -- prompt start: \n {prompt} \n --- END PROMPT ---")
-
         resp = self.client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
@@ -100,7 +119,7 @@ class MVPDataPlatformScanner:
         try:
             parsed = json.loads(raw)
         except json.JSONDecodeError:
-            print(f"DEBUG RAW for metric {metric_name}: \n {raw} \n --- END RAW ---")
+            _log("debug", f"RAW output for metric {metric_name}: {raw}")
             raise
 
         score = parsed.get("score")
@@ -120,20 +139,7 @@ class MVPDataPlatformScanner:
         return parsed
 
     def _metric_input_for(self, metric: str, ctx: Dict[str, Any]) -> Any:
-        """
-        Build the input object for a metric.
-
-        Behavior:
-        - Construct the "base" input exactly as before (using the original snapshot keys).
-        - If the caller provided `_prev_results` in `ctx` (a dict mapping metric->result), and the
-          current metric declares dependencies in REGISTRY, then include those dependency outputs
-          alongside the original input under the key `dependency_results`.
-
-        This ensures dependent metrics receive both the original data they expect AND the JSON
-        outputs produced by the metrics they depend on.
-        """
         m = metric
-        # base input (same as before)
         if m == "check_schema_consistency":
             base = {"baseline": ctx.get("baseline_schema"), "actual": ctx.get("table_schemas")}
         elif m == "evaluate_data_freshness":
@@ -189,73 +195,59 @@ class MVPDataPlatformScanner:
         return base
 
     def _call_metric(self, metric: str, ctx: Dict[str, Any]) -> Dict[str, Any]:
+        _log("debug", f"Starting metric evaluation: {metric}")
         input_obj = self._metric_input_for(metric, ctx)
         prompt = self._build_prompt_for(metric, input_obj)
         result = self._llm_evaluate(prompt, metric)
+        _log("debug", f"Completed metric evaluation: {metric}")
         return result
 
     def run(self) -> Dict[str, Any]:
-        """
-        Orchestrate metric execution.
-
-        - Run all level0 (no-dependency) metrics in parallel.
-        - Then run all dependent metrics (level1+) in parallel **but** pass each metric only the
-          outputs produced by its declared dependencies (not the whole results map). This ensures
-          each metric receives a compact `_prev_results` object containing just the dependency
-          outputs it needs.
-        """
+        start_time = time.time()
+        _log("info", "===== Starting Data Platform Analyzer run =====")
         ctx = collect_snapshot()
         level0 = [m for m, meta in REGISTRY.items() if not meta["depends_on"]]
         level1 = [m for m, meta in REGISTRY.items() if meta["depends_on"]]
 
         results = {}
 
-        # --- Run level0 in parallel ---
-        print("Running level0 metrics in parallel:", level0)
+        _log("info", f"Running level0 metrics in parallel: {level0}")
         with ThreadPoolExecutor(max_workers=min(8, len(level0) or 1)) as ex:
             futures = {ex.submit(self._call_metric, m, ctx): m for m in level0}
             for fut in as_completed(futures):
                 m = futures[fut]
                 try:
                     results[m] = fut.result()
-                    print(f"Completed {m} -> score {results[m]['score']}")
+                    _log("info", f"Completed {m} -> score {results[m]['score']}")
                 except Exception as e:
-                    print(f"Metric {m} failed: {e}")
+                    _log("error", f"Metric {m} failed: {e}")
                     results[m] = {"error": str(e)}
 
-        # --- Prepare and run level1 in parallel, giving each metric only its dependency outputs ---
-        print("Running level1 metrics in parallel (each receives only its dependencies' outputs):", level1)
+        _log("info", f"Running level1 metrics in parallel (each receives only its dependencies' outputs): {level1}")
         with ThreadPoolExecutor(max_workers=min(8, len(level1) or 1)) as ex:
             futures = {}
             for m in level1:
                 deps = REGISTRY[m]["depends_on"]
-                # only keep dependency outputs that completed successfully
                 available_deps = [d for d in deps if d in results and "score" in results.get(d, {})]
                 missing = [d for d in deps if d not in results]
                 if missing:
-                    print(f"Skipping {m} because missing deps: {missing}")
+                    _log("warn", f"Skipping {m} because missing deps: {missing}")
                     continue
 
-                # build a compact _prev_results that contains only the dependency outputs
                 prev_results_subset = {d: results[d] for d in available_deps}
-
-                # include the metric's own existing result if present (rare), so the metric can use
-                # prior output as part of its context. This follows your request "run on its own
-                # output along with the outputs generated by its level 0 dependency".
                 if m in results:
                     prev_results_subset[m] = results[m]
 
                 per_metric_ctx = {**ctx, "_prev_results": prev_results_subset}
-
                 futures[ex.submit(self._call_metric, m, per_metric_ctx)] = m
 
             for fut in as_completed(futures):
                 m = futures[fut]
                 try:
                     results[m] = fut.result()
-                    print(f"Completed {m} -> score {results[m]['score']}")
+                    _log("info", f"Completed {m} -> score {results[m]['score']}")
                 except Exception as e:
-                    print(f"Metric {m} failed: {e}")
+                    _log("error", f"Metric {m} failed: {e}")
                     results[m] = {"error": str(e)}
 
         aggregates = self._aggregate(results)
@@ -271,7 +263,9 @@ class MVPDataPlatformScanner:
         with open(fname, "w", encoding="utf-8") as f:
             json.dump(artifact, f, ensure_ascii=False, indent=2)
 
-        print(f"Run persisted to {fname}")
+        duration = round(time.time() - start_time, 2)
+        _log("info", f"Run persisted to {fname}")
+        _log("info", f"===== Completed Data Platform Analyzer run in {duration} seconds =====")
         return artifact
 
     def _aggregate(self, results: Dict[str, Any]) -> Dict[str, Any]:
@@ -308,7 +302,7 @@ class MVPDataPlatformScanner:
         return {"per_category_1to5": category_avgs, "overall_score_1to5": overall_normalized}
 
 
-if __name__ == "__main__":
+def run_once():
     scanner = MVPDataPlatformScanner()
     artifact = scanner.run()
-    print(json.dumps({"summary": artifact["aggregates"]}, indent=2))
+    _log("info", f"Summary: {json.dumps({'summary': artifact['aggregates']}, indent=2)}")

@@ -1,0 +1,59 @@
+2025-09-05 13:03:52.168 | INFO     | data_platform_analyzer:_log:368 - ===== Starting Data Platform Analyzer run =====
+2025-09-05 13:03:52.171 | INFO     | data_platform_analyzer:_log:368 - Running level0 metrics in parallel: ['check_schema_consistency', 'evaluate_data_freshness', 'evaluate_governance_compliance', 'evaluate_data_lineage', 'evaluate_metadata_coverage', 'evaluate_sensitive_tagging', 'evaluate_duplication', 'evaluate_backup_recovery', 'evaluate_security_config', 'evaluate_resource_utilization', 'assess_query_performance']
+2025-09-05 13:03:52.172 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: check_schema_consistency
+2025-09-05 13:03:52.172 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: evaluate_data_freshness
+2025-09-05 13:03:52.173 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: evaluate_governance_compliance
+2025-09-05 13:03:52.173 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: evaluate_data_lineage
+2025-09-05 13:03:52.174 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: evaluate_metadata_coverage
+2025-09-05 13:03:52.175 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: evaluate_sensitive_tagging
+2025-09-05 13:03:52.175 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: evaluate_duplication
+2025-09-05 13:03:52.176 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: evaluate_backup_recovery
+2025-09-05 13:03:55.378 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: evaluate_governance_compliance
+2025-09-05 13:03:55.379 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: evaluate_security_config
+2025-09-05 13:03:55.379 | INFO     | data_platform_analyzer:_log:368 - Completed evaluate_governance_compliance -> score 3
+2025-09-05 13:03:55.512 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: evaluate_metadata_coverage
+2025-09-05 13:03:55.512 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: evaluate_resource_utilization
+2025-09-05 13:03:55.513 | INFO     | data_platform_analyzer:_log:368 - Completed evaluate_metadata_coverage -> score 2
+2025-09-05 13:03:55.992 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: evaluate_sensitive_tagging
+2025-09-05 13:03:55.993 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: assess_query_performance
+2025-09-05 13:03:55.993 | INFO     | data_platform_analyzer:_log:368 - Completed evaluate_sensitive_tagging -> score 1
+2025-09-05 13:03:56.183 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: evaluate_duplication
+2025-09-05 13:03:56.184 | INFO     | data_platform_analyzer:_log:368 - Completed evaluate_duplication -> score 2
+2025-09-05 13:03:56.388 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: evaluate_data_freshness
+2025-09-05 13:03:56.389 | INFO     | data_platform_analyzer:_log:368 - Completed evaluate_data_freshness -> score 2
+2025-09-05 13:03:56.511 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: check_schema_consistency
+2025-09-05 13:03:56.512 | INFO     | data_platform_analyzer:_log:368 - Completed check_schema_consistency -> score 2
+2025-09-05 13:03:56.710 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: evaluate_data_lineage
+2025-09-05 13:03:56.711 | INFO     | data_platform_analyzer:_log:368 - Completed evaluate_data_lineage -> score 4
+2025-09-05 13:03:58.000 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: evaluate_backup_recovery
+2025-09-05 13:03:58.001 | INFO     | data_platform_analyzer:_log:368 - Completed evaluate_backup_recovery -> score 4
+2025-09-05 13:03:58.282 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: evaluate_security_config
+2025-09-05 13:03:58.283 | INFO     | data_platform_analyzer:_log:368 - Completed evaluate_security_config -> score 2
+2025-09-05 13:03:59.641 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: assess_query_performance
+2025-09-05 13:03:59.641 | INFO     | data_platform_analyzer:_log:368 - Completed assess_query_performance -> score 3
+2025-09-05 13:03:59.861 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: evaluate_resource_utilization
+2025-09-05 13:03:59.862 | INFO     | data_platform_analyzer:_log:368 - Completed evaluate_resource_utilization -> score 3
+2025-09-05 13:03:59.864 | INFO     | data_platform_analyzer:_log:368 - Running level1 metrics in parallel (each receives only its dependencies' outputs): ['evaluate_data_quality', 'compute_pipeline_success_rate', 'compute_pipeline_latency_throughput', 'compute_analytics_adoption']
+2025-09-05 13:03:59.866 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: evaluate_data_quality
+2025-09-05 13:03:59.869 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: compute_pipeline_success_rate
+2025-09-05 13:03:59.871 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: compute_pipeline_latency_throughput
+2025-09-05 13:03:59.875 | DEBUG    | data_platform_analyzer:_log:374 - Starting metric evaluation: compute_analytics_adoption
+2025-09-05 13:04:03.404 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: compute_analytics_adoption
+2025-09-05 13:04:03.405 | INFO     | data_platform_analyzer:_log:368 - Completed compute_analytics_adoption -> score 2
+2025-09-05 13:04:03.590 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: compute_pipeline_latency_throughput
+2025-09-05 13:04:03.592 | INFO     | data_platform_analyzer:_log:368 - Completed compute_pipeline_latency_throughput -> score 1
+2025-09-05 13:04:04.223 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: evaluate_data_quality
+2025-09-05 13:04:04.224 | INFO     | data_platform_analyzer:_log:368 - Completed evaluate_data_quality -> score 2
+2025-09-05 13:04:04.692 | DEBUG    | data_platform_analyzer:_log:374 - Completed metric evaluation: compute_pipeline_success_rate
+2025-09-05 13:04:04.692 | INFO     | data_platform_analyzer:_log:368 - Completed compute_pipeline_success_rate -> score 2
+2025-09-05 13:04:04.697 | INFO     | data_platform_analyzer:_log:368 - Run persisted to runs_mvp_scanner\run_1757057644.json
+2025-09-05 13:04:04.697 | INFO     | data_platform_analyzer:_log:368 - ===== Completed Data Platform Analyzer run in 12.53 seconds =====
+2025-09-05 13:04:04.698 | INFO     | data_platform_analyzer:_log:368 - Summary: {
+  "summary": {
+    "per_category_1to5": {
+      "Development Maturity": 2.44,
+      "Innovation Pipeline": 2.17
+    },
+    "overall_score_1to5": 2.33
+  }
+}

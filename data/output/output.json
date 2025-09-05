@@ -1,6 +1,0 @@
-{
-  "metric_id": "schema.consistency",
-  "score": 2,
-  "rationale": "Missing fields in users (3 fields), orders (1 field), products (1 field); additional table returns in actual schema; ~20% of required fields are absent or different.",
-  "gap": "Add missing fields `created_at` to users, `shipping_address` to orders, and `discontinued_flag` to products. Remove the `returns` table if not needed, or ensure it is documented in the baseline schema."
-}

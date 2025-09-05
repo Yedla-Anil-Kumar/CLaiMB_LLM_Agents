@@ -1,6 +1,0 @@
-{
-  "metric_id": "duplication",
-  "score": 3,
-  "rationale": "Finance domain has low duplication (10%), marketing shows moderate duplication (26.67%), and operations has moderate duplication (20%). Overall, moderate duplication exists primarily in marketing and operations.",
-  "gap": "Implement domain-specific deduplication initiatives, enforce single source of truth policies, and create a prioritized data consolidation roadmap focusing on marketing and operations."
-}
