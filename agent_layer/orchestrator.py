@@ -8,7 +8,7 @@ from typing import Any, Dict, Optional
 
 from dotenv import load_dotenv
 
-# path bootstrap (same pattern you used)
+# path bootstrap
 import sys
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -19,18 +19,25 @@ from agent_layer.router import route, route_many                 # noqa: E402
 from langchain_core.runnables import RunnableParallel           # noqa: E402
 
 
+def now_utc_iso() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
+
+
 def _now_id(prefix: str = "code-repo") -> str:
-    ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
-    return f"{prefix}-{ts}"
+    return f"{prefix}-{now_utc_iso()}"
+
 
 def _clamp_band(v: Any) -> float:
     try:
         x = int(v)
-        if x < 1: x = 1
-        if x > 5: x = 5
+        if x < 1:
+            x = 1
+        if x > 5:
+            x = 5
         return float(x)
     except Exception:
         return 3.0
+
 
 def _aggregate(metrics: Dict[str, Dict[str, Any]]) -> Dict[str, float]:
     cat_scores: Dict[str, float] = {}
@@ -52,40 +59,58 @@ def _aggregate(metrics: Dict[str, Dict[str, Any]]) -> Dict[str, float]:
     return cat_scores
 
 
+class CodeRepoOrchestrator:
+    """
+    Class-based orchestrator for the code-repo agent:
+      - L0 parallel fanout (RunnableParallel)
+      - L1 metrics (respecting declared deps presence)
+      - aggregate category and overall
+      - optional artifact writing
+    """
+
+    def __init__(self, *, prefix: str = "code-repo") -> None:
+        self.prefix = prefix
+
+    def run(self, snapshot: Dict[str, Any], out_dir: Optional[Path] = None) -> Dict[str, Any]:
+        """
+        Snapshot must contain:
+          - code_snippets: list[str]
+          - file_paths:    list[str]
+        """
+        load_dotenv()
+
+        # Level 0
+        l0_runnables = route_many(LEVEL0)
+        parallel = RunnableParallel(**l0_runnables)
+        l0_out: Dict[str, Dict[str, Any]] = parallel.invoke(snapshot)
+
+        # Level 1
+        l1_out: Dict[str, Dict[str, Any]] = {}
+        for mid, deps in LEVEL1_DEPS.items():
+            # deps are computed by L0; we could validate/log if missing
+            _ = [d for d in deps if d not in l0_out]
+            l1_out[mid] = route(mid).invoke(snapshot)
+
+        metrics: Dict[str, Dict[str, Any]] = {**l0_out, **l1_out}
+        aggregates = _aggregate(metrics)
+
+        result = {
+            "run_id": _now_id(self.prefix),
+            "metrics": metrics,
+            "aggregates": aggregates,
+        }
+
+        if out_dir is not None:
+            out_dir = Path(out_dir)
+            out_dir.mkdir(parents=True, exist_ok=True)
+            artifact = out_dir / f"{result['run_id']}.json"
+            artifact.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
+            result["artifact_path"] = str(artifact)
+
+        return result
+
+
+# === Backwards-compatible functional API ===
 def run(snapshot: Dict[str, Any], out_dir: Optional[Path] = None) -> Dict[str, Any]:
-    """
-    Deterministic: Level-0 parallel → Level-1 (honor deps) → aggregate → optional artifact.
-    Snapshot must contain:
-      - code_snippets: list[str]
-      - file_paths:    list[str]
-    """
-    load_dotenv()
-
-    # Level 0
-    l0_runnables = route_many(LEVEL0)
-    parallel = RunnableParallel(**l0_runnables)
-    l0_out: Dict[str, Dict[str, Any]] = parallel.invoke(snapshot)
-
-    # Level 1
-    l1_out: Dict[str, Dict[str, Any]] = {}
-    for mid, deps in LEVEL1_DEPS.items():
-        _ = [d for d in deps if d not in l0_out]  # could log missing parents
-        l1_out[mid] = route(mid).invoke(snapshot)
-
-    metrics: Dict[str, Dict[str, Any]] = {**l0_out, **l1_out}
-    aggregates = _aggregate(metrics)
-
-    result = {
-        "run_id": _now_id(),
-        "metrics": metrics,
-        "aggregates": aggregates,
-    }
-
-    if out_dir is not None:
-        out_dir = Path(out_dir)
-        out_dir.mkdir(parents=True, exist_ok=True)
-        artifact = out_dir / f"{result['run_id']}.json"
-        artifact.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
-        result["artifact_path"] = str(artifact)
-
-    return result
+    orch = CodeRepoOrchestrator()
+    return orch.run(snapshot, out_dir=out_dir)
