@@ -126,7 +126,7 @@ def run_once(args: argparse.Namespace) -> None:
 
 def main() -> None:
     load_dotenv()
-    setup_logger("logs/bi_tracker.log", level="INFO", serialize=False)
+    setup_logger("llm_logs/ml_ops.log", level="INFO", serialize=False)
     args = parse_args()
     run_once(args)
 

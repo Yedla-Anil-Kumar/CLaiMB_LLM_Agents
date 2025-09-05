@@ -1,0 +1,272 @@
+{
+  "run_id": "mlops-2025-09-05T08-26-20Z",
+  "inputs_present": [
+    "aml_cost_correlation",
+    "aml_endpoint_slo",
+    "aml_jobs_flow",
+    "aml_monitoring_coverage",
+    "aml_registry_governance",
+    "cicd_change_failure_rate",
+    "cicd_deploy_frequency",
+    "cicd_lead_time",
+    "cicd_policy_gates",
+    "declared_slo",
+    "mlflow_best_run_trend",
+    "mlflow_experiment_completeness",
+    "mlflow_lineage_coverage",
+    "mlflow_registry_hygiene",
+    "mlflow_reproducibility",
+    "mlflow_validation_artifacts",
+    "sm_clarify_coverage",
+    "sm_cost_efficiency",
+    "sm_endpoint_slo_scaling",
+    "sm_experiments_lineage",
+    "sm_pipeline_stats"
+  ],
+  "metrics": {
+    "aml.cost_correlation_band": {
+      "metric_id": "aml.cost_correlation_band",
+      "band": "B",
+      "rationale": "Join rate is above 0.80 with tag-based attribution, indicating good performance; however, the coverage is limited to tags only, which restricts the depth of insights.",
+      "flags": [],
+      "gaps": [
+        "Attribution limited to tags → add resourceId to billing ETL → move coverage to 'tags+resourceId' (unlocks band 5).",
+        "Join rate is close to the threshold → implement stricter data validation on joins → raise cost_join_rate to ≥0.90 (solidifies band 5)."
+      ],
+      "score_0to100": 85.0
+    },
+    "aml.jobs_flow_band": {
+      "metric_id": "aml.jobs_flow_band",
+      "band": "C",
+      "rationale": "Success below 0.95 limits the band; p95 and lead-time acceptable.",
+      "flags": [],
+      "gaps": [
+        "Success at 0.94 is the limiter → add retry-on-transient and resource quota checks → raise success_rate to ≥0.95 (unlocks band 4).",
+        "Lead-time 6.4h acceptable but improvable → enable caching and artifact reuse → target ≤4h (pushes toward band 5 when success is ≥0.98)."
+      ],
+      "score_0to100": 70.0
+    },
+    "aml.monitoring_coverage_band": {
+      "metric_id": "aml.monitoring_coverage_band",
+      "band": "B",
+      "rationale": "Monitoring is enabled with timely acknowledgement under 6h. The presence of drift alerts indicates some level of monitoring effectiveness.",
+      "flags": [],
+      "gaps": [
+        "Ack at 3.2h misses elite threshold → add on-call rotation and pager duty routing → bring median_time_to_ack_h <2h (unlocks band 5)."
+      ],
+      "score_0to100": 85.0
+    },
+    "aml.registry_governance_band": {
+      "metric_id": "aml.registry_governance_band",
+      "band": "B",
+      "rationale": "All metrics are above the minimum thresholds for band 4, indicating good governance practices. The median transition time is acceptable but not optimal for the highest band.",
+      "flags": [],
+      "gaps": [
+        "Median transition time at 60h prevents band-5 → streamline transition processes → reduce median_transition_h to <48h (unlocks band 5).",
+        "Staging coverage at 0.83 <0.90 → enforce stage on register policy → raise pct_staged to ≥0.90 (supports band 5)."
+      ],
+      "score_0to100": 85.0
+    },
+    "cicd.change_failure_rate_band": {
+      "metric_id": "cicd.change_failure_rate_band",
+      "band": "C",
+      "rationale": "CFR is at 0.22, which is slightly above the threshold for band 4, while rollbacks are within band-3 limits. The combination of these metrics results in a fair rating.",
+      "flags": [
+        "cfr_high"
+      ],
+      "gaps": [
+        "CFR at 0.22 limits reliability → add contract tests and canary deploys → bring cfr < 0.20 (unlocks band 4).",
+        "Stabilize rollbacks via pre-prod soak tests → keep rollbacks_30d ≤3 (supports band 5 once CFR is <0.15)."
+      ],
+      "score_0to100": 70.0
+    },
+    "cicd.deploy_frequency_band": {
+      "metric_id": "cicd.deploy_frequency_band",
+      "band": "B",
+      "rationale": "The frequency of deployments is good, averaging just over 5 per week, but the number of services is at the upper limit, which restricts the per-service rate. This results in a per-service rate of approximately 0.74, which is below the threshold for band 5.",
+      "flags": [],
+      "gaps": [
+        "per-service rate is below threshold → increase deployments or reduce services → achieve freq_per_week ≥ 5 with ≤ 7 services (unlocks band 5)"
+      ],
+      "score_0to100": 85.0
+    },
+    "cicd.lead_time_band": {
+      "metric_id": "cicd.lead_time_band",
+      "band": "B",
+      "rationale": "p50 < 8h and p95 < 24h meet band-4; p50 > 4h blocks band-5.",
+      "flags": [],
+      "gaps": [
+        "p50 at 6.8h prevents band-5 → shard tests and cache dependencies → reduce p50 ≤4h (unlocks band 5)."
+      ],
+      "score_0to100": 85.0
+    },
+    "cicd.policy_gates_band": {
+      "metric_id": "cicd.policy_gates_band",
+      "band": "B",
+      "rationale": "All required checks are present, but the integration-tests are flaky in the logs. This limits the overall reliability of the CI process.",
+      "present": [
+        "pytest",
+        "integration-tests",
+        "bandit",
+        "trivy",
+        "bias_check",
+        "data_validation"
+      ],
+      "missing": [],
+      "failing": [
+        "integration-tests"
+      ],
+      "gaps": [
+        "Flaky integration-tests reduce gate strength → quarantine flakies and make test non-optional pre-deploy → ensure passing before deploy (unlocks band 5)."
+      ],
+      "score_0to100": 85.0,
+      "flags": []
+    },
+    "mlflow.experiment_completeness_band": {
+      "metric_id": "mlflow.experiment_completeness_band",
+      "band": "C",
+      "rationale": "The parameters and metrics are strong, but the artifacts at 0.75 are the main limiting factor. Additionally, while pct_all is above 0.80, it does not meet the threshold for band 4.",
+      "flags": [
+        "artifacts_low"
+      ],
+      "gaps": [
+        "Artifacts at 0.75 cap the band → persist model binaries and eval files for every run → raise pct_artifacts to ≥0.80 (unlocks band 4)."
+      ],
+      "score_0to100": 70.0
+    },
+    "mlflow.experiment_velocity_band": {
+      "metric_id": "mlflow.experiment_velocity_band",
+      "band": "C",
+      "rationale": "The improvement rate is close to the band-4 threshold, and the experiments per week are slightly below the required level. While the improvement rate is promising, the lower frequency of experiments limits the overall band.",
+      "flags": [],
+      "gaps": [
+        "Experiments per week below band-4 threshold → increase the number of experiments conducted weekly → achieve exp/wk ≥1.5 (unlocks band 4)."
+      ],
+      "score_0to100": 70.0
+    },
+    "mlflow.lineage_coverage_band": {
+      "metric_id": "mlflow.lineage_coverage_band",
+      "band": "C",
+      "rationale": "Git and env file coverage are strong at ~0.90, but the data reference is at 0.84, which limits the overall band.",
+      "flags": [
+        "data_ref_coverage"
+      ],
+      "gaps": [
+        "Data references at 0.84 block a higher band → log dataset version/hash via a pre-run hook → raise pct_data_ref to ≥0.85 (unlocks band 4)."
+      ],
+      "score_0to100": 70.0
+    },
+    "mlflow.registry_hygiene_band": {
+      "metric_id": "mlflow.registry_hygiene_band",
+      "band": "B",
+      "rationale": "Both staged and approver percentages are above 0.80, and latency is within acceptable limits; however, the presence of one rollback prevents achieving band 5.",
+      "flags": [
+        "rollback_present"
+      ],
+      "gaps": [
+        "One recent rollback limits confidence → add pre-deploy shadow tests and tighten rollback criteria → keep rollbacks_30d at 0 (unlocks band 5)."
+      ],
+      "score_0to100": 85.0
+    },
+    "mlflow.reproducibility_band": {
+      "metric_id": "mlflow.reproducibility_band",
+      "band": "B",
+      "rationale": "The match rate is strong at 0.88, and there is only a minor signature conflict present. However, the presence of a conflict prevents a higher band rating.",
+      "flags": [
+        "conflicts_present"
+      ],
+      "gaps": [
+        "Signature conflict on 'svc@1.0' → pin environment and seed; verify data hashes → remove conflict occurrences and lift match_rate ≥0.95 (unlocks band 5)."
+      ],
+      "score_0to100": 85.0
+    },
+    "mlflow.validation_artifacts_band": {
+      "metric_id": "mlflow.validation_artifacts_band",
+      "band": "D",
+      "rationale": "Validation JSON is strong at 0.84, but both SHAP and bias report coverage are below 0.70, which limits the overall band.",
+      "flags": [
+        "bias_coverage_low",
+        "shap_coverage_low"
+      ],
+      "gaps": [
+        "Explainability at 0.75 → add SHAP step to pipeline and store artifacts → raise pct_with_shap to ≥0.80 (unlocks band 4).",
+        "Bias report at 0.72 → add fairness evaluation gate before register → raise pct_with_bias_report to ≥0.80 (unlocks band 4)."
+      ],
+      "score_0to100": 55.0
+    },
+    "sm.clarify_coverage_band": {
+      "metric_id": "sm.clarify_coverage_band",
+      "band": "C",
+      "rationale": "Both metrics are above 0.70, with explainability at 0.81 and bias at 0.78, which meets the criteria for band 3. However, the bias report is below the threshold for band 4.",
+      "flags": [
+        "bias_coverage_low"
+      ],
+      "gaps": [
+        "Bias reports at 0.78 → add fairness step to pipeline and publish report → raise pct_with_bias_report to ≥0.80 (unlocks band 4)."
+      ],
+      "score_0to100": 70.0
+    },
+    "sm.experiments_lineage_band": {
+      "metric_id": "sm.experiments_lineage_band",
+      "band": "B",
+      "rationale": "All lineage metrics are above 0.85 with two metrics at or above 0.90; however, the data reference is slightly below the threshold for band 5.",
+      "flags": [],
+      "gaps": [
+        "Data ref at 0.86 blocks band-5 → enforce dataset version capture in training SDK → raise pct_data_ref to ≥0.90 (unlocks band 5)."
+      ],
+      "score_0to100": 85.0
+    },
+    "sm.pipeline_flow_band": {
+      "metric_id": "sm.pipeline_flow_band",
+      "band": "B",
+      "rationale": "The success rate is strong at 0.96, and the retry rate is within acceptable limits. However, the promotion time of 12 hours is at the upper limit for band 4, preventing a higher rating.",
+      "flags": [],
+      "gaps": [
+        "Promotion latency at 12h → automate risk sign-off and bake validation into CI → reduce promotion_time_h to ≤8h (unlocks band 5)."
+      ],
+      "score_0to100": 85.0
+    },
+    "aml.endpoint_slo_band": {
+      "metric_id": "aml.endpoint_slo_band",
+      "band": "A",
+      "rationale": "All measured dimensions exceed SLOs with healthy margins. The availability is above the declared SLO, the p95 latency is well below the target, and the error rate is significantly lower than the threshold.",
+      "flags": [],
+      "gaps": [],
+      "score_0to100": 100.0
+    },
+    "sm.cost_efficiency_band": {
+      "metric_id": "sm.cost_efficiency_band",
+      "band": "D",
+      "rationale": "Both serving cost and training cost exceed the thresholds for a higher band, and GPU headroom is excessive. The idle ratio is acceptable but does not compensate for the other high costs.",
+      "flags": [
+        "serving_cost_high",
+        "training_cost_high",
+        "gpu_headroom_high"
+      ],
+      "gaps": [
+        "Serving cost 0.11/1k → enable model quantization and autoscaling down → keep per_1k ≤ 0.10 (unlocks band 4).",
+        "Training cost 5.2/hour → optimize training process or reduce resource allocation → keep per_training_hour ≤ 4 (unlocks band 4).",
+        "High GPU headroom at 52% → reduce instance size or increase batch size → bring headroom into 10–40% (unlocks band 4)."
+      ],
+      "score_0to100": 55.0
+    },
+    "sm.endpoint_slo_scaling_band": {
+      "metric_id": "sm.endpoint_slo_scaling_band",
+      "band": "C",
+      "rationale": "Availability and error rate meet band-3 thresholds, but p95 latency exceeds the limit, which is a significant limiting factor.",
+      "flags": [],
+      "gaps": [
+        "p95 at 235ms exceeds 300ms threshold → optimize query performance and reduce latency → keep p95 ≤300ms (unlocks band 4).",
+        "Max RPS at 520 is below 800 → enhance infrastructure and load balancing → raise max_rps_at_slo to ≥800 (unlocks band 4)."
+      ],
+      "score_0to100": 70.0
+    }
+  },
+  "aggregates": {
+    "categories": {
+      "data_management": 61.25,
+      "analytics_readiness": 47.4
+    },
+    "overall": 55.71
+  }
+}
