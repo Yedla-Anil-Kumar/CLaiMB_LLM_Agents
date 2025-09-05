@@ -1,0 +1,286 @@
+{
+  "run_id": "code-repo-2025-09-05T13-38-36Z",
+  "metrics": {
+    "code.cyclomatic_complexity_band": {
+      "metric_id": "code.cyclomatic_complexity_band",
+      "band": 3,
+      "rationale": "The average complexity is moderate, with several functions exhibiting branching logic and nested conditionals that contribute to higher complexity. While there are some well-structured functions, the presence of multiple high-complexity functions raises the overall average, limiting the score.",
+      "flags": [
+        "nested_conditionals",
+        "branching_hotspots"
+      ],
+      "gaps": [
+        "Multiple high-complexity functions increase average complexity → refactor to simplify logic and reduce nesting → target avg complexity ≤ 7 (unlocks band 4).",
+        "Presence of async and parallel processing adds complexity → streamline async patterns and reduce interdependencies → target ≤ 20% functions in high/very_high (unlocks band 4)."
+      ],
+      "score": 3
+    },
+    "code.maintainability_band": {
+      "metric_id": "code.maintainability_band",
+      "band": 3,
+      "rationale": "The code demonstrates good use of logging and structured functions, enhancing readability and maintainability. However, there are several instances of mixed responsibilities and lack of clear documentation, which detracts from overall cohesion and clarity.",
+      "flags": [
+        "mixed_responsibilities",
+        "lack_of_documentation"
+      ],
+      "gaps": [
+        "Mixed responsibilities in functions → refactor functions to focus on single responsibilities → improve maintainability_score ≥0.75 (unlocks band 4).",
+        "Insufficient comments and documentation → add docstrings and inline comments for clarity → enhance readability_score ≥0.80 (unlocks band 4)."
+      ],
+      "score": 3
+    },
+    "code.docstring_coverage_band": {
+      "metric_id": "code.docstring_coverage_band",
+      "band": 3,
+      "rationale": "The code snippets demonstrate a fair level of docstring coverage, with several functions containing docstrings that describe their purpose and parameters. However, there are notable gaps in consistency and completeness, particularly in the handling of return values and specific parameter descriptions, which limits the overall quality.",
+      "flags": [
+        "incomplete_param_docs",
+        "missing_return_docs"
+      ],
+      "gaps": [
+        "Incomplete parameter/return descriptions → ensure all functions have complete docstrings with parameter and return details → achieve quality ≥0.75 (unlocks band 4).",
+        "Lack of examples in docstrings → add usage examples for key functions → improve docstring quality ≥0.85 (unlocks band 5)."
+      ],
+      "score": 3
+    },
+    "code.nested_loops_band": {
+      "metric_id": "code.nested_loops_band",
+      "band": 2,
+      "rationale": "The code exhibits frequent deep nesting (depth ≥4) in several functions, particularly in the processing of validation cases and handling of JSON responses. This complexity can lead to performance and maintainability issues, especially as the data size increases.",
+      "flags": [
+        "nested_depth_4",
+        "performance_risk"
+      ],
+      "gaps": [
+        "Frequent deep nesting (depth ≥4) in processing functions → refactor to reduce nesting and improve readability → target depth ≤3 (unlocks band 3).",
+        "Limited testing and error handling in nested structures → implement comprehensive unit tests for critical paths → ensure robustness and reliability (unlocks band 4)."
+      ],
+      "score": 2
+    },
+    "infra.parallel_patterns": {
+      "metric_id": "infra.parallel_patterns",
+      "band": 3,
+      "rationale": "The code uses a mix of asyncio and ThreadPoolExecutor, which is appropriate for IO-bound tasks, but lacks proper timeouts and graceful shutdown mechanisms. While there is some concurrency, the absence of back-pressure and unbounded task submission can lead to resource exhaustion.",
+      "flags": [
+        "asyncio_used",
+        "ThreadPoolExecutor_used"
+      ],
+      "gaps": [
+        "No timeouts in async tasks → implement timeouts for API calls → prevent hanging tasks (unlocks band 4).",
+        "Unbounded task submission → use a semaphore to limit concurrent tasks → prevent resource spikes (unlocks band 4).",
+        "No graceful shutdown → add cancellation logic for tasks → safer shutdown (supports band 4)."
+      ],
+      "score": 3
+    },
+    "infra.security_hygiene": {
+      "metric_id": "infra.security_hygiene",
+      "band": 3,
+      "rationale": "The code snippets show some good practices like structured logging and async processing, but there are indications of potential risks such as the lack of input validation for uploaded images and the absence of secret management for sensitive configurations. These issues could lead to vulnerabilities if not addressed.",
+      "flags": [
+        "lax_input_validation",
+        "missing_secret_management"
+      ],
+      "gaps": [
+        "Implement input validation for uploaded files to ensure only expected formats are processed → reduce risk of malicious uploads (unlocks band 4).",
+        "Utilize a secret management solution for sensitive configurations instead of hardcoding them → enhance security posture (supports band 4–5)."
+      ],
+      "score": 3
+    },
+    "infra.data_pipeline": {
+      "metric_id": "infra.data_pipeline",
+      "band": 3,
+      "rationale": "The pipeline includes some retry logic and logging, but lacks SLAs, alerts, and validation steps, which are critical for reliability. The absence of these elements limits the overall robustness of the pipeline.",
+      "flags": [
+        "retry_logic_present",
+        "logging_enabled"
+      ],
+      "gaps": [
+        "Implement SLAs and alerts for critical failures → add monitoring and alerting mechanisms → unlocks band 4.",
+        "Introduce validation steps to ensure data quality → add validation checks before processing → unlocks band 4."
+      ],
+      "score": 3
+    },
+    "infra.feature_engineering": {
+      "metric_id": "infra.feature_engineering",
+      "band": 2,
+      "rationale": "The code snippets show a lack of structured feature engineering pipelines, with manual processing and ad-hoc transformations that risk reproducibility and serving parity. While there are some logging and async processing elements, the absence of a clear, consistent pipeline structure limits reliability.",
+      "flags": [],
+      "gaps": [
+        "Establish a structured feature engineering pipeline using tools like sklearn or featuretools → improve reproducibility and automation (unlocks band 4)."
+      ],
+      "score": 2
+    },
+    "ml.framework_maturity": {
+      "metric_id": "ml.framework_maturity",
+      "band": 3,
+      "rationale": "The code snippets show a mix of frameworks (Streamlit, OpenAI, asyncio) and some inconsistent patterns, particularly in how logging and error handling are approached. While there are idiomatic usages of certain libraries, the overall integration lacks cohesion, which limits clarity.",
+      "flags": [
+        "mixed_frameworks",
+        "inconsistent_patterns"
+      ],
+      "gaps": [
+        "Inconsistent framework integration → unify logging and error handling practices → improve clarity and consistency across modules (unlocks band 4)."
+      ],
+      "score": 3
+    },
+    "ml.data_validation": {
+      "metric_id": "ml.data_validation",
+      "band": 3,
+      "rationale": "There are some checks in place for processing and analyzing screenshots, but there is no enforcement of these checks or monitoring for data drift. The lack of CI gating and drift monitoring limits the overall robustness of the validation process.",
+      "flags": [
+        "ci_enforcement_missing",
+        "drift_monitoring_missing"
+      ],
+      "gaps": [
+        "No CI gating for validation results → implement CI checks to enforce validation → ensure only valid data is processed (unlocks band 4).",
+        "No drift monitoring in place → add checks for data distribution changes over time → improve anomaly detection (supports band 4)."
+      ],
+      "score": 3
+    },
+    "ml.experiment_tracking": {
+      "metric_id": "ml.experiment_tracking",
+      "band": 3,
+      "rationale": "The code snippets show basic logging of parameters and metrics, but there is inconsistency in artifact and signature tracking, which limits the overall tracking capability. While logging is present, the absence of structured artifact management and lineage tracking reduces the reliability of the experiment tracking.",
+      "flags": [
+        "artifacts_inconsistent",
+        "signature_missing"
+      ],
+      "gaps": [
+        "Artifacts inconsistent → implement structured logging for analysis results and outputs → consistent tracking of artifacts (unlocks band 4).",
+        "Signature missing → log model signature and input examples → reproducible serving (supports band 4)."
+      ],
+      "score": 3
+    },
+    "ml.hpo_practice": {
+      "metric_id": "ml.hpo_practice",
+      "band": 3,
+      "rationale": "The code snippets demonstrate a basic search strategy with some parallel processing and logging, but lack clear evidence of parameter optimization, persistence of best parameters, or structured HPO artifacts. The absence of a dedicated hyperparameter optimization framework and missing seeds limit the rigor of the approach.",
+      "flags": [
+        "no_hpo_framework",
+        "seeds_missing",
+        "artifacts_missing"
+      ],
+      "gaps": [
+        "No HPO framework used → implement a library like Optuna or Hyperopt → structured optimization process (unlocks band 4).",
+        "No fixed seeds → set global/random seeds for reproducibility → comparable results (unlocks band 4).",
+        "Artifacts sparse → log metrics and results for each run → enable auditability (supports band 4)."
+      ],
+      "score": 3
+    },
+    "ml.training_practice": {
+      "metric_id": "ml.training_practice",
+      "band": 4,
+      "rationale": "The code snippets demonstrate a clear entrypoint and utilize configuration-driven design, with logging and error handling present. However, there are no explicit mechanisms for checkpoints or resuming training, which limits reproducibility and robustness.",
+      "flags": [
+        "reproducibility_unknown",
+        "resume_checkpoints_missing"
+      ],
+      "gaps": [
+        "Checkpointing and auto-resume not implemented → add checkpointing logic → ensure resilient training (unlocks band 5).",
+        "Seed and environment capture missing → record seeds and package versions → enable reproducible runs (unlocks band 5)."
+      ],
+      "score": 4
+    },
+    "ml.evaluation_practice": {
+      "metric_id": "ml.evaluation_practice",
+      "band": 3,
+      "rationale": "The code snippets demonstrate basic metrics for analyzing screenshots and processing results, but there is no evidence of calibration or fairness assessments. While logging and structured outputs are present, the lack of comprehensive evaluation metrics limits the overall robustness of the analysis.",
+      "flags": [
+        "calibration_missing",
+        "fairness_analysis_missing"
+      ],
+      "gaps": [
+        "No calibration metrics → implement calibration checks and reliability assessments → enhance evaluation robustness (unlocks band 4).",
+        "Fairness not addressed → include fairness metrics and analysis → complete evaluation (supports band 4)."
+      ],
+      "score": 3
+    },
+    "fs.tests_practice": {
+      "band": 1,
+      "rationale": "tests=0, est_cov=0.00, quality=0.00, coverage_report=False",
+      "flags": [],
+      "gaps": [
+        "Increase coverage and add coverage report"
+      ],
+      "metric_id": "fs.tests_practice",
+      "score": 1
+    },
+    "fs.env_config_maturity": {
+      "band": 1,
+      "rationale": "dep_quality=0.00, env_consistency=0.00, has_any=False",
+      "flags": [],
+      "gaps": [
+        "Add/normalize dependency files and lock versions"
+      ],
+      "metric_id": "fs.env_config_maturity",
+      "score": 1
+    },
+    "fs.ci_cd_maturity": {
+      "band": 1,
+      "rationale": "workflows=0, quality=0.00, deploy_auto=0.00",
+      "flags": [],
+      "gaps": [
+        "Add CI workflows and enforce checks"
+      ],
+      "metric_id": "fs.ci_cd_maturity",
+      "score": 1
+    },
+    "fs.deployment_maturity": {
+      "band": 1,
+      "rationale": "deploy_files=0, automation=0.00, quality=0.00",
+      "flags": [],
+      "gaps": [
+        "Introduce automated deployment with rollout/rollback"
+      ],
+      "metric_id": "fs.deployment_maturity",
+      "score": 1
+    },
+    "fs.experiment_org": {
+      "band": 5,
+      "rationale": "experiment_dirs=1, management=1.00",
+      "flags": [],
+      "gaps": [],
+      "metric_id": "fs.experiment_org",
+      "score": 5
+    },
+    "fs.project_structure": {
+      "band": 3,
+      "rationale": "struct=0.80, docs=0.70, best_practices=0.60",
+      "flags": [],
+      "gaps": [
+        "Improve top-level layout and docs (README, CONTRIBUTING)"
+      ],
+      "metric_id": "fs.project_structure",
+      "score": 3
+    },
+    "infra.inference_endpoint": {
+      "metric_id": "infra.inference_endpoint",
+      "band": 3,
+      "rationale": "The code snippets demonstrate some logging and error handling, but lack clear request/response schema validation and health/readiness probes. While there is some async processing, the overall structure does not ensure robust error handling or model versioning.",
+      "flags": [
+        "logging_present",
+        "async_processing"
+      ],
+      "gaps": [
+        "Implement request/response schema validation → ensure data integrity → unlocks band 4.",
+        "Add health/readiness probes → improve operational monitoring → unlocks band 4."
+      ],
+      "score": 3
+    },
+    "infra.model_export": {
+      "metric_id": "infra.model_export",
+      "band": 1,
+      "rationale": "There is no evidence of model export or serialization methods in the provided snippets, which is critical for reproducibility and deployment. The absence of any persistence methods or related metadata severely limits the ability to assess the model's integrity and usability.",
+      "flags": [],
+      "gaps": [
+        "Implement model export methods (e.g., torch.save, joblib) → add serialization logic → target band 5."
+      ],
+      "score": 1
+    }
+  },
+  "aggregates": {
+    "development_maturity": 2.23,
+    "innovation_pipeline": 2.88,
+    "overall_score": 2.55
+  }
+}
