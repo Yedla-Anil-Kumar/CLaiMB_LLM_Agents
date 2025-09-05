@@ -1,0 +1,287 @@
+{
+  "run": {
+    "run_id": "enterprise-2025-09-05T07-26-33Z",
+    "waves": [
+      [
+        "compute_ai_penetration",
+        "compute_api_reliability",
+        "compute_backlog_aging",
+        "compute_case_resolution_time",
+        "compute_change_failure_rate",
+        "compute_data_sync_latency",
+        "compute_dq_exceptions_rate",
+        "compute_duplicate_record_rate",
+        "compute_hr_onboarding_cycle_time",
+        "compute_incident_reopen_rate",
+        "compute_lead_to_oppty_cycle_time",
+        "compute_platform_customization_debt",
+        "compute_process_automation_coverage",
+        "compute_procure_to_pay_cycle",
+        "compute_q2c_throughput",
+        "compute_rpa_success_rate",
+        "compute_workflow_sla_adherence"
+      ],
+      [
+        "compute_integration_topology_health"
+      ],
+      [
+        "compute_ai_governance_coverage"
+      ],
+      [
+        "compute_ai_outcome_uplift"
+      ]
+    ]
+  },
+  "scores": {
+    "categories": {
+      "data_management": 48.57,
+      "analytics_readiness": 40.0
+    },
+    "overall": 45.14
+  },
+  "metrics": {
+    "compute_ai_penetration": {
+      "metric_id": "ai.penetration",
+      "band": "E",
+      "rationale": "No workflows or executions involving AI features are reported, indicating a critical lack of adoption. The absence of any AI integration severely limits the overall metric score.",
+      "flags": [],
+      "gaps": [
+        "No AI workflows present → implement at least 10% of workflows with AI features → achieve ≥10% workflows with AI (unlocks band 2)."
+      ],
+      "MetricID": "ai.penetration",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_api_reliability": {
+      "metric_id": "api.reliability",
+      "band": "E",
+      "rationale": "No data provided indicates a critical lack of visibility into API performance; without metrics, reliability cannot be assessed.",
+      "flags": [],
+      "gaps": [
+        "Lack of performance metrics → implement monitoring for p95 latency and error rates → establish baseline metrics (unlocks band 3)."
+      ],
+      "MetricID": "api.reliability",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_backlog_aging": {
+      "metric_id": "backlog.aging",
+      "band": "E",
+      "rationale": "The median age of open items is not provided, indicating a critical lack of data; without this, we cannot assess the backlog effectively. The absence of any metrics suggests severe issues in tracking and managing open work.",
+      "flags": [],
+      "gaps": [
+        "Lack of data → implement tracking for p50 and p90 days of open items → achieve p50 ≤1d and p90 ≤3d (unlocks band 5)."
+      ],
+      "MetricID": "backlog.aging",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_case_resolution_time": {
+      "metric_id": "itsm.case_resolution_time",
+      "band": "E",
+      "rationale": "No data provided indicates a critical lack of resolution metrics; without any evidence of performance, the assessment defaults to the lowest band.",
+      "flags": [],
+      "gaps": [
+        "Lack of resolution data → implement tracking for median and p90 resolution times → establish a baseline for improvement (unlocks band 3)."
+      ],
+      "MetricID": "itsm.case_resolution_time",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_change_failure_rate": {
+      "metric_id": "change.failure_rate",
+      "band": "C",
+      "rationale": "The change failure rate of 2% indicates a generally reliable deployment process; however, the lack of detailed insights into the causes of failures limits the ability to improve further. This combination of a low failure rate with insufficient root cause analysis suggests a fair performance overall.",
+      "flags": [],
+      "gaps": [
+        "Root causes unclear → implement tracking for failed deploys to identify common issues → reduce failure rate to ≤1% (unlocks band 4)."
+      ],
+      "MetricID": "change.failure_rate",
+      "Score": 3,
+      "score_0to100": 70
+    },
+    "compute_data_sync_latency": {
+      "metric_id": "integration.data_sync_latency",
+      "band": "E",
+      "rationale": "No data provided for median, p95, or failure percentage, indicating a critical lack of visibility into event delivery performance.",
+      "flags": [],
+      "gaps": [
+        "Lack of performance metrics → implement monitoring for median, p95, and failure % → establish baseline metrics (unlocks band 3)."
+      ],
+      "MetricID": "integration.data_sync_latency",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_dq_exceptions_rate": {
+      "metric_id": "dq.exceptions_rate",
+      "band": "E",
+      "rationale": "No data provided indicates a lack of visibility into exception rates, which is critical for assessment; absence of any checks suggests severe gaps in monitoring and control.",
+      "flags": [],
+      "gaps": [
+        "No checks performed → implement a comprehensive set of data quality checks → achieve at least 100 checks with a measurable exception rate (unlocks band 3)."
+      ],
+      "MetricID": "dq.exceptions_rate",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_duplicate_record_rate": {
+      "metric_id": "mdm.duplicate_rate",
+      "band": "C",
+      "rationale": "The duplicate rate of 2% indicates a strong performance, but the lack of information on the total number of entities evaluated limits the assessment. The number of duplicate groups suggests some issues with entity matching that need addressing.",
+      "flags": [],
+      "gaps": [
+        "Total entities evaluated unknown → provide total entities evaluated and breakdown by source system → maintain ≤2% duplicates across all sources (unlocks band 4)"
+      ],
+      "MetricID": "mdm.duplicate_rate",
+      "Score": 3,
+      "score_0to100": 70
+    },
+    "compute_hr_onboarding_cycle_time": {
+      "metric_id": "hr.onboarding_cycle_time",
+      "band": "E",
+      "rationale": "No data provided for median hours, indicating a critical lack of information; this prevents any assessment of onboarding efficiency.",
+      "flags": [],
+      "gaps": [
+        "Lack of data → implement tracking for median and p90 hours → achieve median ≤24h (unlocks band 5)."
+      ],
+      "MetricID": "hr.onboarding_cycle_time",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_incident_reopen_rate": {
+      "metric_id": "itsm.incident_reopen_rate",
+      "band": "E",
+      "rationale": "No data provided indicates a critical lack of visibility into incident management performance; without any metrics, it's impossible to assess the quality of resolutions or identify areas for improvement.",
+      "flags": [],
+      "gaps": [
+        "Data absence → implement tracking for reopened and resolved incidents → achieve at least 600 resolved incidents with a reopen rate ≤2% (unlocks band 5)."
+      ],
+      "MetricID": "itsm.incident_reopen_rate",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_lead_to_oppty_cycle_time": {
+      "metric_id": "sales.lead_to_oppty_cycle_time",
+      "band": "E",
+      "rationale": "No data provided indicates a critical lack of performance metrics; without any evidence of median or p90 hours, the assessment defaults to the lowest band. The absence of any sample size or conversion timing stats severely limits the ability to evaluate performance.",
+      "flags": [],
+      "gaps": [
+        "Data absence → implement tracking for median and p90 hours → establish a baseline for evaluation (unlocks band 3)."
+      ],
+      "MetricID": "sales.lead_to_oppty_cycle_time",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_platform_customization_debt": {
+      "metric_id": "platform.customization_debt",
+      "band": "E",
+      "rationale": "No evidence of customization metrics provided, indicating a lack of visibility into potential risks; absence of any positive indicators further exacerbates the situation.",
+      "flags": [],
+      "gaps": [
+        "Lack of visibility → implement tracking for all customization metrics across platforms → achieve comprehensive reporting on customization risks (unlocks band 3)"
+      ],
+      "MetricID": "platform.customization_debt",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_process_automation_coverage": {
+      "metric_id": "process.automation.coverage",
+      "band": "E",
+      "rationale": "No data provided indicates a critical lack of automation coverage across platforms. Without any active flows or enabled business processes, the automation footprint is non-existent.",
+      "flags": [],
+      "gaps": [
+        "No automated objects identified → implement at least one automated object per platform → achieve coverage ratio >0.30 (unlocks band 2)."
+      ],
+      "MetricID": "process.automation.coverage",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_procure_to_pay_cycle": {
+      "metric_id": "sap.procure_to_pay_cycle",
+      "band": "E",
+      "rationale": "No data provided indicates a critical lack of performance metrics; without any evidence of stage timings, the assessment cannot be favorable.",
+      "flags": [],
+      "gaps": [
+        "Lack of data → implement tracking for total_days, approval_days, gr_days, and invoice_days → achieve ≤20d total_days (unlocks band 2)."
+      ],
+      "MetricID": "sap.procure_to_pay_cycle",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_q2c_throughput": {
+      "metric_id": "q2c.throughput",
+      "band": "E",
+      "rationale": "No data provided indicates a critical lack of visibility into the quote-to-cash process; this absence of metrics severely limits assessment capabilities.",
+      "flags": [],
+      "gaps": [
+        "Data absence → implement tracking for total hours, quote to SO hours, and SO to billing hours → establish a baseline for future assessments (unlocks band 3)."
+      ],
+      "MetricID": "q2c.throughput",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_rpa_success_rate": {
+      "metric_id": "rpa.success_rate",
+      "band": "E",
+      "rationale": "No data provided on RPA run outcomes, leading to an inability to assess reliability; this results in a critical rating. The absence of any success or failure metrics limits the evaluation significantly.",
+      "flags": [],
+      "gaps": [
+        "No data available → implement tracking for success and failure rates → achieve ≥98% success rate (unlocks band 5)."
+      ],
+      "MetricID": "rpa.success_rate",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_workflow_sla_adherence": {
+      "metric_id": "workflow.sla_adherence",
+      "band": "E",
+      "rationale": "No data provided indicates a critical lack of adherence to SLAs; without any completed items, the on-time rate cannot be assessed positively.",
+      "flags": [],
+      "gaps": [
+        "No completed items → implement tracking for all SLA items → achieve at least 60% on-time rate (unlocks band 2)."
+      ],
+      "MetricID": "workflow.sla_adherence",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_integration_topology_health": {
+      "metric_id": "integration.topology_health",
+      "band": "E",
+      "rationale": "No data provided indicates a lack of operational health, suggesting systemic failures. The absence of uptime, healthy nodes, and error counts points to critical issues in the integration system.",
+      "flags": [],
+      "gaps": [
+        "no operational metrics available → implement monitoring for uptime, node health, and error rates → achieve ≥99.9% uptime and no critical errors (unlocks band 5)"
+      ],
+      "MetricID": "integration.topology_health",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_ai_governance_coverage": {
+      "metric_id": "ai.governance_coverage",
+      "band": "E",
+      "rationale": "No data provided indicates a lack of governance controls; therefore, the coverage is critically low. The absence of any models with controls directly leads to this assessment.",
+      "flags": [],
+      "gaps": [
+        "No models with controls → implement governance controls for all models → achieve ≥90% coverage (unlocks band 5)."
+      ],
+      "MetricID": "ai.governance_coverage",
+      "Score": 1,
+      "score_0to100": 40
+    },
+    "compute_ai_outcome_uplift": {
+      "metric_id": "ai.outcome_uplift",
+      "band": "E",
+      "rationale": "No evidence of KPI improvement is provided; the absence of data indicates a critical situation. Without any uplift, the effectiveness of the AI rollout cannot be assessed positively.",
+      "flags": [],
+      "gaps": [
+        "Lack of KPI data → implement tracking for pre- and post-AI rollout KPIs → demonstrate at least 1% uplift (unlocks band 2)."
+      ],
+      "MetricID": "ai.outcome_uplift",
+      "Score": 1,
+      "score_0to100": 40
+    }
+  },
+  "snapshot_meta": {
+    "collected_at": "2025-09-05T07:26:33.137570+00:00"
+  }
+}
