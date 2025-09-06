@@ -94,11 +94,11 @@
     "evaluate_metadata_coverage": {
       "metric_id": "metadata.coverage",
       "score": 2,
-      "rationale": "50% of tables are fully documented. The `orders` and `transactions` tables are complete, but the `customers` table is missing a required `description` field, and the `inventory` table is missing a required `owner` field.",
+      "rationale": "Only 50% of tables are fully documented. The `orders` and `transactions` tables are complete, but the `customers` table is missing a required `description` field, and the `inventory` table is missing a required `owner` field.",
       "gap": [
-        "Establish a mandatory metadata documentation process for all new data assets to ensure completeness.",
-        "Assign data stewards to each table to ensure all required fields are filled out during the data entry process.",
-        "Implement a periodic review of existing catalog entries to identify and rectify missing metadata fields."
+        "Establish mandatory metadata documentation protocols for all data entries, ensuring that all required fields are filled before data assets are finalized.",
+        "Create a training program for data owners to understand the importance of complete metadata and how to fill it out correctly.",
+        "Implement a review process where metadata completeness is checked regularly, and incomplete entries are flagged for immediate attention."
       ],
       "mapping": [
         "Data Accessibility"
@@ -107,7 +107,7 @@
     "evaluate_duplication": {
       "metric_id": "duplication",
       "score": 2,
-      "rationale": "Finance has a moderate duplication rate of 10% (4/40). Marketing has a high duplication rate of 26.7% (8/30), which is the highest. Operations has a high duplication rate of 20% (10/50). The overall score is driven by the severe duplication in the marketing domain.",
+      "rationale": "Finance has a moderate duplication rate of 10% (4/40). Marketing has a high duplication rate of 26.7% (8/30), which is the highest. Operations has a high duplication rate of 20% (10/50). The overall score is driven by the severe duplication in the marketing domain, which significantly impacts data integrity.",
       "gap": [
         "Implement a data deduplication process focusing on the marketing domain, starting with customer data.",
         "Enforce a single source of truth for core datasets and deprecate redundant copies.",
@@ -118,20 +118,6 @@
         "Data Accessibility"
       ]
     },
-    "evaluate_data_freshness": {
-      "metric_id": "data.freshness",
-      "score": 2,
-      "rationale": "Table `users` and `transactions` are healthy, updated within SLA. Table `orders` is 5h behind its hourly SLA, and table `inventory` is 26h behind its daily SLA, indicating major freshness issues with multiple tables consistently behind SLA.",
-      "gap": [
-        "Investigate the `orders` ingestion process to identify delays, focusing on data source reliability and processing efficiency.",
-        "Review the `inventory` update schedule and consider increasing the frequency of updates or optimizing the data pipeline to ensure timely updates.",
-        "Implement a monitoring system that alerts the data team when any table is more than 30 minutes behind its expected update time."
-      ],
-      "mapping": [
-        "Data Architecture",
-        "Data Operations"
-      ]
-    },
     "evaluate_sensitive_tagging": {
       "metric_id": "sensitive.tagging",
       "score": 1,
@@ -139,7 +125,7 @@
       "gap": [
         "Implement a comprehensive data tagging policy that mandates tagging of all sensitive fields before data entry.",
         "Utilize automated tools to regularly scan datasets for sensitive data and ensure proper tagging.",
-        "Train staff on the importance of data tagging and compliance to reduce human error in tagging processes."
+        "Train staff on the importance of data tagging and compliance to reduce human error in tagging sensitive fields."
       ],
       "mapping": [
         "Data Governance",
@@ -151,11 +137,11 @@
     "evaluate_governance_compliance": {
       "metric_id": "governance.compliance",
       "score": 2,
-      "rationale": "Of 1000 total requests, 80 were violations, representing an 8% rate. This indicates moderate compliance issues, with risks associated with unauthorized access and expired credentials.",
+      "rationale": "Of 1000 total requests, 80 were violations, representing an 8% rate. This indicates moderate compliance issues, with risks associated with unauthorized access and privilege escalation.",
       "gap": [
         "Implement stricter access controls to prevent unauthorized access, including multi-factor authentication for sensitive data.",
-        "Regularly review and update user credentials to ensure that expired credentials are promptly revoked and not used.",
-        "Enhance monitoring and alerting for privilege escalation attempts to quickly identify and mitigate potential security breaches."
+        "Review and revoke access for users with expired credentials immediately to mitigate risks of unauthorized access.",
+        "Establish a clear policy for privilege escalation, ensuring that any elevation of access rights is logged and approved by a supervisor."
       ],
       "mapping": [
         "Data Operations",
@@ -165,6 +151,20 @@
         "Regulatory Compliance",
         "Risk Management",
         "Regulatory & Legal Compliance"
+      ]
+    },
+    "evaluate_data_freshness": {
+      "metric_id": "data.freshness",
+      "score": 2,
+      "rationale": "Table `users` is healthy, last updated 45m ago; `transactions` is also healthy, last updated 15m ago. However, `orders` is 5h behind its hourly SLA (4h lag) and `inventory` is 26h behind its daily SLA (26h lag). Multiple tables are consistently behind SLA, indicating major issues.",
+      "gap": [
+        "Reschedule the `orders` ingestion pipeline to ensure timely updates, possibly by increasing resource allocation during peak times.",
+        "Investigate the `inventory` update process to identify the cause of the 26h delay, focusing on data source reliability and processing efficiency.",
+        "Implement a monitoring system that alerts the data team when any table is more than 30 minutes behind its expected update time."
+      ],
+      "mapping": [
+        "Data Architecture",
+        "Data Operations"
       ]
     },
     "check_schema_consistency": {
@@ -185,11 +185,11 @@
     "evaluate_data_lineage": {
       "metric_id": "data.lineage",
       "score": 4,
-      "rationale": "Lineage documented for 80% of tables (40 tables undocumented). Coverage is good but there are significant gaps in the marketing and HR domains that need addressing.",
+      "rationale": "Lineage documented for 80% of tables (40 tables undocumented). Coverage is good but there are significant gaps in the marketing and HR domains that could impact data-driven decision-making.",
       "gap": [
-        "Document the lineage for the 40 tables currently lacking coverage, focusing on the 15 marketing tables and 13 HR tables that are critical for reporting and analysis.",
+        "Document the lineage for the 40 tables currently lacking coverage, focusing on the 15 marketing tables and 13 HR tables that are critical for reporting and analytics.",
         "Implement a strategy to enhance column-level lineage tracking, especially for the 100 tables that currently have only table-level lineage, to improve understanding of data transformations.",
-        "Conduct a review of the lineage documentation process to ensure that all new data assets are registered with complete lineage before deployment."
+        "Conduct a review of the lineage documentation process to identify bottlenecks and streamline the integration of new data assets into the lineage tracking system."
       ],
       "mapping": [
         "Data Architecture"
@@ -202,8 +202,8 @@
       "gap": [
         "Enhance the backup success rate for the `log_data_backup` by reviewing and optimizing the backup process and storage solutions.",
         "Implement incremental backups for the `analytics_warehouse_backup` to reduce RPO and RTO values, ensuring quicker recovery times.",
-        "Schedule regular monitoring and reporting of backup success rates to identify and address failures promptly.",
-        "Conduct a comprehensive review of the disaster recovery plan to ensure it aligns with the current RTO and RPO requirements for all systems."
+        "Schedule regular monitoring and reporting on backup success rates to identify and address issues proactively across all systems.",
+        "Conduct a comprehensive review of the disaster recovery plan to ensure it aligns with the current RPO and RTO requirements for all systems."
       ],
       "mapping": [
         "Security Infrastructure",
@@ -224,8 +224,8 @@
     },
     "assess_query_performance": {
       "metric_id": "query.performance",
-      "score": 3,
-      "rationale": "The average runtime for successful queries is 8.0s. The queries `q101`, `q103`, `q104`, `q107`, and `q109` are relatively fast, but `q105` has a slow runtime of 33.5s, and `q110` for user `eve` failed, impacting the overall performance.",
+      "score": 2,
+      "rationale": "The average runtime for successful queries is 7.4s. The queries `q101`, `q103`, `q104`, `q107`, and `q109` are relatively fast, but `q105` has a slow runtime of 33.5s, and `q110` for user `eve` failed, impacting the overall performance.",
       "gap": [
         "Review and optimize the `q105` query to reduce its 33.5-second runtime, potentially by adding an index or rewriting the query.",
         "Investigate the failure of `q110` for user `eve` by checking error logs and permissions issues.",
@@ -239,11 +239,12 @@
     "evaluate_resource_utilization": {
       "metric_id": "resource.utilization",
       "score": 3,
-      "rationale": "The `analytics-prod` cluster has an average utilization of 74.67% (CPU: 80%, Memory: 76%, Storage: 68%) with a monthly cost of $9k, which is reasonable for its usage. The `etl-dev` cluster has a lower average utilization of 42.33% (CPU: 42%, Memory: 35%, Storage: 50%) with a cost of $2.6k, indicating potential overprovisioning. The `training-gpu` cluster has a low average utilization of 38.33% (CPU: 25%, Memory: 40%, Storage: 70%) with a cost of $3k, suggesting serious inefficiency. Overall, the",
+      "rationale": "The `analytics-prod` cluster has a strong average utilization of 75.3% (CPU: 80%, Memory: 76%, Storage: 68%) with a monthly cost of $9k, indicating efficient use of resources. The `etl-dev` cluster has a lower average utilization of 42.3% (CPU: 42%, Memory: 35%, Storage: 50%) with a cost of $2.6k, suggesting some underutilization. The `training-gpu` cluster shows a concerning average utilization of 38.3% (CPU: 25%, Memory: 40%, Storage: 70%) with a cost of $3k, indicating significant inefficienc",
       "gap": [
-        "Right-size the `etl-dev` and `training-gpu` clusters by scaling down their compute resources to better match their current average utilization.",
-        "Implement auto-scaling on `etl-dev` and `training-gpu` to prevent overprovisioning and reduce unnecessary costs during low usage periods.",
-        "Conduct a FinOps review for the `etl-dev` and `training-gpu` clusters to identify opportunities for cost reduction and improve efficiency."
+        "Right-size the `etl-dev` cluster by scaling down its compute resources to better match its current average utilization.",
+        "Right-size the `training-gpu` cluster to reduce costs and improve efficiency, potentially by scaling down or reallocating resources based on actual usage.",
+        "Implement auto-scaling policies for `etl-dev` and `training-gpu` to dynamically adjust resources based on workload demand, preventing overspending during low usage periods.",
+        "Conduct regular FinOps reviews to analyze cost versus utilization across all clusters, identifying opportunities for cost reduction and resource optimization."
       ],
       "mapping": [
         "Cloud Computing Capabilities",
@@ -253,11 +254,11 @@
     },
     "compute_analytics_adoption": {
       "metric_id": "analytics.adoption",
-      "score": 2,
-      "rationale": "Adoption score is 4 (65 active users, 1800 views, 4300 queries). Sales leads with 20 active users and 700 views, followed by marketing with 18 users and 450 views, finance with 15 users and 380 views, and operations with 12 users and 270 views. Dependencies: metadata coverage scored 2 (50% documented), schema consistency scored 2 (frequent inconsistencies), and data freshness scored 2 (major freshness issues). Final score = 2 because all dependency scores are low, pulling the overall readiness d",
+      "score": 4,
+      "rationale": "Adoption score is 4 (65 active users, 1800 views, 4300 queries). Sales leads adoption with 20 users and 700 views, marketing follows with 18 users and 450 views, finance has 15 users and 380 views, while operations has 12 users and 270 views. Dependencies: metadata coverage scored 2 (only 50% documented), schema consistency scored 2 (frequent inconsistencies), and data freshness scored 2 (multiple tables behind SLA). Final score = 2 because the lowest dependency score pulled the overall readines",
       "gap": [
         "Conduct training sessions for all departments to improve understanding and usage of the analytics platform.",
-        "Create a communication plan to share best practices and success stories from the sales and marketing departments to encourage adoption in finance and operations.",
+        "Encourage departments to share best practices and success stories to boost engagement and adoption across the board.",
         "Implement a user feedback mechanism to identify barriers to usage and address them promptly."
       ],
       "mapping": [
@@ -265,19 +266,18 @@
         "Cost Reduction & Efficiency"
       ]
     },
-    "compute_pipeline_success_rate": {
-      "metric_id": "pipeline.success_rate",
-      "score": 2,
-      "rationale": "Pipeline runs: 10 total, 6 successes and 4 failures. Success rate = 60.0%, which corresponds to score 1. The failed pipelines were `inventory_load` (2 failures, runtime 0), `customer_dim_refresh` (1 failure, runtime 0), and `analytics_snapshot` (1 failure, runtime 0). Runtime distribution shows `daily_sales_etl` averaging ~311.67s, while `inventory_load`, `customer_dim_refresh`, and `analytics_snapshot` had failures with runtime 0. Dependency results: Data lineage scored 4 due to incomplete docu",
+    "compute_pipeline_latency_throughput": {
+      "metric_id": "pipeline.latency_throughput",
+      "score": 1,
+      "rationale": "Pipeline breakdown: daily_sales_etl has 12m runtime, 1.5M rows, and 1m queue wait (good performance). inventory_load has 55m runtime, 580k rows, and 10m queue wait (moderate performance). customer_dim_refresh has 130m runtime, 320k rows, and 30m queue wait (poor performance). The long runtime of customer_dim_refresh (>120m) significantly impacts the overall score. Dependency breakdown: Data lineage scored 4 due to 80% documentation coverage, but significant gaps exist in marketing and HR domains",
       "gap": [
-        "Implement robust retry mechanisms with exponential backoff for the `inventory_load`, `customer_dim_refresh`, and `analytics_snapshot` pipelines.",
-        "Investigate root causes of failures in `inventory_load`, `customer_dim_refresh`, and `analytics_snapshot` by reviewing logs and dependencies.",
-        "Enhance pipeline monitoring to detect runtime anomalies and failures proactively, especially for pipelines with a history of failures."
+        "Optimize customer_dim_refresh by analyzing and refactoring the ETL process to reduce its 130m runtime.",
+        "Consider breaking down customer_dim_refresh into smaller, more manageable jobs to improve performance.",
+        "Investigate the cause of the 30m queue wait for customer_dim_refresh and implement scheduling improvements."
       ],
       "mapping": [
         "Data Operations",
-        "Human-AI Collaboration",
-        "Model Development",
+        "Production Deployment",
         "MLOps Maturity"
       ]
     },
@@ -295,18 +295,19 @@
         "Data Quality"
       ]
     },
-    "compute_pipeline_latency_throughput": {
-      "metric_id": "pipeline.latency_throughput",
-      "score": 1,
-      "rationale": "Pipeline breakdown: daily_sales_etl has 12m runtime, 1.5M rows, and 1m queue wait (good performance). inventory_load has 55m runtime, 580k rows, and 10m queue wait (moderate performance). customer_dim_refresh has 130m runtime, 320k rows, and 30m queue wait (poor performance). The long runtime of customer_dim_refresh (>120m) significantly impacts the overall score. Dependency breakdown: Data lineage scored 4 due to 80% documentation coverage, but significant gaps exist in marketing and HR domains",
+    "compute_pipeline_success_rate": {
+      "metric_id": "pipeline.success_rate",
+      "score": 2,
+      "rationale": "Pipeline runs: 10 total, 6 successes and 4 failures. Success rate = 60.0%, which corresponds to score 1. The failed pipelines were `inventory_load` (2 failures, runtime 0), `customer_dim_refresh` (1 failure, runtime 0), and `analytics_snapshot` (1 failure, runtime 0). Runtime distribution shows `daily_sales_etl` averaging ~311.67s, while `inventory_load`, `customer_dim_refresh`, and `analytics_snapshot` had failures with runtime 0. Dependency results: Data lineage scored 4 due to incomplete docu",
       "gap": [
-        "Optimize customer_dim_refresh by breaking it into smaller, more manageable jobs to reduce its 130m runtime.",
-        "Investigate the cause of the 30m queue wait for customer_dim_refresh and implement scheduling improvements to minimize delays.",
-        "Consider scaling resources for customer_dim_refresh to handle the data volume more efficiently."
+        "Implement robust retry mechanisms with exponential backoff for the `inventory_load`, `customer_dim_refresh`, and `analytics_snapshot` pipelines.",
+        "Investigate root causes of failures in `inventory_load`, `customer_dim_refresh`, and `analytics_snapshot` by reviewing logs and dependencies.",
+        "Enhance pipeline monitoring to detect runtime anomalies and failures proactively, especially for pipelines with a history of failures."
       ],
       "mapping": [
         "Data Operations",
-        "Production Deployment",
+        "Human-AI Collaboration",
+        "Model Development",
         "MLOps Maturity"
       ]
     }
@@ -314,8 +315,8 @@
   "aggregates": {
     "per_category_1to5": {
       "Development Maturity": 2.33,
-      "Innovation Pipeline": 2.17
+      "Innovation Pipeline": 2.33
     },
-    "overall_score_1to5": 2.27
+    "overall_score_1to5": 2.33
   }
 }

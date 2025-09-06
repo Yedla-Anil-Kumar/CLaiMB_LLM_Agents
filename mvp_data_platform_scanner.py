@@ -9,7 +9,8 @@ from openai import OpenAI
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from loguru import logger
 
-from agents.snapshot_collectors import collect_snapshot
+# updated import: use the snapshot collector class
+from agents.snapshot_collectors import DataPlatformAnalyzerSnapshotCollector
 from agents.prompts import DataManagementPrompts, AnalyticsReadinessPrompts
 
 # Configure loguru to log both to console and file
@@ -78,7 +79,8 @@ def _log(level: str, message: str):
 
 
 class MVPDataPlatformScanner:
-    def __init__(self, api_key: str = None, out_dir: str = "runs_mvp_scanner"):
+    def __init__(self, api_key: str = None, out_dir: str = "runs_mvp_scanner",
+                 snapshot_data_dir: str = "data/Input", snapshot_config_file: str = "config/config.yaml"):
         load_dotenv()
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         if not self.api_key:
@@ -86,6 +88,11 @@ class MVPDataPlatformScanner:
         self.client = OpenAI(api_key=self.api_key)
         self.out_dir = Path(out_dir)
         self.out_dir.mkdir(parents=True, exist_ok=True)
+
+        # instantiate the snapshot collector class and keep it on the scanner
+        self.snapshot_collector = DataPlatformAnalyzerSnapshotCollector(
+            data_dir=snapshot_data_dir, config_file=snapshot_config_file
+        )
 
     def _build_prompt_for(self, metric: str, input_obj: Any) -> str:
         mapping = PROMPT_MAPPING.get(metric)
@@ -112,30 +119,98 @@ class MVPDataPlatformScanner:
                 {"role": "system", "content": "You are a structured evaluator. Always return valid JSON only."},
                 {"role": "user", "content": prompt},
             ],
-            temperature=0,
+            temperature=0.1,
         )
 
         raw = resp.choices[0].message.content.strip()
+
+        parsed = None
+
+        # 1) Try direct parse
         try:
             parsed = json.loads(raw)
         except json.JSONDecodeError:
             _log("debug", f"RAW output for metric {metric_name}: {raw}")
-            raise
 
+            # 2) Try to parse first JSON value and ignore trailing garbage
+            decoder = json.JSONDecoder()
+            try:
+                obj, idx = decoder.raw_decode(raw)
+                parsed = obj
+                if idx < len(raw.strip()):
+                    _log("warn", f"Extra/trailing data detected in LLM output for {metric_name}; ignoring after position {idx}.")
+            except Exception:
+                # 3) Balanced-brace fallback to extract first {...}
+                start = raw.find("{")
+                if start == -1:
+                    raise json.JSONDecodeError(f"No JSON object found in LLM output for {metric_name}", raw, 0)
+                depth = 0
+                for i, ch in enumerate(raw[start:], start):
+                    if ch == "{":
+                        depth += 1
+                    elif ch == "}":
+                        depth -= 1
+                        if depth == 0:
+                            candidate = raw[start : i + 1]
+                            try:
+                                parsed = json.loads(candidate)
+                                _log("warn", f"Parsed first JSON object for {metric_name} and ignored trailing text.")
+                                break
+                            except Exception:
+                                parsed = None
+                if parsed is None:
+                    raise json.JSONDecodeError(f"Could not parse JSON output for {metric_name}", raw, 0)
+
+        # If it's an array, use the first element
+        if isinstance(parsed, list) and parsed:
+            _log("warn", f"LLM returned a JSON array for {metric_name}; using first element.")
+            parsed = parsed[0]
+
+        # If wrapped under a single top-level key (e.g., {"some_metric": {...}}), unwrap if it looks like the metric object
+        if isinstance(parsed, dict) and len(parsed) == 1:
+            sole_key = next(iter(parsed))
+            sole_val = parsed[sole_key]
+            if isinstance(sole_val, dict) and any(k in sole_val for k in ("score", "rationale", "gap")):
+                _log("warn", f"Unwrapped single top-level key '{sole_key}' for {metric_name}.")
+                parsed = sole_val
+
+        if not isinstance(parsed, dict):
+            raise ValueError(f"Metric {metric_name} returned non-object JSON: {type(parsed)}; raw: {raw}")
+
+        # Ensure metric_id exists; default to metric_name when missing
+        parsed["metric_id"] = parsed.get("metric_id") or metric_name
+
+        # Score: coerce to int and clamp 1..5
         score = parsed.get("score")
         try:
             score = int(score)
         except Exception:
-            raise ValueError(f"Metric {metric_name} returned invalid score: {score}")
-
+            raise ValueError(f"Metric {metric_name} returned invalid score: {score}; full raw: {raw}")
         score = max(1, min(5, score))
         parsed["score"] = score
 
+        # Rationale: short string, truncate
+        parsed["rationale"] = str(parsed.get("rationale") or "No rationale provided")[:500]
+
+        # Gap: ensure list of strings, max 5 items
         gap = parsed.get("gap") or []
+        if isinstance(gap, str):
+            gap = [gap]
         if not isinstance(gap, list):
             gap = [str(gap)]
         parsed["gap"] = [str(g)[:200] for g in gap[:5]]
-        parsed["rationale"] = str(parsed.get("rationale") or "No rationale provided")[:500]
+
+        # Mapping: normalize to list of strings if present, otherwise empty list
+        mapping = parsed.get("mapping")
+        if mapping is None:
+            parsed["mapping"] = []
+        elif isinstance(mapping, str):
+            parsed["mapping"] = [mapping]
+        elif isinstance(mapping, list):
+            parsed["mapping"] = [str(m) for m in mapping]
+        else:
+            parsed["mapping"] = [str(mapping)]
+
         return parsed
 
     def _metric_input_for(self, metric: str, ctx: Dict[str, Any]) -> Any:
@@ -205,7 +280,10 @@ class MVPDataPlatformScanner:
     def run(self) -> Dict[str, Any]:
         start_time = time.time()
         _log("info", "===== Starting Data Platform Analyzer run =====")
-        ctx = collect_snapshot()
+
+        # use the snapshot collector class (previously: collect_snapshot())
+        ctx = self.snapshot_collector.collect_snapshot()
+
         level0 = [m for m, meta in REGISTRY.items() if not meta["depends_on"]]
         level1 = [m for m, meta in REGISTRY.items() if meta["depends_on"]]
 
