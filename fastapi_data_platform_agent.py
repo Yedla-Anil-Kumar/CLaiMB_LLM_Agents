@@ -78,4 +78,21 @@ def get_run(run_id: str):
     with open(path, encoding="utf-8") as f:
         return json.load(f)
 
+@app.get("/runs/latest/{n}")
+def latest_n_runs(n: int):
+    """Fetch the last n run artifacts."""
+    files = sorted(glob.glob(str(RUNS_DIR / "*.json")))
+    if not files:
+        return {"status": "no_runs"}
+    
+    # Take the last n files
+    last_files = files[-n:]
+    runs = []
+    for f in last_files:
+        with open(f, encoding="utf-8") as file:
+            runs.append(json.load(file))
+    
+    return {"count": len(runs), "runs": runs}
+
+
 # uvicorn fastapi_data_platform_agent:app --reload
